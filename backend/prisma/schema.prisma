@@ -112,18 +112,49 @@ model organizations {
 }
 
 model projects {
-  id               String             @id @default(uuid())
-  name             String
-  description      String?
-  website          String?
-  pitchDeckUrl     String?
-  status           ProjectStatus      @default(DRAFT)
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  ownerId          String
-  applications     applications[]
-  form_submissions form_submissions[]
-  users            users              @relation(fields: [ownerId], references: [id])
+  id                   String             @id @default(uuid())
+  name                 String
+  description          String?
+  website              String?
+  pitchDeckUrl         String?
+  coreFounders         String?
+  projectHQ            String?
+  status               ProjectStatus      @default(DRAFT)
+  blockchain           BlockchainType?
+  otherBlockchain      String?
+  features             String[]           @default([])
+  techStack            String?
+  security             String?
+  tgeDate              String?
+  listingExchanges     String?
+  marketMaker          String?
+  totalSupply          String?
+  circulatingSupply    String?
+  vestingSchedule      String?
+  tokenomics           String?
+  tokenomicsMechanisms String?
+  previousFunding      String[]           @default([])
+  fundingTarget        String?
+  investmentTypes      InvestmentType[]   @default([])
+  interestedVCs        String?
+  keyMetrics           String?
+  requiredServices     String[]           @default([])
+  serviceDetails       String?
+  additionalServices   String?
+  companyStructure     CompanyStructure?
+  regulatoryCompliance String[]           @default([])
+  legalAdvisor         String?
+  complianceStrategy   String?
+  riskFactors          String?
+  uniquePosition       String?
+  biggestChallenges    String?
+  referralSource       String?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  ownerId              String
+  applications         applications[]
+  form_submissions     form_submissions[]
+  users                users              @relation(fields: [ownerId], references: [id])
 }
 
 model users {

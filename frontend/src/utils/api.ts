@@ -66,13 +66,17 @@ interface ApiErrorConfig {
   headers?: Record<string, string>;
 }
 
-// Update the error interface to match axios error structure
-interface ApiError {
-  response?: ApiErrorResponse;
-  config?: ApiErrorConfig;
-  message: string;
-  status?: number;
-}
+// Helper function to get auth headers
+const getAuthHeaders = (): Record<string, string> => {
+  const token = localStorage.getItem('token');
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json'
+  };
+  if (token) {
+    headers['Authorization'] = `Bearer ${token}`;
+  }
+  return headers;
+};
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
@@ -222,76 +226,61 @@ export const deleteUploadedFile = async (filename: string): Promise<void> => {
 
 // PROJECT API CALLS
 
-// Define ProjectStatus type
-type ProjectStatus = 'DRAFT' | 'SUBMITTED';
+// Define the type for the transformed project data
+export interface ProjectSubmissionData {
+  name: string;
+  description: string;
+  website: string;
+  pitchDeckUrl: string;
+  coreFounders: string;
+  projectHQ: string;
+  status: string;
+  blockchain: string;
+  otherBlockchain?: string;
+  features: string[];
+  techStack: string;
+  security: string;
+  tgeDate?: string;
+  listingExchanges?: string;
+  marketMaker?: string;
+  tokenomics: string;
+  tokenomicsMechanisms?: string;
+  previousFunding: string[];
+  fundingTarget: string;
+  investmentTypes: string[];
+  interestedVCs?: string;
+  keyMetrics?: string;
+  requiredServices: string[];
+  serviceDetails?: string;
+  additionalServices?: string;
+  companyStructure: string;
+  regulatoryCompliance: string[];
+  legalAdvisor?: string;
+  complianceStrategy: string;
+  riskFactors?: string;
+  uniquePosition: string;
+  biggestChallenges: string;
+  referralSource: string;
+}
 
 /**
  * Save project as draft or submit
  */
-export const submitProject = async (formData: FormData, status: ProjectStatus = 'SUBMITTED') => {
-  console.log('Submitting project with transformed data:', formData);
-  
-  // Transform the data to match the backend structure
-  const transformedData = {
-    name: formData.generalInfo.projectName,
-    description: '',
-    website: formData.generalInfo.websiteUrl,
-    pitchDeckUrl: formData.generalInfo.pitchDeckUrl,
-    status: status,
-    blockchain: formData.technical.blockchain,
-    otherBlockchain: formData.technical.otherBlockchain || '',
-    features: formData.technical.features,
-    techStack: formData.technical.techStack,
-    security: formData.technical.security,
-    tgeDate: formData.tgeDetails.tgeDate,
-    listingExchanges: formData.tgeDetails.listingExchanges,
-    marketMaker: formData.tgeDetails.marketMakingProvider || '',
-    // Convert tokenomics object to string
-    tokenomics: JSON.stringify({
-      totalSupply: formData.tgeDetails.totalSupply,
-      circulatingSupply: formData.tgeDetails.circulatingSupply,
-      vestingSchedule: formData.tgeDetails.vestingSchedule
-    }),
-    previousFunding: formData.funding.previousFunding,
-    fundingTarget: formData.funding.fundingTarget,
-    // Fix for investmentTypes - convert to proper format
-    // The controller expects an array of enum values
-    investmentTypes: formData.funding.investmentType.map(type => {
-      // Map STRATEGIC to OTHER since it's not in the enum
-      if (type.toUpperCase() === 'STRATEGIC') return 'OTHER';
-      return type.toUpperCase();
-    }),
-    interestedVCs: formData.funding.interestedVCs || '',
-    keyMetrics: formData.funding.keyMetrics,
-    requiredServices: formData.services.requiredServices,
-    serviceDetails: formData.services.serviceDetails,
-    additionalServices: formData.services.additionalServices || '',
-    companyStructure: formData.compliance.companyStructure,
-    regulatoryCompliance: formData.compliance.regulatoryCompliance,
-    legalAdvisor: formData.compliance.legalAdvisor || '',
-    complianceStrategy: formData.compliance.complianceStrategy,
-    riskFactors: formData.compliance.riskFactors
-  };
-
-  console.log('Using authorization token:', localStorage.getItem('token') ? 'Token exists' : 'No token');
-  console.log('Transformed data being sent to server:', JSON.stringify(transformedData, null, 2));
-
+export const submitProject = async (data: ProjectSubmissionData) => {
   try {
-    const response = await api.post('/projects', transformedData, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
-      timeout: 30000 // 30 second timeout
+    const response = await fetch(`${API_URL}/projects`, {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
     });
 
-    return response;
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
   } catch (error) {
-    // Type the error properly
-    const apiError = error as ApiError;
-    console.error('API Error:', apiError.response?.status, apiError.response?.data);
-    console.error('Detailed submission error:', apiError);
-    console.error('Error in submitProject:', apiError);
+    console.error('Error submitting project:', error);
     throw error;
   }
 };

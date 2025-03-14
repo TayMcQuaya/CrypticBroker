@@ -10,6 +10,24 @@ import { toast } from 'react-hot-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 
+// Import enums
+enum BlockchainType {
+  ETHEREUM = 'ETHEREUM',
+  BINANCE_SMART_CHAIN = 'BINANCE_SMART_CHAIN',
+  POLYGON = 'POLYGON',
+  SOLANA = 'SOLANA',
+  AVALANCHE = 'AVALANCHE',
+  OTHER = 'OTHER'
+}
+
+enum CompanyStructure {
+  LLC = 'LLC',
+  CORPORATION = 'CORPORATION',
+  FOUNDATION = 'FOUNDATION',
+  DAO = 'DAO',
+  OTHER = 'OTHER'
+}
+
 // Import form steps
 import GeneralInfoStep from './steps/GeneralInfoStep';
 import TGEDetailsStep from './steps/TGEDetailsStep';
@@ -317,16 +335,68 @@ export default function ProjectSubmissionForm() {
 
   // Modified submit function for test mode
   const onSubmit = async (data: FormData) => {
-    console.log('Form submission started with data:', data);
+    setIsSubmitting(true);
     try {
-      setIsSubmitting(true);
+      console.log('Original form data:', JSON.stringify(data, null, 2));
+      console.log('General Info section:', JSON.stringify(data.generalInfo, null, 2));
       
+      // Transform form data to match API structure
+      const transformedData = {
+        name: data.generalInfo.projectName || '',
+        description: '',  // Default empty string
+        website: data.generalInfo.websiteUrl || '',
+        pitchDeckUrl: data.generalInfo.pitchDeckUrl || '',
+        coreFounders: data.generalInfo.coreFounders || '',
+        projectHQ: data.generalInfo.projectHQ || '',
+        status: 'SUBMITTED',
+        blockchain: data.technical.blockchain || 'OTHER',
+        otherBlockchain: data.technical.otherBlockchain || '',
+        features: data.technical.features || [],
+        techStack: data.technical.techStack || '',
+        security: data.technical.security || '',
+        tgeDate: data.tgeDetails.tgeDate || '',
+        listingExchanges: data.tgeDetails.listingExchanges || '',
+        marketMaker: data.tgeDetails.marketMakingProvider || '',
+        tokenomics: JSON.stringify({
+          totalSupply: data.tgeDetails.totalSupply || '',
+          circulatingSupply: data.tgeDetails.circulatingSupply || '',
+          vestingSchedule: data.tgeDetails.vestingSchedule || ''
+        }),
+        tokenomicsMechanisms: data.tgeDetails.tokenomicsMechanisms || '',
+        previousFunding: data.funding.previousFunding || [],
+        fundingTarget: data.funding.fundingTarget || '',
+        investmentTypes: data.funding.investmentType || [],
+        interestedVCs: data.funding.interestedVCs || '',
+        keyMetrics: data.funding.keyMetrics || '',
+        requiredServices: data.services.requiredServices || [],
+        serviceDetails: data.services.serviceDetails || '',
+        additionalServices: data.services.additionalServices || '',
+        companyStructure: data.compliance.companyStructure || 'OTHER',
+        regulatoryCompliance: data.compliance.regulatoryCompliance || [],
+        legalAdvisor: data.compliance.legalAdvisor || '',
+        complianceStrategy: data.compliance.complianceStrategy || '',
+        riskFactors: data.compliance.riskFactors || '',
+        uniquePosition: data.finalQuestions?.uniquePosition || '',
+        biggestChallenges: data.finalQuestions?.biggestChallenges || '',
+        referralSource: data.finalQuestions?.referralSource || 'OTHER'
+      };
+
+      console.log('Transformed data - General Info fields:', JSON.stringify({
+        name: transformedData.name,
+        website: transformedData.website,
+        pitchDeckUrl: transformedData.pitchDeckUrl,
+        coreFounders: transformedData.coreFounders,
+        projectHQ: transformedData.projectHQ
+      }, null, 2));
+
+      console.log('Full transformed data being sent to server:', JSON.stringify(transformedData, null, 2));
+
       if (isTestMode) {
         // In test mode, just simulate success without API calls
-        console.log('Test mode submission:', data);
+        console.log('Test mode submission:', transformedData);
         
         // Save form data to localStorage
-        localStorage.setItem('projectDraft', JSON.stringify(data));
+        localStorage.setItem('projectDraft', JSON.stringify(transformedData));
         localStorage.setItem('projectDraftSavedTime', new Date().toISOString());
         setLastSavedTime(new Date());
         
@@ -361,15 +431,15 @@ export default function ProjectSubmissionForm() {
         }
 
         // Save as draft first
-        localStorage.setItem('projectDraft', JSON.stringify(data));
+        localStorage.setItem('projectDraft', JSON.stringify(transformedData));
         
         // Submit to server
-        const response = await submitProject(data, 'SUBMITTED');
+        const response = await submitProject(transformedData);
         
         // Clear loading toast
         toast.dismiss(loadingToast);
         
-        if (response.status === 200 || response.status === 201) {
+        if (response.status === 200 || response.status === 201 || response.status === 'success' || response?.data?.status === 'success') {
           // Success case
           toast.success('Project submitted successfully!');
           
@@ -389,7 +459,7 @@ export default function ProjectSubmissionForm() {
             }
           }, 1000);
         } else {
-          throw new Error(`Unexpected response status: ${response.status}`);
+          throw new Error(`Unexpected response status: ${response.status || 'unknown'}`);
         }
       } catch (error: Error | unknown) {
         // Clear loading toast

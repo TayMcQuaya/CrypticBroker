@@ -1,0 +1,191 @@
+General Information
+Basic project details and team information
+
+Project Name*
+Projecto Testo
+The name of your blockchain project
+
+Website URL*
+www.myproject.com
+Your project's website address (must start with http:// or https://)
+
+Pitch Deck URL*
+www.mypitch.com
+Link to your pitch deck (must start with http:// or https://)
+
+No file chosen
+Core Founders & LinkedIn Profiles*
+https://www.lindedln.com
+List core team members with their LinkedIn profiles
+
+Project HQ / Jurisdiction*
+Switzerland
+Primary location or jurisdiction of your project
+
+TGE Date*
+
+21/03/2025
+Expected date for the Token Generation Event
+
+Expected Listing Exchanges*
+Binance
+List the exchanges where you plan to list your token
+
+Market Making Provider
+Wintermute
+If applicable, specify your market making provider
+
+Total Supply*
+10000000
+Total number of tokens that will ever exist
+
+Circulating Supply at TGE*
+10000
+Number of tokens that will be in circulation at TGE
+
+Vesting Schedule*
+vesting every 3 months 1% each month
+Detail the vesting periods and unlock schedules for different token allocations
+
+Deflationary/Incentive Mechanisms
+staking rewards, burning events
+Explain any mechanisms that affect token supply or provide incentives for holders
+
+
+Funding & Investment
+Funding history and current needs
+
+Previous Funding Rounds*
+
+Private
+
+Pre-Seed
+
+Seed
+
+Public
+
+None Yet
+Select all that apply
+
+Current Fundraising Target ($USD)*
+100000
+Enter the amount you're looking to raise in this round
+
+Type of Investment Sought*
+
+Equity
+
+SAFT
+
+Strategic
+
+Other
+Select all that apply
+
+Top 3 VCs/Funds Currently Interested
+VC FUNDS AMAZING
+Optional - helps us understand your current fundraising progress
+
+Key Metrics to Showcase to Investors*
+we have key metrics to show to clients which will impress them
+Quantifiable metrics that demonstrate your project's traction
+
+Technical Details
+Product and technical information
+
+Primary Blockchain*
+
+Ethereum
+Other Blockchain
+Specify if you selected 'Other' above
+Only fill this if you selected 'Other' above
+
+Key Technical Features*
+
+Smart Contracts
+
+NFT Integration
+
+DeFi Protocols
+
+Cross-chain Bridge
+
+DAO Governance
+
+AI/ML Integration
+Select all that apply
+
+Technical Stack*
+ethereum solitidy 
+nft integration
+smart contracts
+List the main technologies used in your project
+
+Security Measures*
+cybersecurity audits by professionals
+Describe measures taken to ensure project security
+
+Services & Support
+Additional services and support needed
+
+Required Support Services*
+
+Legal Advisory
+
+Marketing & PR
+
+Community Management
+
+Exchange Listing
+
+Market Making
+
+Tokenomics Design
+
+Technical Development
+
+Smart Contract Audit
+Select all services you need support with
+
+Service Details*
+budget allo is fine
+indian hotline service
+mental health support
+Provide detailed information about your service needs
+
+Additional Services
+we offer more than we promise
+Optional - List any other services you're looking for
+
+
+Compliance & Legal
+Legal and regulatory information
+
+Company Structure*
+
+DAO
+Regulatory Compliance Status*
+
+AML Policy
+
+KYC Procedures
+
+Legal Opinion
+
+Required Licenses
+
+None Yet
+Select all that apply
+
+Legal Advisor/Firm
+dao lover
+Optional - Who provides your legal counsel?
+
+Compliance Strategy*
+we have concepts of compliance strategies
+Describe your approach to regulatory compliance
+
+Key Risk Factors*
+trumps tarrif wars and europs regulations risks
+Identify and explain key risks and how you plan to address them
