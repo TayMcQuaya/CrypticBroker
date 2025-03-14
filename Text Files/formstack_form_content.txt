@@ -1,0 +1,2863 @@
+Form URL: https://outlierventuresapp.formstack.com/forms/applications
+Scraped on: 2025-03-14 01:49:59
+Total Sections Detected: 13
+==================================================
+
+Form Title: OV Applications - Formstack
+
+Section 1:
+--------------------
+Section 2:
+--------------------
+Question: You can view our Privacy Policy here
+Type: Email
+
+Question: Founder Email Address
+Type: Email
+
+Question:  (Required)
+Type: Email
+
+Question: Founder Telegram Handle
+Type: Text
+
+Question: Founder Full NameFirst NameLast Name (Required)
+Type: Text
+
+Question: Founder Full Name
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: Company Name
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: What is the main technical set-up of your project?What is the main technical set-up of your project?Blockchain (L0, L1, L2)Single-chain dAppMulti-chain dAppWeb2 InfrastructureWeb3 InfrastructureOtherOther (Required)
+Type: Radio
+Options:
+  - Single-chain dApp
+  - Multi-chain dApp
+  - Web2 Infrastructure
+  - Web3 Infrastructure
+  - Other
+  - Other
+
+Question: What is the main technical set-up of your project?
+Type: Radio
+Options:
+  - Single-chain dApp
+  - Multi-chain dApp
+  - Web2 Infrastructure
+  - Web3 Infrastructure
+  - Other
+  - Other
+
+Question:  (Required)
+Type: Radio
+Options:
+  - Single-chain dApp
+  - Multi-chain dApp
+  - Web2 Infrastructure
+  - Web3 Infrastructure
+  - Other
+  - Other
+
+Question: What is the main technical set-up of your project?
+Type: Radio
+Options:
+  - Single-chain dApp
+  - Multi-chain dApp
+  - Web2 Infrastructure
+  - Web3 Infrastructure
+  - Other
+  - Other
+
+Question: Blockchain (L0, L1, L2)
+Type: Radio
+Options:
+  - Single-chain dApp
+  - Multi-chain dApp
+  - Web2 Infrastructure
+  - Web3 Infrastructure
+  - Other
+  - Other
+
+Question: Single-chain dApp
+Type: Radio
+Options:
+  - Single-chain dApp
+  - Multi-chain dApp
+  - Web2 Infrastructure
+  - Web3 Infrastructure
+  - Other
+  - Other
+
+Question: Multi-chain dApp
+Type: Radio
+Options:
+  - Single-chain dApp
+  - Multi-chain dApp
+  - Web2 Infrastructure
+  - Web3 Infrastructure
+  - Other
+  - Other
+
+Question: Web2 Infrastructure
+Type: Radio
+Options:
+  - Single-chain dApp
+  - Multi-chain dApp
+  - Web2 Infrastructure
+  - Web3 Infrastructure
+  - Other
+  - Other
+
+Question: Web3 Infrastructure
+Type: Radio
+Options:
+  - Single-chain dApp
+  - Multi-chain dApp
+  - Web2 Infrastructure
+  - Web3 Infrastructure
+  - Other
+  - Other
+
+Question: Other
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: What vertical are you focused on?What vertical are you focused on?AI AgentsAI Infrastructure & ML Ops (inference, attestation, rhlf)Consumer Crypto (Decentralized Social etc.)Cryptographically enhanced ML / Privacy enhancing technologyDAO Infrastructure & ToolingData Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)DeFiDePINWeb3 GamingPersonhood, Identity & VerificationLayer 1NFT Tooling & InfrastructureRWAScaling (e.g. L2, Rollups, DA, ZK)WalletsOtherOther (Required)
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: What vertical are you focused on?
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question:  (Required)
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: What vertical are you focused on?
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: AI Agents
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: AI Infrastructure & ML Ops (inference, attestation, rhlf)
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: Consumer Crypto (Decentralized Social etc.)
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: Cryptographically enhanced ML / Privacy enhancing technology
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: DAO Infrastructure & Tooling
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: DeFi
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: DePIN
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: Web3 Gaming
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: Personhood, Identity & Verification
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: Layer 1
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: NFT Tooling & Infrastructure
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: RWA
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: Scaling (e.g. L2, Rollups, DA, ZK)
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: Wallets
+Type: Radio
+Options:
+  - AI Infrastructure & ML Ops (inference, attestation, rhlf)
+  - Consumer Crypto (Decentralized Social etc.)
+  - Cryptographically enhanced ML / Privacy enhancing technology
+  - DAO Infrastructure & Tooling
+  - Data Economy & Infrastructure (e.g. storage, orchestration, input, compute and models)
+  - DeFi
+  - DePIN
+  - Web3 Gaming
+  - Personhood, Identity & Verification
+  - Layer 1
+  - NFT Tooling & Infrastructure
+  - RWA
+  - Scaling (e.g. L2, Rollups, DA, ZK)
+  - Wallets
+  - Other
+  - Other
+
+Question: Other
+Type: Text
+
+Question: Within this vertical how would you categorize what you are building?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: What are the main Web3 ecosystems where you are building today?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: Where is the value of your project expected to accrue today/in the near future?Where is the value of your project expected to accrue today/in the near future?100% Token100% EquityBoth Token and EquityEquity transitioning into TokenOtherOther (Required)
+Type: Radio
+Options:
+  - 100% Equity
+  - Both Token and Equity
+  - Equity transitioning into Token
+  - Other
+  - Other
+
+Question: Where is the value of your project expected to accrue today/in the near future?
+Type: Radio
+Options:
+  - 100% Equity
+  - Both Token and Equity
+  - Equity transitioning into Token
+  - Other
+  - Other
+
+Question:  (Required)
+Type: Radio
+Options:
+  - 100% Equity
+  - Both Token and Equity
+  - Equity transitioning into Token
+  - Other
+  - Other
+
+Question: Where is the value of your project expected to accrue today/in the near future?
+Type: Radio
+Options:
+  - 100% Equity
+  - Both Token and Equity
+  - Equity transitioning into Token
+  - Other
+  - Other
+
+Question: 100% Token
+Type: Radio
+Options:
+  - 100% Equity
+  - Both Token and Equity
+  - Equity transitioning into Token
+  - Other
+  - Other
+
+Question: 100% Equity
+Type: Radio
+Options:
+  - 100% Equity
+  - Both Token and Equity
+  - Equity transitioning into Token
+  - Other
+  - Other
+
+Question: Both Token and Equity
+Type: Radio
+Options:
+  - 100% Equity
+  - Both Token and Equity
+  - Equity transitioning into Token
+  - Other
+  - Other
+
+Question: Equity transitioning into Token
+Type: Radio
+Options:
+  - 100% Equity
+  - Both Token and Equity
+  - Equity transitioning into Token
+  - Other
+  - Other
+
+Question: Other
+Type: Radio
+Options:
+  - Post Web
+  - DePIN
+  - FutureSpark (Riyadh)
+  - Describe your business in one line*
+
+Question: What's your preferred Outlier Ventures program?What's your preferred Outlier Ventures program?Ascent Token LaunchPost WebDePINFutureSpark (Riyadh)Please do not submit multiple application if you want to apply to more than one program as our team will re-direct you if required (Required)
+Type: Radio
+Options:
+  - Post Web
+  - DePIN
+  - FutureSpark (Riyadh)
+  - Describe your business in one line*
+
+Question: What's your preferred Outlier Ventures program?
+Type: Radio
+Options:
+  - Post Web
+  - DePIN
+  - FutureSpark (Riyadh)
+  - Describe your business in one line*
+
+Question:  (Required)
+Type: Radio
+Options:
+  - Post Web
+  - DePIN
+  - FutureSpark (Riyadh)
+  - Describe your business in one line*
+
+Question: What's your preferred Outlier Ventures program?
+Type: Radio
+Options:
+  - Post Web
+  - DePIN
+  - FutureSpark (Riyadh)
+  - Describe your business in one line*
+
+Question: Ascent Token Launch
+Type: Radio
+Options:
+  - Post Web
+  - DePIN
+  - FutureSpark (Riyadh)
+  - Describe your business in one line*
+
+Question: Post Web
+Type: Radio
+Options:
+  - Post Web
+  - DePIN
+  - FutureSpark (Riyadh)
+  - Describe your business in one line*
+
+Question: DePIN
+Type: Radio
+Options:
+  - Post Web
+  - DePIN
+  - FutureSpark (Riyadh)
+  - Describe your business in one line*
+
+Question: FutureSpark (Riyadh)
+Type: Text
+
+Question: Please do not submit multiple application if you want to apply to more than one program as our team will re-direct you if required
+Type: Text
+
+Question: Please do not submit multiple application if you want to apply to more than one program as our team will re-direct you if required
+Type: Text
+
+Section 3:
+--------------------
+Question: Describe your business in one line
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: What is your primary location?CityAfghanistanAland IslandsAlbaniaAlgeriaAmerican SamoaAndorraAngolaAnguillaAntarcticaAntigua and BarbudaArgentinaArmeniaArubaAustraliaAustriaAzerbaijanBahamasBahrainBangladeshBarbadosBelarusBelgiumBelizeBeninBermudaBhutanBolivia, Plurinational State ofBosnia and HerzegovinaBotswanaBouvet IslandBrazilBritish Indian Ocean TerritoryBrunei DarussalamBulgariaBurkina FasoBurundiCambodiaCameroonCanadaCape VerdeCayman IslandsCentral African RepublicChadChileChinaChristmas IslandCocos (Keeling) IslandsColombiaComorosCongoCongo, The Democratic Republic of theCook IslandsCosta RicaCote d'IvoireCroatiaCubaCyprusCzech RepublicDenmarkDjiboutiDominicaDominican RepublicEcuadorEgyptEl SalvadorEquatorial GuineaEritreaEstoniaEthiopiaFalkland Islands (Malvinas)Faroe IslandsFijiFinlandFranceFrench GuianaFrench PolynesiaFrench Southern TerritoriesGabonGambiaGeorgiaGermanyGhanaGibraltarGreeceGreenlandGrenadaGuadeloupeGuamGuatemalaGuernseyGuineaGuinea-bissauGuyanaHaitiHeard Island and Mcdonald IslandsHoly See (Vatican City State)HondurasHong KongHungaryIcelandIndiaIndonesiaIran, Islamic Republic ofIraqIrelandIsle of ManIsraelItalyJamaicaJapanJerseyJordanKazakhstanKenyaKiribatiKorea, Democratic People\'s Republic ofKorea, Republic ofKosovoKuwaitKyrgyzstanLao People\'s Democratic RepublicLatviaLebanonLesothoLiberiaLibyaLiechtensteinLithuaniaLuxembourgMacaoRepublic of MacedoniaMadagascarMalawiMalaysiaMaldivesMaliMaltaMarshall IslandsMartiniqueMauritaniaMauritiusMayotteMexicoMicronesia, Federated States ofMoldova, Republic ofMonacoMongoliaMontenegroMontserratMoroccoMozambiqueMyanmarNamibiaNauruNepalNetherlandsNetherlands AntillesNew CaledoniaNew ZealandNicaraguaNigerNigeriaNiueNorfolk IslandNorthern Mariana IslandsNorwayOmanPakistanPalauPalestinian TerritoryPanamaPapua New GuineaParaguayPeruPhilippinesPitcairnPolandPortugalPuerto RicoQatarReunionRomaniaRussian FederationRwandaSaint BarthelemySaint HelenaSaint Kitts and NevisSaint LuciaSaint MartinSaint Pierre and MiquelonSaint Vincent and the GrenadinesSamoaSan MarinoSao Tome and PrincipeSaudi ArabiaSenegalSerbiaSeychellesSierra LeoneSingaporeSlovakiaSloveniaSolomon IslandsSomaliaSouth AfricaSouth Georgia and the South Sandwich IslandsSpainSri LankaSudanSurinameSvalbard and Jan MayenSwazilandSwedenSwitzerlandSyrian Arab RepublicTaiwan, Republic of ChinaTajikistanTanzania, United Republic ofThailandTimor-lesteTogoTokelauTongaTrinidad and TobagoTunisiaTurkeyTurkmenistanTurks and Caicos IslandsTuvaluUgandaUkraineUnited Arab EmiratesUnited KingdomUnited StatesUnited States Minor Outlying IslandsUruguayUzbekistanVanuatuVenezuelaVietnamVirgin Islands, BritishVirgin Islands, U.S.Wallis and FutunaWestern SaharaYemenZambiaZimbabweCountry (Required)
+Type: Text
+
+Question: What is your primary location?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: When did you start working on your project? (Required)
+Type: Hidden
+
+Question: When did you start working on your project?
+Type: Hidden
+
+Question:  (Required)
+Type: Hidden
+
+Question: Where did you hear about us?Where did you hear about us?ReferralEventTwitterLinkedinTelegramDiscordInstagramGoogleOutlier Ventures ThesisOutlier Ventures NewsletterOutlier Ventures PodcastOther (Required)
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Where did you hear about us?
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question:  (Required)
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Where did you hear about us?
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Referral
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Event
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Twitter
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Linkedin
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Telegram
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Discord
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Instagram
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Google
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Outlier Ventures Thesis
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Outlier Ventures Newsletter
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Outlier Ventures Podcast
+Type: Radio
+Options:
+  - Event
+  - Twitter
+  - Linkedin
+  - Telegram
+  - Discord
+  - Instagram
+  - Google
+  - Outlier Ventures Thesis
+  - Outlier Ventures Newsletter
+  - Outlier Ventures Podcast
+  - Other
+  - If selecting 'other' please tell us more*
+
+Question: Other
+Type: Text
+
+Question: If selecting 'other' please tell us more
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: What type of referral was this?What type of referral was this?Outlier Ventures TeamThird Party (Required)
+Type: Radio
+Options:
+  - Third Party
+  - If event please name the event*
+
+Question: What type of referral was this?
+Type: Radio
+Options:
+  - Third Party
+  - If event please name the event*
+
+Question:  (Required)
+Type: Radio
+Options:
+  - Third Party
+  - If event please name the event*
+
+Question: What type of referral was this?
+Type: Radio
+Options:
+  - Third Party
+  - If event please name the event*
+
+Question: Outlier Ventures Team
+Type: Radio
+Options:
+  - Third Party
+  - If event please name the event*
+
+Question: Third Party
+Type: Text
+
+Question: If event please name the event
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: Name of person/organisation who referred you
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: Please provide a link to your pitch deck (Google Drive/Dropbox/DocSend etc.)
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: Make sure your sharing settings will allow our team to view your deck
+Type: Text
+
+Question: Make sure your sharing settings will allow our team to view your deck
+Type: Text
+
+Question: Website Link
+Type: Text
+
+Question: Do you have a demo? Please link below.
+Type: Text
+
+Question: Please share the LinkedIn/GitHub/Twitter of all Co-Founders
+Type: Paragraph Text
+
+Question:  (Required)
+Type: Paragraph Text
+
+Section 4:
+--------------------
+Question: How many people are working on the project as of today?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: How many of them are full time?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: Which statement better reflects your current team statusWhich statement better reflects your current team statusI am just a solo-founderWe have at least have 2 full-time team members with both technical and commercial expertiseThe above plus a core team of developersThe above plus an active marketing/community/sales teamWe have all the necessary positions filled (incl. HR, legal, finance, etc.) to fully realize our vision (Required)
+Type: Radio
+Options:
+  - We have at least have 2 full-time team members with both technical and commercial expertise
+  - The above plus a core team of developers
+  - The above plus an active marketing/community/sales team
+  - We have all the necessary positions filled (incl. HR, legal, finance, etc.) to fully realize our vision
+  - We have conceptualized the product and worked on a high-level roadmap
+
+Question: Which statement better reflects your current team status
+Type: Radio
+Options:
+  - We have at least have 2 full-time team members with both technical and commercial expertise
+  - The above plus a core team of developers
+  - The above plus an active marketing/community/sales team
+  - We have all the necessary positions filled (incl. HR, legal, finance, etc.) to fully realize our vision
+  - We have conceptualized the product and worked on a high-level roadmap
+
+Question:  (Required)
+Type: Radio
+Options:
+  - We have at least have 2 full-time team members with both technical and commercial expertise
+  - The above plus a core team of developers
+  - The above plus an active marketing/community/sales team
+  - We have all the necessary positions filled (incl. HR, legal, finance, etc.) to fully realize our vision
+  - We have conceptualized the product and worked on a high-level roadmap
+
+Question: Which statement better reflects your current team status
+Type: Radio
+Options:
+  - We have at least have 2 full-time team members with both technical and commercial expertise
+  - The above plus a core team of developers
+  - The above plus an active marketing/community/sales team
+  - We have all the necessary positions filled (incl. HR, legal, finance, etc.) to fully realize our vision
+  - We have conceptualized the product and worked on a high-level roadmap
+
+Question: I am just a solo-founder
+Type: Radio
+Options:
+  - We have at least have 2 full-time team members with both technical and commercial expertise
+  - The above plus a core team of developers
+  - The above plus an active marketing/community/sales team
+  - We have all the necessary positions filled (incl. HR, legal, finance, etc.) to fully realize our vision
+  - We have conceptualized the product and worked on a high-level roadmap
+
+Question: We have at least have 2 full-time team members with both technical and commercial expertise
+Type: Radio
+Options:
+  - We have at least have 2 full-time team members with both technical and commercial expertise
+  - The above plus a core team of developers
+  - The above plus an active marketing/community/sales team
+  - We have all the necessary positions filled (incl. HR, legal, finance, etc.) to fully realize our vision
+  - We have conceptualized the product and worked on a high-level roadmap
+
+Question: The above plus a core team of developers
+Type: Radio
+Options:
+  - We have at least have 2 full-time team members with both technical and commercial expertise
+  - The above plus a core team of developers
+  - The above plus an active marketing/community/sales team
+  - We have all the necessary positions filled (incl. HR, legal, finance, etc.) to fully realize our vision
+  - We have conceptualized the product and worked on a high-level roadmap
+
+Question: The above plus an active marketing/community/sales team
+Type: Radio
+Options:
+  - We have at least have 2 full-time team members with both technical and commercial expertise
+  - The above plus a core team of developers
+  - The above plus an active marketing/community/sales team
+  - We have all the necessary positions filled (incl. HR, legal, finance, etc.) to fully realize our vision
+  - We have conceptualized the product and worked on a high-level roadmap
+
+Question: We have all the necessary positions filled (incl. HR, legal, finance, etc.) to fully realize our vision
+Type: Radio
+Options:
+  - We have developed a Proof of concept (POC)
+  - We have a working Minimum Viable Product (MVP)
+  - We have an MVP that has attracted users and revenue
+  - We have a full live product ready to scale!
+  - B2C
+
+Section 5:
+--------------------
+Question: Which statement better reflects your current product statusWhich statement better reflects your current product statusWe have conceptualized the product and worked on a high-level roadmapWe have developed a Proof of concept (POC)We have a working Minimum Viable Product (MVP)We have an MVP that has attracted users and revenueWe have a full live product ready to scale! (Required)
+Type: Radio
+Options:
+  - We have developed a Proof of concept (POC)
+  - We have a working Minimum Viable Product (MVP)
+  - We have an MVP that has attracted users and revenue
+  - We have a full live product ready to scale!
+  - B2C
+
+Question: Which statement better reflects your current product status
+Type: Radio
+Options:
+  - We have developed a Proof of concept (POC)
+  - We have a working Minimum Viable Product (MVP)
+  - We have an MVP that has attracted users and revenue
+  - We have a full live product ready to scale!
+  - B2C
+
+Question:  (Required)
+Type: Radio
+Options:
+  - We have developed a Proof of concept (POC)
+  - We have a working Minimum Viable Product (MVP)
+  - We have an MVP that has attracted users and revenue
+  - We have a full live product ready to scale!
+  - B2C
+
+Question: Which statement better reflects your current product status
+Type: Radio
+Options:
+  - We have developed a Proof of concept (POC)
+  - We have a working Minimum Viable Product (MVP)
+  - We have an MVP that has attracted users and revenue
+  - We have a full live product ready to scale!
+  - B2C
+
+Question: We have conceptualized the product and worked on a high-level roadmap
+Type: Radio
+Options:
+  - We have developed a Proof of concept (POC)
+  - We have a working Minimum Viable Product (MVP)
+  - We have an MVP that has attracted users and revenue
+  - We have a full live product ready to scale!
+  - B2C
+
+Question: We have developed a Proof of concept (POC)
+Type: Radio
+Options:
+  - We have developed a Proof of concept (POC)
+  - We have a working Minimum Viable Product (MVP)
+  - We have an MVP that has attracted users and revenue
+  - We have a full live product ready to scale!
+  - B2C
+
+Question: We have a working Minimum Viable Product (MVP)
+Type: Radio
+Options:
+  - We have developed a Proof of concept (POC)
+  - We have a working Minimum Viable Product (MVP)
+  - We have an MVP that has attracted users and revenue
+  - We have a full live product ready to scale!
+  - B2C
+
+Question: We have an MVP that has attracted users and revenue
+Type: Radio
+Options:
+  - We have developed a Proof of concept (POC)
+  - We have a working Minimum Viable Product (MVP)
+  - We have an MVP that has attracted users and revenue
+  - We have a full live product ready to scale!
+  - B2C
+
+Question: We have a full live product ready to scale!
+Type: Radio
+Options:
+  - B2B
+  - B2B2C
+  - DAOs
+  - Platform/Marketplace
+  - Direct Sales
+
+Section 6:
+--------------------
+Question: What is the main customer focus of your company?What is the main customer focus of your company?B2CB2BB2B2CDAOsPlatform/Marketplace (Required)
+Type: Radio
+Options:
+  - B2B
+  - B2B2C
+  - DAOs
+  - Platform/Marketplace
+  - Direct Sales
+
+Question: What is the main customer focus of your company?
+Type: Radio
+Options:
+  - B2B
+  - B2B2C
+  - DAOs
+  - Platform/Marketplace
+  - Direct Sales
+
+Question:  (Required)
+Type: Radio
+Options:
+  - B2B
+  - B2B2C
+  - DAOs
+  - Platform/Marketplace
+  - Direct Sales
+
+Question: What is the main customer focus of your company?
+Type: Radio
+Options:
+  - B2B
+  - B2B2C
+  - DAOs
+  - Platform/Marketplace
+  - Direct Sales
+
+Question: B2C
+Type: Radio
+Options:
+  - B2B
+  - B2B2C
+  - DAOs
+  - Platform/Marketplace
+  - Direct Sales
+
+Question: B2B
+Type: Radio
+Options:
+  - B2B
+  - B2B2C
+  - DAOs
+  - Platform/Marketplace
+  - Direct Sales
+
+Question: B2B2C
+Type: Radio
+Options:
+  - B2B
+  - B2B2C
+  - DAOs
+  - Platform/Marketplace
+  - Direct Sales
+
+Question: DAOs
+Type: Radio
+Options:
+  - B2B
+  - B2B2C
+  - DAOs
+  - Platform/Marketplace
+  - Direct Sales
+
+Question: Platform/Marketplace
+Type: Radio
+Options:
+  - Subscription
+  - Transaction Fees
+  - Agency/Advisory
+  - Other
+  - Other
+
+Question: Which of the following better captures the business model of your company Which of the following better captures the business model of your companyDirect SalesSubscriptionTransaction FeesAgency/AdvisoryOtherOther (Required)
+Type: Radio
+Options:
+  - Subscription
+  - Transaction Fees
+  - Agency/Advisory
+  - Other
+  - Other
+
+Question: Which of the following better captures the business model of your company
+Type: Radio
+Options:
+  - Subscription
+  - Transaction Fees
+  - Agency/Advisory
+  - Other
+  - Other
+
+Question:  (Required)
+Type: Radio
+Options:
+  - Subscription
+  - Transaction Fees
+  - Agency/Advisory
+  - Other
+  - Other
+
+Question: Which of the following better captures the business model of your company
+Type: Radio
+Options:
+  - Subscription
+  - Transaction Fees
+  - Agency/Advisory
+  - Other
+  - Other
+
+Question: Direct Sales
+Type: Radio
+Options:
+  - Subscription
+  - Transaction Fees
+  - Agency/Advisory
+  - Other
+  - Other
+
+Question: Subscription
+Type: Radio
+Options:
+  - Subscription
+  - Transaction Fees
+  - Agency/Advisory
+  - Other
+  - Other
+
+Question: Transaction Fees
+Type: Radio
+Options:
+  - Subscription
+  - Transaction Fees
+  - Agency/Advisory
+  - Other
+  - Other
+
+Question: Agency/Advisory
+Type: Radio
+Options:
+  - Subscription
+  - Transaction Fees
+  - Agency/Advisory
+  - Other
+  - Other
+
+Question: Other
+Type: Paragraph Text
+
+Question: Who would you say are your top 3 competitors
+Type: Paragraph Text
+
+Question:  (Required)
+Type: Paragraph Text
+
+Question: Do you currently have any users or revenue?Do you currently have any users or revenue?YesNo (Required)
+Type: Radio
+Options:
+  - No
+  - <20
+
+Question: Do you currently have any users or revenue?
+Type: Radio
+Options:
+  - No
+  - <20
+
+Question:  (Required)
+Type: Radio
+Options:
+  - No
+  - <20
+
+Question: Do you currently have any users or revenue?
+Type: Radio
+Options:
+  - No
+  - <20
+
+Question: Yes
+Type: Radio
+Options:
+  - No
+  - <20
+
+Question: No
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <20
+
+Question: What's the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your productWhat's the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product<2020 - 5050 - 100100 - 500500 - 1000>1000 (Required)
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <20
+
+Question: What's the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <20
+
+Question:  (Required)
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <20
+
+Question: What's the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <20
+
+Question: <20
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <20
+
+Question: 20 - 50
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <20
+
+Question: 50 - 100
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <20
+
+Question: 100 - 500
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <20
+
+Question: 500 - 1000
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <20
+
+Question: >1000
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <5
+
+Question: What is the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your productWhat is the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product<2020 - 5050 - 100100 - 500500 - 1000>1000 (Required)
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <5
+
+Question: What is the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <5
+
+Question:  (Required)
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <5
+
+Question: What is the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <5
+
+Question: <20
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <5
+
+Question: 20 - 50
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <5
+
+Question: 50 - 100
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <5
+
+Question: 100 - 500
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <5
+
+Question: 500 - 1000
+Type: Radio
+Options:
+  - 20 - 50
+  - 50 - 100
+  - 100 - 500
+  - 500 - 1000
+  - >1000
+  - <5
+
+Question: >1000
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - <5
+
+Question: Please provide the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your productPlease provide the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product<55 - 1010 - 2020 - 5050 - 100>100 (Required)
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - <5
+
+Question: Please provide the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - <5
+
+Question:  (Required)
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - <5
+
+Question: Please provide the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - <5
+
+Question: <5
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - <5
+
+Question: 5 - 10
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - <5
+
+Question: 10 - 20
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - <5
+
+Question: 20 - 50
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - <5
+
+Question: 50 - 100
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - <5
+
+Question: >100
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - What is the approximate average monthly revenue generated by your product?*Please provide figures in US$
+
+Question: Please tell us the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your productPlease tell us the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product<55 - 1010 - 2020 - 5050 - 100>100 (Required)
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - What is the approximate average monthly revenue generated by your product?*Please provide figures in US$
+
+Question: Please tell us the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - What is the approximate average monthly revenue generated by your product?*Please provide figures in US$
+
+Question:  (Required)
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - What is the approximate average monthly revenue generated by your product?*Please provide figures in US$
+
+Question: Please tell us the approximate average number of Monthly Active Users (MAUs)/Customers interacting with your product
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - What is the approximate average monthly revenue generated by your product?*Please provide figures in US$
+
+Question: <5
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - What is the approximate average monthly revenue generated by your product?*Please provide figures in US$
+
+Question: 5 - 10
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - What is the approximate average monthly revenue generated by your product?*Please provide figures in US$
+
+Question: 10 - 20
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - What is the approximate average monthly revenue generated by your product?*Please provide figures in US$
+
+Question: 20 - 50
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - What is the approximate average monthly revenue generated by your product?*Please provide figures in US$
+
+Question: 50 - 100
+Type: Radio
+Options:
+  - 5 - 10
+  - 10 - 20
+  - 20 - 50
+  - 50 - 100
+  - >100
+  - What is the approximate average monthly revenue generated by your product?*Please provide figures in US$
+
+Question: >100
+Type: Text
+
+Question: What is the approximate average monthly revenue generated by your product?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: Please provide figures in US$
+Type: Radio
+Options:
+  - No
+  - How much have you raised in the past through grants?*$Please provide figures in US$
+
+Question: Please provide figures in US$
+Type: Radio
+Options:
+  - No
+  - How much have you raised in the past through grants?*$Please provide figures in US$
+
+Section 7:
+--------------------
+Question: Have you raised money in the past? (incl. grants, equity, token, etc.)Have you raised money in the past? (incl. grants, equity, token, etc.)YesNo (Required)
+Type: Radio
+Options:
+  - No
+  - How much have you raised in the past through grants?*$Please provide figures in US$
+
+Question: Have you raised money in the past? (incl. grants, equity, token, etc.)
+Type: Radio
+Options:
+  - No
+  - How much have you raised in the past through grants?*$Please provide figures in US$
+
+Question:  (Required)
+Type: Radio
+Options:
+  - No
+  - How much have you raised in the past through grants?*$Please provide figures in US$
+
+Question: Have you raised money in the past? (incl. grants, equity, token, etc.)
+Type: Radio
+Options:
+  - No
+  - How much have you raised in the past through grants?*$Please provide figures in US$
+
+Question: Yes
+Type: Radio
+Options:
+  - No
+  - How much have you raised in the past through grants?*$Please provide figures in US$
+
+Question: No
+Type: Text
+
+Question: How much have you raised in the past through grants?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: $
+Type: Text
+
+Question: Please provide figures in US$
+Type: Text
+
+Question: Please provide figures in US$
+Type: Text
+
+Question: How much have you raised in the past through equity?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: $
+Type: Text
+
+Question: Please provide figures in US$
+Type: Text
+
+Question: Please provide figures in US$
+Type: Text
+
+Question: How much have you raised in the past through tokens (fungible tokens)?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: $
+Type: Text
+
+Question: Please provide figures in US$
+Type: Text
+
+Question: Please provide figures in US$
+Type: Text
+
+Question: What is your most recent equity valuation? (closed round, post-money)
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: $
+Type: Text
+
+Question: Please provide figures in US$. If you haven't raised money via equity in the past please put enter 0
+Type: Text
+
+Question: Please provide figures in US$. If you haven't raised money via equity in the past please put enter 0
+Type: Text
+
+Question: What is your most recent token valuation? (closed round)
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: $
+Type: Text
+
+Question: Please provide figures in US$. If you haven't raised money via tokens in the past please put enter 0
+Type: Radio
+Options:
+  - 4-5 months
+  - 6-8 months
+  - 8-12 months
+  - >12 months
+  - What is your current monthly burn rate?*$
+
+Question: Please provide figures in US$. If you haven't raised money via tokens in the past please put enter 0
+Type: Radio
+Options:
+  - 4-5 months
+  - 6-8 months
+  - 8-12 months
+  - >12 months
+  - What is your current monthly burn rate?*$
+
+Question: What is your current runway?What is your current runway?<4months4-5 months6-8 months8-12 months>12 months (Required)
+Type: Radio
+Options:
+  - 4-5 months
+  - 6-8 months
+  - 8-12 months
+  - >12 months
+  - What is your current monthly burn rate?*$
+
+Question: What is your current runway?
+Type: Radio
+Options:
+  - 4-5 months
+  - 6-8 months
+  - 8-12 months
+  - >12 months
+  - What is your current monthly burn rate?*$
+
+Question:  (Required)
+Type: Radio
+Options:
+  - 4-5 months
+  - 6-8 months
+  - 8-12 months
+  - >12 months
+  - What is your current monthly burn rate?*$
+
+Question: What is your current runway?
+Type: Radio
+Options:
+  - 4-5 months
+  - 6-8 months
+  - 8-12 months
+  - >12 months
+  - What is your current monthly burn rate?*$
+
+Question: <4months
+Type: Radio
+Options:
+  - 4-5 months
+  - 6-8 months
+  - 8-12 months
+  - >12 months
+  - What is your current monthly burn rate?*$
+
+Question: 4-5 months
+Type: Radio
+Options:
+  - 4-5 months
+  - 6-8 months
+  - 8-12 months
+  - >12 months
+  - What is your current monthly burn rate?*$
+
+Question: 6-8 months
+Type: Radio
+Options:
+  - 4-5 months
+  - 6-8 months
+  - 8-12 months
+  - >12 months
+  - What is your current monthly burn rate?*$
+
+Question: 8-12 months
+Type: Radio
+Options:
+  - 4-5 months
+  - 6-8 months
+  - 8-12 months
+  - >12 months
+  - What is your current monthly burn rate?*$
+
+Question: >12 months
+Type: Text
+
+Question: What is your current monthly burn rate?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: $
+Type: Text
+
+Section 8:
+--------------------
+Question: What is your main social media account?What is your main social media account?We don't have a presence on social mediaDiscordInstagramLinkedinTelegramTwitter (Required)
+Type: Radio
+Options:
+  - Discord
+  - Instagram
+  - Linkedin
+  - Telegram
+  - Twitter
+  - <100
+
+Question: What is your main social media account?
+Type: Radio
+Options:
+  - Discord
+  - Instagram
+  - Linkedin
+  - Telegram
+  - Twitter
+  - <100
+
+Question:  (Required)
+Type: Radio
+Options:
+  - Discord
+  - Instagram
+  - Linkedin
+  - Telegram
+  - Twitter
+  - <100
+
+Question: What is your main social media account?
+Type: Radio
+Options:
+  - Discord
+  - Instagram
+  - Linkedin
+  - Telegram
+  - Twitter
+  - <100
+
+Question: We don't have a presence on social media
+Type: Radio
+Options:
+  - Discord
+  - Instagram
+  - Linkedin
+  - Telegram
+  - Twitter
+  - <100
+
+Question: Discord
+Type: Radio
+Options:
+  - Discord
+  - Instagram
+  - Linkedin
+  - Telegram
+  - Twitter
+  - <100
+
+Question: Instagram
+Type: Radio
+Options:
+  - Discord
+  - Instagram
+  - Linkedin
+  - Telegram
+  - Twitter
+  - <100
+
+Question: Linkedin
+Type: Radio
+Options:
+  - Discord
+  - Instagram
+  - Linkedin
+  - Telegram
+  - Twitter
+  - <100
+
+Question: Telegram
+Type: Radio
+Options:
+  - Discord
+  - Instagram
+  - Linkedin
+  - Telegram
+  - Twitter
+  - <100
+
+Question: Twitter
+Type: Radio
+Options:
+  - 100 - 500
+  - 500 - 2000
+  - 2000 - 5000
+  - 5000 - 10,000
+  - >10,000
+  - We have not incorporated or looked into options yet
+
+Question: How many followers/members/subscribers do you have on that account?How many followers/members/subscribers do you have on that account?<100100 - 500500 - 20002000 - 50005000 - 10,000>10,000 (Required)
+Type: Radio
+Options:
+  - 100 - 500
+  - 500 - 2000
+  - 2000 - 5000
+  - 5000 - 10,000
+  - >10,000
+  - We have not incorporated or looked into options yet
+
+Question: How many followers/members/subscribers do you have on that account?
+Type: Radio
+Options:
+  - 100 - 500
+  - 500 - 2000
+  - 2000 - 5000
+  - 5000 - 10,000
+  - >10,000
+  - We have not incorporated or looked into options yet
+
+Question:  (Required)
+Type: Radio
+Options:
+  - 100 - 500
+  - 500 - 2000
+  - 2000 - 5000
+  - 5000 - 10,000
+  - >10,000
+  - We have not incorporated or looked into options yet
+
+Question: How many followers/members/subscribers do you have on that account?
+Type: Radio
+Options:
+  - 100 - 500
+  - 500 - 2000
+  - 2000 - 5000
+  - 5000 - 10,000
+  - >10,000
+  - We have not incorporated or looked into options yet
+
+Question: <100
+Type: Radio
+Options:
+  - 100 - 500
+  - 500 - 2000
+  - 2000 - 5000
+  - 5000 - 10,000
+  - >10,000
+  - We have not incorporated or looked into options yet
+
+Question: 100 - 500
+Type: Radio
+Options:
+  - 100 - 500
+  - 500 - 2000
+  - 2000 - 5000
+  - 5000 - 10,000
+  - >10,000
+  - We have not incorporated or looked into options yet
+
+Question: 500 - 2000
+Type: Radio
+Options:
+  - 100 - 500
+  - 500 - 2000
+  - 2000 - 5000
+  - 5000 - 10,000
+  - >10,000
+  - We have not incorporated or looked into options yet
+
+Question: 2000 - 5000
+Type: Radio
+Options:
+  - 100 - 500
+  - 500 - 2000
+  - 2000 - 5000
+  - 5000 - 10,000
+  - >10,000
+  - We have not incorporated or looked into options yet
+
+Question: 5000 - 10,000
+Type: Radio
+Options:
+  - 100 - 500
+  - 500 - 2000
+  - 2000 - 5000
+  - 5000 - 10,000
+  - >10,000
+  - We have not incorporated or looked into options yet
+
+Question: >10,000
+Type: Radio
+Options:
+  - We are not incorporated, but have explored different options
+  - We are not incorporated, but are in talks with providers in different jurisdictions
+  - We are incorporated, and are working on finalizing all legal documents
+  - We are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.)
+  - Yes
+
+Section 9:
+--------------------
+Question: Which statement better reflects your current legal statusWhich statement better reflects your current legal statusWe have not incorporated or looked into options yetWe are not incorporated, but have explored different optionsWe are not incorporated, but are in talks with providers in different jurisdictionsWe are incorporated, and are working on finalizing all legal documentsWe are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.) (Required)
+Type: Radio
+Options:
+  - We are not incorporated, but have explored different options
+  - We are not incorporated, but are in talks with providers in different jurisdictions
+  - We are incorporated, and are working on finalizing all legal documents
+  - We are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.)
+  - Yes
+
+Question: Which statement better reflects your current legal status
+Type: Radio
+Options:
+  - We are not incorporated, but have explored different options
+  - We are not incorporated, but are in talks with providers in different jurisdictions
+  - We are incorporated, and are working on finalizing all legal documents
+  - We are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.)
+  - Yes
+
+Question:  (Required)
+Type: Radio
+Options:
+  - We are not incorporated, but have explored different options
+  - We are not incorporated, but are in talks with providers in different jurisdictions
+  - We are incorporated, and are working on finalizing all legal documents
+  - We are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.)
+  - Yes
+
+Question: Which statement better reflects your current legal status
+Type: Radio
+Options:
+  - We are not incorporated, but have explored different options
+  - We are not incorporated, but are in talks with providers in different jurisdictions
+  - We are incorporated, and are working on finalizing all legal documents
+  - We are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.)
+  - Yes
+
+Question: We have not incorporated or looked into options yet
+Type: Radio
+Options:
+  - We are not incorporated, but have explored different options
+  - We are not incorporated, but are in talks with providers in different jurisdictions
+  - We are incorporated, and are working on finalizing all legal documents
+  - We are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.)
+  - Yes
+
+Question: We are not incorporated, but have explored different options
+Type: Radio
+Options:
+  - We are not incorporated, but have explored different options
+  - We are not incorporated, but are in talks with providers in different jurisdictions
+  - We are incorporated, and are working on finalizing all legal documents
+  - We are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.)
+  - Yes
+
+Question: We are not incorporated, but are in talks with providers in different jurisdictions
+Type: Radio
+Options:
+  - We are not incorporated, but have explored different options
+  - We are not incorporated, but are in talks with providers in different jurisdictions
+  - We are incorporated, and are working on finalizing all legal documents
+  - We are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.)
+  - Yes
+
+Question: We are incorporated, and are working on finalizing all legal documents
+Type: Radio
+Options:
+  - We are not incorporated, but have explored different options
+  - We are not incorporated, but are in talks with providers in different jurisdictions
+  - We are incorporated, and are working on finalizing all legal documents
+  - We are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.)
+  - Yes
+
+Question: We are incorporated, and have all legal documents ready (incl. fundraising agreements, e.g. TPSA/SAFE, etc.)
+Type: Radio
+Options:
+  - No
+  - We have considered launching a token and have looked at potential utility and mechanics
+
+Section 10:
+--------------------
+Question: Have you or do you plan to launch a fungible token within the next 12-18 months?Have you or do you plan to launch a fungible token within the next 12-18 months?YesNo (Required)
+Type: Radio
+Options:
+  - No
+  - We have considered launching a token and have looked at potential utility and mechanics
+
+Question: Have you or do you plan to launch a fungible token within the next 12-18 months?
+Type: Radio
+Options:
+  - No
+  - We have considered launching a token and have looked at potential utility and mechanics
+
+Question:  (Required)
+Type: Radio
+Options:
+  - No
+  - We have considered launching a token and have looked at potential utility and mechanics
+
+Question: Have you or do you plan to launch a fungible token within the next 12-18 months?
+Type: Radio
+Options:
+  - No
+  - We have considered launching a token and have looked at potential utility and mechanics
+
+Question: Yes
+Type: Radio
+Options:
+  - No
+  - We have considered launching a token and have looked at potential utility and mechanics
+
+Question: No
+Type: Radio
+Options:
+  - We have drafted the token use cases, potential allocation and have selected a tentative launch date
+  - We have developed all token value flows, agreed on a token allocation and chose a distribution mechanism
+  - We have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMs
+  - We have performed a healthy token sale and have +$10k on average daily transaction value
+  - Yes
+
+Question: Which statement better reflects your current Token statusWhich statement better reflects your current Token statusWe have considered launching a token and have looked at potential utility and mechanicsWe have drafted the token use cases, potential allocation and have selected a tentative launch dateWe have developed all token value flows, agreed on a token allocation and chose a distribution mechanismWe have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMsWe have performed a healthy token sale and have +$10k on average daily transaction value (Required)
+Type: Radio
+Options:
+  - We have drafted the token use cases, potential allocation and have selected a tentative launch date
+  - We have developed all token value flows, agreed on a token allocation and chose a distribution mechanism
+  - We have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMs
+  - We have performed a healthy token sale and have +$10k on average daily transaction value
+  - Yes
+
+Question: Which statement better reflects your current Token status
+Type: Radio
+Options:
+  - We have drafted the token use cases, potential allocation and have selected a tentative launch date
+  - We have developed all token value flows, agreed on a token allocation and chose a distribution mechanism
+  - We have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMs
+  - We have performed a healthy token sale and have +$10k on average daily transaction value
+  - Yes
+
+Question:  (Required)
+Type: Radio
+Options:
+  - We have drafted the token use cases, potential allocation and have selected a tentative launch date
+  - We have developed all token value flows, agreed on a token allocation and chose a distribution mechanism
+  - We have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMs
+  - We have performed a healthy token sale and have +$10k on average daily transaction value
+  - Yes
+
+Question: Which statement better reflects your current Token status
+Type: Radio
+Options:
+  - We have drafted the token use cases, potential allocation and have selected a tentative launch date
+  - We have developed all token value flows, agreed on a token allocation and chose a distribution mechanism
+  - We have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMs
+  - We have performed a healthy token sale and have +$10k on average daily transaction value
+  - Yes
+
+Question: We have considered launching a token and have looked at potential utility and mechanics
+Type: Radio
+Options:
+  - We have drafted the token use cases, potential allocation and have selected a tentative launch date
+  - We have developed all token value flows, agreed on a token allocation and chose a distribution mechanism
+  - We have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMs
+  - We have performed a healthy token sale and have +$10k on average daily transaction value
+  - Yes
+
+Question: We have drafted the token use cases, potential allocation and have selected a tentative launch date
+Type: Radio
+Options:
+  - We have drafted the token use cases, potential allocation and have selected a tentative launch date
+  - We have developed all token value flows, agreed on a token allocation and chose a distribution mechanism
+  - We have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMs
+  - We have performed a healthy token sale and have +$10k on average daily transaction value
+  - Yes
+
+Question: We have developed all token value flows, agreed on a token allocation and chose a distribution mechanism
+Type: Radio
+Options:
+  - We have drafted the token use cases, potential allocation and have selected a tentative launch date
+  - We have developed all token value flows, agreed on a token allocation and chose a distribution mechanism
+  - We have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMs
+  - We have performed a healthy token sale and have +$10k on average daily transaction value
+  - Yes
+
+Question: We have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMs
+Type: Radio
+Options:
+  - We have drafted the token use cases, potential allocation and have selected a tentative launch date
+  - We have developed all token value flows, agreed on a token allocation and chose a distribution mechanism
+  - We have modeled and publicly documented the token economy and engaged with launchpads/exchanges/MMs
+  - We have performed a healthy token sale and have +$10k on average daily transaction value
+  - Yes
+
+Question: We have performed a healthy token sale and have +$10k on average daily transaction value
+Type: Radio
+Options:
+  - No
+  - We have identified a concept and utility/roadmap for the NFTs
+
+Section 11:
+--------------------
+Question: Have you or do you plan to distribute Non-Fungible Tokens (NFTs) in the next 6-12 months? Have you or do you plan to distribute Non-Fungible Tokens (NFTs) in the next 6-12 months? YesNo (Required)
+Type: Radio
+Options:
+  - No
+  - We have identified a concept and utility/roadmap for the NFTs
+
+Question: Have you or do you plan to distribute Non-Fungible Tokens (NFTs) in the next 6-12 months?
+Type: Radio
+Options:
+  - No
+  - We have identified a concept and utility/roadmap for the NFTs
+
+Question:  (Required)
+Type: Radio
+Options:
+  - No
+  - We have identified a concept and utility/roadmap for the NFTs
+
+Question: Have you or do you plan to distribute Non-Fungible Tokens (NFTs) in the next 6-12 months?
+Type: Radio
+Options:
+  - No
+  - We have identified a concept and utility/roadmap for the NFTs
+
+Question: Yes
+Type: Radio
+Options:
+  - No
+  - We have identified a concept and utility/roadmap for the NFTs
+
+Question: No
+Type: Radio
+Options:
+  - We have determined the key metrics for the drop (e.g. mechanism, supply, price, date, rarities, royalties, etc.)
+  - We have developed all the artworks and finalised tech requirements (e.g. smart contracts, pre-sale algorithms,  etc.)
+  - We performed the NFT mint and sold 100% of the total available supply
+  - We have a healthy secondary market with total trading volume above 2,000 ETH (or equivalent)
+  - How much revenue did you generate from them (mint + secondary market royalties)?*Please provide figures in US$
+
+Question: Which statement better reflects your current NFT status?Which statement better reflects your current NFT status?We have identified a concept and utility/roadmap for the NFTsWe have determined the key metrics for the drop (e.g. mechanism, supply, price, date, rarities, royalties, etc.)We have developed all the artworks and finalised tech requirements (e.g. smart contracts, pre-sale algorithms,  etc.)We performed the NFT mint and sold 100% of the total available supplyWe have a healthy secondary market with total trading volume above 2,000 ETH (or equivalent)
+Type: Radio
+Options:
+  - We have determined the key metrics for the drop (e.g. mechanism, supply, price, date, rarities, royalties, etc.)
+  - We have developed all the artworks and finalised tech requirements (e.g. smart contracts, pre-sale algorithms,  etc.)
+  - We performed the NFT mint and sold 100% of the total available supply
+  - We have a healthy secondary market with total trading volume above 2,000 ETH (or equivalent)
+  - How much revenue did you generate from them (mint + secondary market royalties)?*Please provide figures in US$
+
+Question: Which statement better reflects your current NFT status?
+Type: Radio
+Options:
+  - We have determined the key metrics for the drop (e.g. mechanism, supply, price, date, rarities, royalties, etc.)
+  - We have developed all the artworks and finalised tech requirements (e.g. smart contracts, pre-sale algorithms,  etc.)
+  - We performed the NFT mint and sold 100% of the total available supply
+  - We have a healthy secondary market with total trading volume above 2,000 ETH (or equivalent)
+  - How much revenue did you generate from them (mint + secondary market royalties)?*Please provide figures in US$
+
+Question: Which statement better reflects your current NFT status?
+Type: Radio
+Options:
+  - We have determined the key metrics for the drop (e.g. mechanism, supply, price, date, rarities, royalties, etc.)
+  - We have developed all the artworks and finalised tech requirements (e.g. smart contracts, pre-sale algorithms,  etc.)
+  - We performed the NFT mint and sold 100% of the total available supply
+  - We have a healthy secondary market with total trading volume above 2,000 ETH (or equivalent)
+  - How much revenue did you generate from them (mint + secondary market royalties)?*Please provide figures in US$
+
+Question: We have identified a concept and utility/roadmap for the NFTs
+Type: Radio
+Options:
+  - We have determined the key metrics for the drop (e.g. mechanism, supply, price, date, rarities, royalties, etc.)
+  - We have developed all the artworks and finalised tech requirements (e.g. smart contracts, pre-sale algorithms,  etc.)
+  - We performed the NFT mint and sold 100% of the total available supply
+  - We have a healthy secondary market with total trading volume above 2,000 ETH (or equivalent)
+  - How much revenue did you generate from them (mint + secondary market royalties)?*Please provide figures in US$
+
+Question: We have determined the key metrics for the drop (e.g. mechanism, supply, price, date, rarities, royalties, etc.)
+Type: Radio
+Options:
+  - We have determined the key metrics for the drop (e.g. mechanism, supply, price, date, rarities, royalties, etc.)
+  - We have developed all the artworks and finalised tech requirements (e.g. smart contracts, pre-sale algorithms,  etc.)
+  - We performed the NFT mint and sold 100% of the total available supply
+  - We have a healthy secondary market with total trading volume above 2,000 ETH (or equivalent)
+  - How much revenue did you generate from them (mint + secondary market royalties)?*Please provide figures in US$
+
+Question: We have developed all the artworks and finalised tech requirements (e.g. smart contracts, pre-sale algorithms,  etc.)
+Type: Radio
+Options:
+  - We have determined the key metrics for the drop (e.g. mechanism, supply, price, date, rarities, royalties, etc.)
+  - We have developed all the artworks and finalised tech requirements (e.g. smart contracts, pre-sale algorithms,  etc.)
+  - We performed the NFT mint and sold 100% of the total available supply
+  - We have a healthy secondary market with total trading volume above 2,000 ETH (or equivalent)
+  - How much revenue did you generate from them (mint + secondary market royalties)?*Please provide figures in US$
+
+Question: We performed the NFT mint and sold 100% of the total available supply
+Type: Radio
+Options:
+  - We have determined the key metrics for the drop (e.g. mechanism, supply, price, date, rarities, royalties, etc.)
+  - We have developed all the artworks and finalised tech requirements (e.g. smart contracts, pre-sale algorithms,  etc.)
+  - We performed the NFT mint and sold 100% of the total available supply
+  - We have a healthy secondary market with total trading volume above 2,000 ETH (or equivalent)
+  - How much revenue did you generate from them (mint + secondary market royalties)?*Please provide figures in US$
+
+Question: We have a healthy secondary market with total trading volume above 2,000 ETH (or equivalent)
+Type: Text
+
+Question: How much revenue did you generate from them (mint + secondary market royalties)?
+Type: Text
+
+Question:  (Required)
+Type: Text
+
+Question: Please provide figures in US$
+Type: Paragraph Text
+
+Question: Please provide figures in US$
+Type: Paragraph Text
+
+Section 12:
+--------------------
+Question: Is there anything else you would like to tell us?
+Type: Paragraph Text
+
+Section 13:
+--------------------
+Question: In our core team, we have members that identify as...In our core team, we have members that identify as... Required fieldMaleFemaleOtherPrefer not to sayBased on the diversity set-up of your team, select all that apply (this data is just collected for statistical purposes (only) and will not affect the team’s assessment) (Required)
+Type: Checkbox
+Options:
+  - Female
+  - Other
+  - Prefer not to say
+  - Arab
+
+Question: In our core team, we have members that identify as...
+Type: Checkbox
+Options:
+  - Female
+  - Other
+  - Prefer not to say
+  - Arab
+
+Question:  (Required)
+Type: Checkbox
+Options:
+  - Female
+  - Other
+  - Prefer not to say
+  - Arab
+
+Question: In our core team, we have members that identify as... Required field
+Type: Checkbox
+Options:
+  - Female
+  - Other
+  - Prefer not to say
+  - Arab
+
+Question: Male
+Type: Checkbox
+Options:
+  - Female
+  - Other
+  - Prefer not to say
+  - Arab
+
+Question: Female
+Type: Checkbox
+Options:
+  - Female
+  - Other
+  - Prefer not to say
+  - Arab
+
+Question: Other
+Type: Checkbox
+Options:
+  - Female
+  - Other
+  - Prefer not to say
+  - Arab
+
+Question: Prefer not to say
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Based on the diversity set-up of your team, select all that apply (this data is just collected for statistical purposes (only) and will not affect the team’s assessment)
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Based on the diversity set-up of your team, select all that apply (this data is just collected for statistical purposes (only) and will not affect the team’s assessment)
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Additionally, in our core team, we have members that identify as... Additionally, in our core team, we have members that identify as...  Required fieldArabBlackCaucasianEast AsianSouth AsianHispanicMixed or multiple ethnic groupsOtherPrefer not to sayBased on the diversity set-up of your team, select all that apply (this data is just collected for statistical purposes (only) and will not affect the team’s assessment) (Required)
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Additionally, in our core team, we have members that identify as...
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question:  (Required)
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Additionally, in our core team, we have members that identify as...  Required field
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Arab
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Black
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Caucasian
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: East Asian
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: South Asian
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Hispanic
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Mixed or multiple ethnic groups
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Other
+Type: Checkbox
+Options:
+  - Black
+  - Caucasian
+  - East Asian
+  - South Asian
+  - Hispanic
+  - Mixed or multiple ethnic groups
+  - Other
+  - Prefer not to say
+  - Please provide your Calendly (or similar) link so we can book a call with you promptly
+
+Question: Prefer not to say
+Type: Text
+
+Question: Based on the diversity set-up of your team, select all that apply (this data is just collected for statistical purposes (only) and will not affect the team’s assessment)
+Type: Text
+
+Question: Based on the diversity set-up of your team, select all that apply (this data is just collected for statistical purposes (only) and will not affect the team’s assessment)
+Type: Text
+
+Question: Please provide your Calendly (or similar) link so we can book a call with you promptly
+Type: Text
+
+Question: Would you like  to receive updates and marketing. You can change your preferences at any time as per our Privacy Policy.Would you like  to receive updates and marketing. You can change your preferences at any time as per our Privacy Policy. Required fieldYesNo (Required)
+Type: Checkbox
+Options:
+  - No
+  - Campaign TermThis hidden field has been added by Attribution to CRM Plugin to store Campaign Term in this Form's submission table
+
+Question: Would you like  to receive updates and marketing. You can change your preferences at any time as per our Privacy Policy.
+Type: Checkbox
+Options:
+  - No
+  - Campaign TermThis hidden field has been added by Attribution to CRM Plugin to store Campaign Term in this Form's submission table
+
+Question:  (Required)
+Type: Checkbox
+Options:
+  - No
+  - Campaign TermThis hidden field has been added by Attribution to CRM Plugin to store Campaign Term in this Form's submission table
+
+Question: Would you like  to receive updates and marketing. You can change your preferences at any time as per our Privacy Policy. Required field
+Type: Checkbox
+Options:
+  - No
+  - Campaign TermThis hidden field has been added by Attribution to CRM Plugin to store Campaign Term in this Form's submission table
+
+Question: Yes
+Type: Checkbox
+Options:
+  - No
+  - Campaign TermThis hidden field has been added by Attribution to CRM Plugin to store Campaign Term in this Form's submission table
+
+Question: No
+Type: Text
+
+Question: Campaign Term
+Type: Text
+
+Question: This hidden field has been added by Attribution to CRM Plugin to store Campaign Term in this Form's submission table
+Type: Not Found
+
+Question: This hidden field has been added by Attribution to CRM Plugin to store Campaign Term in this Form's submission table
+Type: Not Found
+
+==================================================

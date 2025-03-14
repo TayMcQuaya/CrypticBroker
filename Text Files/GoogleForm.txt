@@ -1,0 +1,140 @@
+________________________________________
+Title: Cryptic Broker: Token Project Onboarding for TGE & Funding
+Note: * Indicates required question 
+________________________________________
+ General Project Information
+Project Name: 
+•	*Required 
+•	Type: Short answer text
+Website & Whitepaper Link: 
+•	*Required 
+•	Type: Short answer text
+Pitch Deck Link (Google Drive, Notion, Dropbox, PDF URL, etc.): 
+•	*Required 
+•	Type: Short answer text
+Core Founders & LinkedIn Profiles: 
+•	Type: Short answer text
+Project HQ / Jurisdiction: 
+•	Type: Short answer text
+________________________________________
+ Token Generation Event (TGE) Details
+TGE Date (If Confirmed): 
+•	Type: Date
+Expected Listing Exchanges: 
+•	Type: Multiple choice 
+•	Options: 
+o	CEX 
+o	DEX 
+o	Both 
+o	Not Sure Yet
+Market Making Provider (If Any): 
+•	Type: Short answer text
+Tokenomics Breakdown: 
+•	Fields: 
+o	Total Supply 
+o	Circulating Supply at TGE 
+o	Vesting Schedule (Team, Advisors, Seed, Private, Public) 
+o	Deflationary/Incentive Mechanisms (Buybacks, Burns, Staking, etc.)
+•	Type: Paragraph text
+________________________________________
+ Funding & Investment Needs
+Previous Funding Rounds: 
+•	Type: Checkboxes (Select Multiple) 
+•	Options: 
+o	Private 
+o	Pre-Seed 
+o	Seed 
+o	Public 
+o	None Yet 
+o	Other
+Current Fundraising Target ($USD): 
+•	Type: Short answer text
+Type of Investment Sought: 
+•	Type: Checkboxes (Select Multiple) 
+•	Options: 
+o	Equity 
+o	SAFT 
+o	Strategic 
+o	Other
+Top 3 VCs/Funds Currently Interested? 
+•	Type: Short answer text
+Key Metrics to Showcase to Investors (TVL, Active Users, etc.): 
+•	Type: Paragraph text
+________________________________________
+ Product & Technical Details
+Blockchain & Tech Stack: 
+•	Type: Checkboxes (Select Multiple) 
+•	Options: 
+o	Ethereum (ETH) 
+o	Solana (SOL) 
+o	Arbitrum (ARB) 
+o	Avalanche (AVAX) 
+o	Binance Smart Chain (BSC) 
+o	Cosmos (ATOM) 
+o	Near Protocol (NEAR) 
+o	Other
+Current Product Stage: 
+•	Type: Multiple choice 
+•	Options: 
+o	MVP 
+o	Beta 
+o	Live Mainnet 
+o	Concept 
+o	Series A 
+o	Series B
+Use of On-Chain Data? 
+•	Type: Multiple choice 
+•	Options: 
+o	Yes 
+o	No
+________________________________________
+ Alignment with Cryptic Broker Services
+Does your project need support in the following areas? 
+•	Type: Checkboxes (Select Multiple) 
+•	Options: 
+o	 Market Making & Liquidity Provision 
+o	 Exchange Listing Support 
+o	 KOL/Influencer Marketing & PR 
+o	 Software & Smart Contract Development 
+o	 Events & Activations (IRL & Virtual) 
+o	 VC Funding & Strategic Introductions 
+o	 Web3 Banking & Off-Ramping Solutions 
+o	 DAO & Governance Structuring 
+o	 Marketing & Community Growth
+Community Size (TG, Discord, Twitter, etc.): 
+•	Type: Short answer text
+KOL & Influencer Engagements (Existing or Needed?): 
+•	Type: Paragraph text
+Current Marketing Strategy for TGE? 
+•	Type: Paragraph text
+Are You Interested in hosting a side event, incubator or hackathon? 
+•	Type: Multiple choice 
+•	Options: 
+o	Yes 
+o	No
+________________________________________
+ Compliance & Legal
+Legal Entity & Country of Incorporation: 
+•	Type: Short answer text
+Token Sale Regulations Followed (SEC, MiCA, etc.): 
+•	Type: Short answer text
+KYC/AML Policies in Place? 
+•	Type: Multiple choice 
+•	Options: 
+o	Yes 
+o	No
+________________________________________
+ Final Questions
+Why is your project uniquely positioned to succeed? 
+•	Type: Paragraph text
+What are your biggest challenges right now? 
+•	Type: Paragraph text
+How did you hear about Cryptic Broker? 
+•	Type: Multiple choice 
+•	Options: 
+o	Twitter 
+o	Telegram 
+o	Event 
+o	Referral 
+o	Other
+________________________________________
