@@ -88,9 +88,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const token = localStorage.getItem('token');
         if (token) {
           try {
+            // Check token expiration
+            const tokenData = JSON.parse(atob(token.split('.')[1]));
+            const expirationTime = tokenData.exp * 1000; // Convert to milliseconds
+            const currentTime = Date.now();
+            
+            // If token is about to expire (less than 5 minutes left), refresh it
+            if (expirationTime - currentTime < 5 * 60 * 1000) {
+              console.log('Token is about to expire, refreshing...');
+              // For now, just redirect to login
+              localStorage.removeItem('token');
+              setLoading(false);
+              return;
+            }
+            
             const response = (await getCurrentUser() as unknown) as ApiResponse<UserResponse>;
             setUser(response.data.data.user);
-          } catch {
+          } catch (err) {
+            console.error('Error loading user:', err);
             localStorage.removeItem('token');
           }
         }

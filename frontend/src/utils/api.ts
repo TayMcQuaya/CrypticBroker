@@ -82,10 +82,33 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Log the error for debugging
+    console.error('API Error:', error.response?.status, error.response?.data);
+    
     if (error.response?.status === 401) {
-      // Token expired or invalid
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+      // Show error message to user
+      if (typeof window !== 'undefined') {
+        // Create a persistent error message
+        const errorDiv = document.createElement('div');
+        errorDiv.style.position = 'fixed';
+        errorDiv.style.top = '20px';
+        errorDiv.style.left = '50%';
+        errorDiv.style.transform = 'translateX(-50%)';
+        errorDiv.style.backgroundColor = '#f44336';
+        errorDiv.style.color = 'white';
+        errorDiv.style.padding = '15px 20px';
+        errorDiv.style.borderRadius = '4px';
+        errorDiv.style.zIndex = '9999';
+        errorDiv.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+        errorDiv.textContent = 'Authentication error: ' + (error.response?.data?.message || 'Your session has expired. Redirecting to login...');
+        document.body.appendChild(errorDiv);
+        
+        // Token expired or invalid - redirect after delay
+        setTimeout(() => {
+          localStorage.removeItem('token');
+          window.location.href = '/login';
+        }, 3000); // 3 second delay
+      }
     }
     return Promise.reject(error);
   }
@@ -227,6 +250,42 @@ export const submitProject = async (data: FormData, status: 'DRAFT' | 'SUBMITTED
 
   console.log('Sending project data:', transformedData);
   return api.post('/projects', transformedData);
+};
+
+/**
+ * Debug function to check token status
+ */
+export const checkTokenStatus = () => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    console.log('No token found in localStorage');
+    return { valid: false, message: 'No token found' };
+  }
+  
+  try {
+    // Parse the token payload
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const expirationTime = payload.exp * 1000; // Convert to milliseconds
+    const currentTime = Date.now();
+    const timeLeft = expirationTime - currentTime;
+    
+    console.log('Token payload:', payload);
+    console.log('Expiration time:', new Date(expirationTime).toLocaleString());
+    console.log('Current time:', new Date(currentTime).toLocaleString());
+    console.log('Time left:', Math.floor(timeLeft / 1000 / 60), 'minutes');
+    
+    return { 
+      valid: timeLeft > 0,
+      message: timeLeft > 0 
+        ? `Token is valid for ${Math.floor(timeLeft / 1000 / 60)} more minutes` 
+        : 'Token has expired',
+      expiresAt: new Date(expirationTime).toLocaleString(),
+      timeLeftMinutes: Math.floor(timeLeft / 1000 / 60)
+    };
+  } catch (error) {
+    console.error('Error parsing token:', error);
+    return { valid: false, message: 'Invalid token format' };
+  }
 };
 
 // Default export for the API client
