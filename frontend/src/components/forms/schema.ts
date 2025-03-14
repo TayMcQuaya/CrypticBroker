@@ -14,13 +14,13 @@ export const formSchema = z.object({
     projectName: z.string().min(1, 'Project name is required'),
     websiteUrl: z.string()
       .refine(
-        (val) => val === '' || val.startsWith('http'), 
-        { message: 'Must be a valid URL starting with http:// or https://' }
+        (val) => val === '' || val.includes('.') || val.startsWith('http'), 
+        { message: 'Must be a valid URL (e.g., example.com or http://example.com)' }
       ),
     pitchDeckUrl: z.string()
       .refine(
-        (val) => val === '' || val.startsWith('http'), 
-        { message: 'Must be a valid URL starting with http:// or https://' }
+        (val) => val === '' || val.includes('.') || val.startsWith('http'), 
+        { message: 'Must be a valid URL (e.g., example.com or http://example.com)' }
       ),
     coreFounders: z.string().min(1, 'Core founders information is required'),
     projectHQ: z.string().min(1, 'Project HQ is required'),

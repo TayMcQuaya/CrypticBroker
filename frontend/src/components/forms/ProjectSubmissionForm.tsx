@@ -60,13 +60,38 @@ export default function ProjectSubmissionForm() {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [isSavingDraft, setIsSavingDraft] = React.useState(false);
+  const [hasSavedDraft, setHasSavedDraft] = React.useState(false);
+  const [serverStatus, setServerStatus] = React.useState<'online' | 'offline' | 'unknown'>('unknown');
   
   const methods = useForm<FormData>({
     mode: 'onChange',
     resolver: zodResolver(formSchema),
   });
 
-  const { handleSubmit, trigger, setValue } = methods;
+  const { handleSubmit, trigger, setValue, reset } = methods;
+
+  // Check for saved draft on component mount
+  React.useEffect(() => {
+    const savedDraft = localStorage.getItem('projectDraft');
+    if (savedDraft) {
+      setHasSavedDraft(true);
+    }
+  }, []);
+
+  // Load draft from local storage
+  const loadDraft = () => {
+    try {
+      const savedDraft = localStorage.getItem('projectDraft');
+      if (savedDraft) {
+        const parsedDraft = JSON.parse(savedDraft) as FormData;
+        reset(parsedDraft);
+        toast.success('Draft loaded successfully');
+      }
+    } catch (error) {
+      console.error('Error loading draft:', error);
+      toast.error('Failed to load draft');
+    }
+  };
 
   // Handle file uploads
   const handleFileUpload = async (file: File, field: FormDataPath) => {
@@ -84,12 +109,61 @@ export default function ProjectSubmissionForm() {
   const saveDraft = async () => {
     try {
       setIsSavingDraft(true);
+      // Get values without validation
       const formData = methods.getValues();
-      await submitProject(formData, 'DRAFT');
-      toast.success('Draft saved successfully');
+      
+      // Always save to local storage as backup
+      localStorage.setItem('projectDraft', JSON.stringify(formData));
+      // Set hasSavedDraft to true since we have a local copy
+      setHasSavedDraft(true);
+      
+      try {
+        const response = await submitProject(formData, 'DRAFT');
+        
+        // Check if this was a mock success (local storage only)
+        if (response.data && typeof response.data === 'object' && 'message' in response.data && 
+            typeof response.data.message === 'string' && response.data.message.includes('Mock success')) {
+          toast.success('Draft saved locally');
+          toast.error('Server connection failed - using local storage only');
+          setServerStatus('offline');
+        } else {
+          toast.success('Draft saved successfully');
+          setServerStatus('online');
+        }
+      } catch (error: unknown) {
+        console.error('Error saving draft to server:', error);
+        
+        // Show more detailed error message
+        const err = error as { response?: { status?: number }, code?: string, message?: string };
+        if (err.response?.status === 500) {
+          toast.success('Draft saved locally (server error occurred)');
+          toast.error('Could not save to server: Internal server error');
+          setServerStatus('offline');
+        } else if (err.response?.status === 401) {
+          toast.success('Draft saved locally (authentication error)');
+          toast.error('Could not save to server: Authentication error');
+          // Don't set offline for auth errors
+        } else if (err.code === 'ECONNABORTED') {
+          toast.success('Draft saved locally (server timeout)');
+          toast.error('Could not save to server: Request timed out');
+          setServerStatus('offline');
+        } else {
+          toast.success('Draft saved locally');
+          toast.error(`Could not save to server: ${err.message || 'Unknown error'}`);
+          setServerStatus('offline');
+        }
+      }
     } catch (error) {
-      console.error('Error saving draft:', error);
-      toast.error('Failed to save draft');
+      console.error('Error in saveDraft:', error);
+      
+      // Check if we at least saved to localStorage
+      if (localStorage.getItem('projectDraft')) {
+        toast.success('Draft saved locally');
+        toast.error('An error occurred in the save process');
+      } else {
+        toast.error('Failed to save draft');
+      }
+      setServerStatus('offline');
     } finally {
       setIsSavingDraft(false);
     }
@@ -98,11 +172,52 @@ export default function ProjectSubmissionForm() {
   const onSubmit = async (data: FormData) => {
     try {
       setIsSubmitting(true);
-      await submitProject(data, 'SUBMITTED');
-      toast.success('Project submitted successfully');
+      
+      // Save to local storage as backup
+      localStorage.setItem('projectSubmission', JSON.stringify(data));
+      
+      try {
+        const response = await submitProject(data, 'SUBMITTED');
+        
+        // Check if this was a mock success (local storage only)
+        if (response.data && typeof response.data === 'object' && 'message' in response.data && 
+            typeof response.data.message === 'string' && response.data.message.includes('Mock success')) {
+          toast.success('Project saved locally');
+          toast.error('Server connection failed - submission may not be processed');
+          setServerStatus('offline');
+        } else {
+          toast.success('Project submitted successfully');
+          setServerStatus('online');
+        }
+      } catch (error: unknown) {
+        console.error('Error submitting project to server:', error);
+        
+        // Show more detailed error message
+        const err = error as { response?: { status?: number }, code?: string, message?: string };
+        if (err.response?.status === 500) {
+          toast.error('Could not submit to server: Internal server error');
+          setServerStatus('offline');
+        } else if (err.response?.status === 401) {
+          toast.error('Could not submit to server: Authentication error');
+          // Don't set offline for auth errors
+        } else if (err.code === 'ECONNABORTED') {
+          toast.error('Could not submit to server: Request timed out');
+          setServerStatus('offline');
+        } else {
+          toast.error(`Could not submit to server: ${err.message || 'Unknown error'}`);
+          setServerStatus('offline');
+        }
+      }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      toast.error('Failed to submit project');
+      console.error('Error in onSubmit:', error);
+      
+      // Check if we at least saved to localStorage
+      if (localStorage.getItem('projectSubmission')) {
+        toast.success('Project saved locally');
+        toast.error('Failed to submit to server - please try again later');
+      } else {
+        toast.error('Failed to submit project');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -125,8 +240,14 @@ export default function ProjectSubmissionForm() {
     const { errors } = methods.formState;
     console.log('Current form errors:', errors);
     
+    // Log current form values for debugging
+    const currentValues = methods.getValues();
+    console.log('Current form values:', currentValues);
+    
     // Use type assertion to handle the complex type conversion
     const isStepValid = await trigger(fields as unknown as Array<keyof FormData>);
+    
+    console.log('Step validation result:', isStepValid);
     
     if (isStepValid) {
       setCurrentStep((prev) => Math.min(prev + 1, formSteps.length - 1));
@@ -134,6 +255,13 @@ export default function ProjectSubmissionForm() {
       // Show validation errors to the user
       toast.error('Please fill in all required fields correctly');
       console.log('Validation failed for fields:', fields);
+      
+      // Log specific field errors
+      fields.forEach(field => {
+        console.log(`Checking field: ${field}`);
+        // Just log the entire errors object - simpler approach
+        console.log('All form errors:', methods.formState.errors);
+      });
       
       // Scroll to the form
       const formElement = document.querySelector('form');
@@ -149,6 +277,53 @@ export default function ProjectSubmissionForm() {
 
   const CurrentStepComponent = formSteps[currentStep].component;
 
+  // Check server status on component mount
+  React.useEffect(() => {
+    const checkServerStatus = async () => {
+      try {
+        // Try multiple health check endpoints
+        const endpoints = ['/api/health', '/health', '/api/status', '/status'];
+        let isOnline = false;
+        
+        for (const endpoint of endpoints) {
+          try {
+            console.log(`Trying health check endpoint: ${endpoint}`);
+            // Simple ping to check if server is responding
+            const response = await fetch(endpoint, { 
+              method: 'GET',
+              headers: { 'Content-Type': 'application/json' },
+              signal: AbortSignal.timeout(3000) // 3 second timeout per endpoint
+            });
+            
+            if (response.ok) {
+              console.log(`Server is online (${endpoint})`);
+              isOnline = true;
+              break;
+            }
+          } catch (endpointError) {
+            console.log(`Endpoint ${endpoint} failed:`, endpointError);
+            // Continue to next endpoint
+          }
+        }
+        
+        setServerStatus(isOnline ? 'online' : 'offline');
+      } catch (error) {
+        console.error('All server health checks failed:', error);
+        setServerStatus('offline');
+      }
+    };
+    
+    // Initial check
+    checkServerStatus();
+    
+    // Set up periodic health checks
+    const intervalId = setInterval(() => {
+      checkServerStatus();
+    }, 30000); // Check every 30 seconds
+    
+    return () => clearInterval(intervalId);
+  }, []); // No dependencies needed since we're not using any state variables in the interval
+
   return (
     <FormProvider {...methods}>
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
@@ -157,6 +332,20 @@ export default function ProjectSubmissionForm() {
             <h1 className="text-xl font-semibold">Submit Your Project</h1>
             <span className="text-sm">Step {currentStep + 1} of {formSteps.length}</span>
           </div>
+          
+          {/* Server status indicator */}
+          {serverStatus === 'offline' && (
+            <div className="mt-2 bg-red-600 text-white px-3 py-1.5 rounded-md text-sm flex items-center">
+              <span className="inline-block w-2 h-2 bg-red-300 rounded-full mr-2 animate-pulse"></span>
+              <span>Server connection lost - Your data will be saved locally</span>
+            </div>
+          )}
+          {serverStatus === 'unknown' && (
+            <div className="mt-2 bg-yellow-600 text-white px-3 py-1.5 rounded-md text-sm flex items-center">
+              <span className="inline-block w-2 h-2 bg-yellow-300 rounded-full mr-2 animate-pulse"></span>
+              <span>Checking server connection...</span>
+            </div>
+          )}
           
           {/* Progress bar */}
           <div className="mt-4">
@@ -190,6 +379,30 @@ export default function ProjectSubmissionForm() {
             <p className="mt-2 text-sm text-gray-600">
               {formSteps[currentStep].description}
             </p>
+            
+            {/* Draft notification */}
+            {hasSavedDraft && currentStep === 0 && (
+              <div className="mt-4 p-3 bg-blue-50 rounded-lg text-blue-700 text-sm">
+                <p>You have a saved draft. Would you like to load it?</p>
+                <button
+                  type="button"
+                  onClick={loadDraft}
+                  className="mt-2 px-3 py-1 bg-blue-600 text-white rounded-md text-xs hover:bg-blue-700"
+                >
+                  Load Draft
+                </button>
+              </div>
+            )}
+            
+            {/* Offline mode explanation */}
+            {serverStatus === 'offline' && currentStep === 0 && (
+              <div className="mt-4 p-3 bg-red-50 rounded-lg text-red-700 text-sm">
+                <p className="font-semibold">Server Connection Issue Detected</p>
+                <p className="mt-1">The application is currently running in offline mode. Your data will be saved to your browser&apos;s local storage.</p>
+                <p className="mt-1">When the server connection is restored, you can submit your project.</p>
+                <p className="mt-1 text-xs">Technical details: The server endpoints are returning errors (404/500). This could be due to server maintenance or network issues.</p>
+              </div>
+            )}
           </div>
 
           {/* Current step form */}
@@ -235,7 +448,10 @@ export default function ProjectSubmissionForm() {
 
             <button
               type={currentStep === formSteps.length - 1 ? 'submit' : 'button'}
-              onClick={currentStep === formSteps.length - 1 ? undefined : nextStep}
+              onClick={currentStep === formSteps.length - 1 ? undefined : () => {
+                console.log('Next button clicked');
+                nextStep();
+              }}
               disabled={isSubmitting}
               className="
                 inline-flex items-center px-6 py-2 rounded-lg text-sm font-medium
