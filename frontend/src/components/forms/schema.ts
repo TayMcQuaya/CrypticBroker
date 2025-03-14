@@ -12,8 +12,16 @@ export const formSchema = z.object({
   // General Info
   generalInfo: z.object({
     projectName: z.string().min(1, 'Project name is required'),
-    websiteUrl: z.string().url('Must be a valid URL'),
-    pitchDeckUrl: z.string().url('Must be a valid URL'),
+    websiteUrl: z.string()
+      .refine(
+        (val) => val === '' || val.startsWith('http'), 
+        { message: 'Must be a valid URL starting with http:// or https://' }
+      ),
+    pitchDeckUrl: z.string()
+      .refine(
+        (val) => val === '' || val.startsWith('http'), 
+        { message: 'Must be a valid URL starting with http:// or https://' }
+      ),
     coreFounders: z.string().min(1, 'Core founders information is required'),
     projectHQ: z.string().min(1, 'Project HQ is required'),
   }),

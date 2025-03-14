@@ -32,7 +32,7 @@ export default function GeneralInfoStep({ onFileUpload }: GeneralInfoStepProps) 
         type="url"
         required
         placeholder="https://your-project.com"
-        helpText="Your project's website address"
+        helpText="Your project's website address (must start with http:// or https://)"
       />
 
       <div className="space-y-2">
@@ -42,7 +42,7 @@ export default function GeneralInfoStep({ onFileUpload }: GeneralInfoStepProps) 
           type="url"
           required
           placeholder="https://drive.google.com/..."
-          helpText="Link to your pitch deck (Google Drive, Dropbox, etc.)"
+          helpText="Link to your pitch deck (must start with http:// or https://)"
         />
         <div className="mt-1">
           <input

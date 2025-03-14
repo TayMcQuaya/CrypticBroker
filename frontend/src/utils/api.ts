@@ -1,4 +1,5 @@
 import axios from 'axios';
+import type { FormData } from '../components/forms/schema';
 
 // Types
 export interface User {
@@ -53,7 +54,7 @@ export interface MultipleFileUploadResponse {
   };
 }
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 // Create axios instance with default config
 const api = axios.create({
@@ -168,6 +169,64 @@ export const uploadMultipleFiles = async (files: File[]): Promise<MultipleFileUp
  */
 export const deleteUploadedFile = async (filename: string): Promise<void> => {
   await api.delete(`/upload/${filename}`);
+};
+
+// PROJECT API CALLS
+
+/**
+ * Save project as draft or submit
+ */
+export const submitProject = async (data: FormData, status: 'DRAFT' | 'SUBMITTED') => {
+  // Transform form data to match backend structure, handling partial data
+  const transformedData = {
+    // General Info (required for draft)
+    name: data.generalInfo?.projectName || 'Untitled Project', // Ensure name is never empty
+    description: '', // Default empty description
+    website: data.generalInfo?.websiteUrl || '',
+    pitchDeckUrl: data.generalInfo?.pitchDeckUrl || '',
+    status,
+
+    // Technical Details (with defaults for required fields)
+    blockchain: data.technical?.blockchain || 'ETHEREUM',
+    otherBlockchain: '',
+    features: data.technical?.features?.split(',').map(f => f.trim()) || [],
+    techStack: data.technical?.techStack || '',
+    security: data.technical?.security || '',
+
+    // TGE Details (with defaults for required fields)
+    tgeDate: data.tgeDetails?.tgeDate || '',
+    listingExchanges: data.tgeDetails?.listingExchanges || '',
+    marketMaker: data.tgeDetails?.marketMakingProvider || '',
+    tokenomics: JSON.stringify({
+      totalSupply: data.tgeDetails?.totalSupply || '',
+      circulatingSupply: data.tgeDetails?.circulatingSupply || '',
+      vestingSchedule: data.tgeDetails?.vestingSchedule || '',
+    }),
+
+    // Funding Details (with defaults for required fields)
+    previousFunding: data.funding?.previousFunding?.split(',').map(f => f.trim()) || [],
+    fundingTarget: data.funding?.fundingTarget || '0',
+    investmentTypes: data.funding?.investmentType ? [data.funding.investmentType] : [],
+    interestedVCs: '',
+    keyMetrics: data.funding?.keyMetrics || '',
+
+    // Services (with defaults for required fields)
+    requiredServices: data.services?.requiredServices?.split(',').map(s => s.trim()) || [],
+    serviceDetails: data.services?.serviceDetails || '',
+    additionalServices: '',
+
+    // Compliance (with defaults for required fields)
+    companyStructure: data.compliance?.companyStructure || 'LLC',
+    regulatoryCompliance: Array.isArray(data.compliance?.regulatoryCompliance) 
+      ? data.compliance.regulatoryCompliance 
+      : data.compliance?.regulatoryCompliance ? [data.compliance.regulatoryCompliance] : [],
+    legalAdvisor: data.compliance?.legalAdvisor || '',
+    complianceStrategy: data.compliance?.complianceStrategy || '',
+    riskFactors: data.compliance?.riskFactors || ''
+  };
+
+  console.log('Sending project data:', transformedData);
+  return api.post('/projects', transformedData);
 };
 
 // Default export for the API client

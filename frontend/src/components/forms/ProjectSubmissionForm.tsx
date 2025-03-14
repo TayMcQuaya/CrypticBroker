@@ -5,7 +5,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FiArrowLeft, FiArrowRight, FiCheck, FiSave } from 'react-icons/fi';
 import { formSchema, FormData, FormDataPath } from './schema';
-import { uploadFile } from '../../utils/api';
+import { uploadFile, submitProject } from '../../utils/api';
 import { toast } from 'react-hot-toast';
 
 // Import form steps
@@ -85,22 +85,7 @@ export default function ProjectSubmissionForm() {
     try {
       setIsSavingDraft(true);
       const formData = methods.getValues();
-      
-      const response = await fetch('/api/projects', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          status: 'DRAFT',
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to save draft');
-      }
-
+      await submitProject(formData, 'DRAFT');
       toast.success('Draft saved successfully');
     } catch (error) {
       console.error('Error saving draft:', error);
@@ -113,23 +98,7 @@ export default function ProjectSubmissionForm() {
   const onSubmit = async (data: FormData) => {
     try {
       setIsSubmitting(true);
-      
-      // Submit form data to API
-      const response = await fetch('/api/projects', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...data,
-          status: 'SUBMITTED',
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit form');
-      }
-
+      await submitProject(data, 'SUBMITTED');
       toast.success('Project submitted successfully');
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -151,11 +120,26 @@ export default function ProjectSubmissionForm() {
     
     const currentId = formSteps[currentStep].id;
     const fields = stepFields[currentId as keyof typeof stepFields];
+    
+    // Debug validation errors
+    const { errors } = methods.formState;
+    console.log('Current form errors:', errors);
+    
     // Use type assertion to handle the complex type conversion
     const isStepValid = await trigger(fields as unknown as Array<keyof FormData>);
     
     if (isStepValid) {
       setCurrentStep((prev) => Math.min(prev + 1, formSteps.length - 1));
+    } else {
+      // Show validation errors to the user
+      toast.error('Please fill in all required fields correctly');
+      console.log('Validation failed for fields:', fields);
+      
+      // Scroll to the form
+      const formElement = document.querySelector('form');
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
 
