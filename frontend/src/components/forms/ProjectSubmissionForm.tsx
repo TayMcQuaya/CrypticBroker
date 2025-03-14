@@ -1,8 +1,10 @@
+'use client';
+
 import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FiArrowLeft, FiArrowRight, FiCheck, FiSave } from 'react-icons/fi';
-import { formSchema, FormData } from './schema';
+import { formSchema, FormData, FormDataPath } from './schema';
 import { uploadFile } from '../../utils/api';
 import { toast } from 'react-hot-toast';
 
@@ -17,42 +19,42 @@ import ComplianceStep from './steps/ComplianceStep';
 // Form steps configuration - easy to modify
 const formSteps = [
   {
-    id: 'general',
+    id: 'generalInfo' as const,
     title: 'General Information',
     description: 'Basic project details and team information',
     component: GeneralInfoStep,
   },
   {
-    id: 'tge',
+    id: 'tgeDetails' as const,
     title: 'TGE Details',
     description: 'Token generation event information',
     component: TGEDetailsStep,
   },
   {
-    id: 'funding',
+    id: 'funding' as const,
     title: 'Funding & Investment',
     description: 'Funding history and current needs',
     component: FundingStep,
   },
   {
-    id: 'technical',
+    id: 'technical' as const,
     title: 'Technical Details',
     description: 'Product and technical information',
     component: TechnicalDetailsStep,
   },
   {
-    id: 'services',
+    id: 'services' as const,
     title: 'Services & Support',
     description: 'Additional services and support needed',
     component: ServicesStep,
   },
   {
-    id: 'compliance',
+    id: 'compliance' as const,
     title: 'Compliance & Legal',
     description: 'Legal and regulatory information',
     component: ComplianceStep,
   },
-];
+] as const;
 
 export default function ProjectSubmissionForm() {
   const [currentStep, setCurrentStep] = React.useState(0);
@@ -67,10 +69,10 @@ export default function ProjectSubmissionForm() {
   const { handleSubmit, trigger, setValue } = methods;
 
   // Handle file uploads
-  const handleFileUpload = async (file: File, field: keyof FormData) => {
+  const handleFileUpload = async (file: File, field: FormDataPath) => {
     try {
       const response = await uploadFile(file);
-      setValue(field, response.data.file.path);
+      setValue(field, response.data.file.path, { shouldValidate: true });
       toast.success('File uploaded successfully');
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -139,16 +141,18 @@ export default function ProjectSubmissionForm() {
 
   const nextStep = async () => {
     const stepFields = {
-      general: ['projectName', 'websiteUrl', 'pitchDeckUrl', 'founders', 'jurisdiction'],
-      tge: ['tgeDate', 'listingExchanges', 'marketMaker', 'tokenomics'],
-      funding: ['previousFunding', 'fundingTarget', 'investmentType', 'interestedVCs', 'keyMetrics'],
-      technical: ['blockchain', 'otherBlockchain', 'features', 'techStack', 'security'],
-      services: ['requiredServices', 'serviceDetails', 'additionalServices'],
-      compliance: ['companyStructure', 'regulatoryCompliance', 'legalAdvisor', 'complianceStrategy', 'riskFactors'],
-    };
+      generalInfo: ['generalInfo.projectName', 'generalInfo.websiteUrl', 'generalInfo.pitchDeckUrl', 'generalInfo.coreFounders', 'generalInfo.projectHQ'],
+      tgeDetails: ['tgeDetails.tgeDate', 'tgeDetails.listingExchanges', 'tgeDetails.totalSupply', 'tgeDetails.circulatingSupply', 'tgeDetails.vestingSchedule'],
+      funding: ['funding.previousFunding', 'funding.fundingTarget', 'funding.investmentType', 'funding.keyMetrics'],
+      technical: ['technical.blockchain', 'technical.features', 'technical.techStack', 'technical.security'],
+      services: ['services.requiredServices', 'services.serviceDetails'],
+      compliance: ['compliance.companyStructure', 'compliance.regulatoryCompliance', 'compliance.complianceStrategy', 'compliance.riskFactors'],
+    } as const;
     
-    const fields = stepFields[formSteps[currentStep].id as keyof typeof stepFields] as Array<keyof FormData>;
-    const isStepValid = await trigger(fields);
+    const currentId = formSteps[currentStep].id;
+    const fields = stepFields[currentId as keyof typeof stepFields];
+    // Use type assertion to handle the complex type conversion
+    const isStepValid = await trigger(fields as unknown as Array<keyof FormData>);
     
     if (isStepValid) {
       setCurrentStep((prev) => Math.min(prev + 1, formSteps.length - 1));

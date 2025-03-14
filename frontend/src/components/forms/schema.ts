@@ -1,97 +1,66 @@
 import { z } from 'zod';
 
+// Helper type for nested paths
+export type NestedKeyOf<ObjectType extends object> = {
+  [Key in keyof ObjectType & (string | number)]: ObjectType[Key] extends object
+    ? `${Key}.${NestedKeyOf<ObjectType[Key]>}`
+    : `${Key}`;
+}[keyof ObjectType & (string | number)];
+
 // Define the schema for the project submission form
 export const formSchema = z.object({
-  // General Project Information
+  // General Info
   generalInfo: z.object({
     projectName: z.string().min(1, 'Project name is required'),
-    websiteUrl: z.string().url('Please enter a valid URL'),
-    pitchDeckUrl: z.string().url('Please enter a valid URL'),
-    coreFounders: z.string(),
-    projectHQ: z.string(),
+    websiteUrl: z.string().url('Must be a valid URL'),
+    pitchDeckUrl: z.string().url('Must be a valid URL'),
+    coreFounders: z.string().min(1, 'Core founders information is required'),
+    projectHQ: z.string().min(1, 'Project HQ is required'),
   }),
 
-  // Token Generation Event (TGE) Details
+  // TGE Details
   tgeDetails: z.object({
     tgeDate: z.string().optional(),
-    listingExchanges: z.enum(['CEX', 'DEX', 'BOTH', 'NOT_SURE']),
+    listingExchanges: z.string().min(1, 'Listing exchanges are required'),
     marketMakingProvider: z.string().optional(),
-    tokenomics: z.object({
-      totalSupply: z.string(),
-      circulatingSupply: z.string(),
-      vestingSchedule: z.string(),
-      incentiveMechanisms: z.string(),
-    }),
+    totalSupply: z.string().min(1, 'Total supply is required'),
+    circulatingSupply: z.string().min(1, 'Circulating supply is required'),
+    vestingSchedule: z.string().min(1, 'Vesting schedule is required'),
+    tokenomicsMechanisms: z.string().optional(),
   }),
 
-  // Funding & Investment Needs
+  // Funding
   funding: z.object({
-    previousRounds: z.array(z.enum([
-      'PRIVATE',
-      'PRE_SEED',
-      'SEED',
-      'PUBLIC',
-      'NONE',
-      'OTHER'
-    ])),
-    fundraisingTarget: z.string(),
-    investmentType: z.array(z.enum([
-      'EQUITY',
-      'SAFT',
-      'STRATEGIC',
-      'OTHER'
-    ])),
-    interestedVCs: z.string(),
-    keyMetrics: z.string(),
+    previousFunding: z.string().min(1, 'Previous funding information is required'),
+    fundingTarget: z.string().min(1, 'Funding target is required'),
+    investmentType: z.string().min(1, 'Investment type is required'),
+    interestedVCs: z.string().optional(),
+    keyMetrics: z.string().min(1, 'Key metrics are required'),
   }),
 
-  // Product & Technical Details
-  technicalDetails: z.object({
-    blockchain: z.array(z.enum([
-      'ETHEREUM',
-      'SOLANA',
-      'ARBITRUM',
-      'AVALANCHE',
-      'BSC',
-      'COSMOS',
-      'NEAR',
-      'OTHER'
-    ])),
-    productStage: z.enum([
-      'MVP',
-      'BETA',
-      'LIVE_MAINNET',
-      'CONCEPT',
-      'SERIES_A',
-      'SERIES_B'
-    ]),
-    usesOnChainData: z.boolean(),
+  // Technical Details
+  technical: z.object({
+    blockchain: z.string().min(1, 'Blockchain selection is required'),
+    otherBlockchain: z.string().optional(),
+    features: z.string().min(1, 'Features description is required'),
+    techStack: z.string().min(1, 'Tech stack information is required'),
+    security: z.string().min(1, 'Security information is required'),
   }),
 
-  // Services Needed
+  // Services
   services: z.object({
-    neededServices: z.array(z.enum([
-      'MARKET_MAKING',
-      'EXCHANGE_LISTING',
-      'MARKETING_PR',
-      'DEVELOPMENT',
-      'EVENTS',
-      'VC_INTROS',
-      'BANKING',
-      'DAO_GOVERNANCE',
-      'COMMUNITY_GROWTH'
-    ])),
-    communitySize: z.string(),
-    influencerEngagements: z.string(),
-    marketingStrategy: z.string(),
-    interestedInEvents: z.boolean(),
+    requiredServices: z.string().min(1, 'Required services information is required'),
+    serviceDetails: z.string().min(1, 'Service details are required'),
+    additionalServices: z.string().optional(),
   }),
 
-  // Compliance & Legal
+  // Compliance
   compliance: z.object({
-    legalEntity: z.string(),
-    regulations: z.string(),
-    hasKycAml: z.boolean(),
+    companyStructure: z.string().min(1, 'Company structure information is required'),
+    regulatoryCompliance: z.string().min(1, 'Regulatory compliance information is required'),
+    legalAdvisor: z.string().optional(),
+    complianceStrategy: z.string().min(1, 'Compliance strategy is required'),
+    riskFactors: z.string().min(1, 'Risk factors are required'),
   }),
 
   // Final Questions
@@ -110,12 +79,13 @@ export const formSchema = z.object({
 
 // Export type for the form data
 export type FormData = z.infer<typeof formSchema>;
+export type FormDataPath = NestedKeyOf<FormData>;
 
 // Export individual section types
 export type GeneralInfo = FormData['generalInfo'];
 export type TGEDetails = FormData['tgeDetails'];
 export type Funding = FormData['funding'];
-export type TechnicalDetails = FormData['technicalDetails'];
+export type TechnicalDetails = FormData['technical'];
 export type Services = FormData['services'];
 export type Compliance = FormData['compliance'];
 export type FinalQuestions = FormData['finalQuestions']; 
