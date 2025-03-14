@@ -1,103 +1,144 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import Layout from '../components/layout/Layout';
-import { FiBarChart2, FiLock, FiTrendingUp, FiUsers } from 'react-icons/fi';
-
-// Feature card component
-const FeatureCard = ({ 
-  title, 
-  description, 
-  icon: Icon 
-}: { 
-  title: string; 
-  description: string; 
-  icon: React.ElementType;
-}) => {
-  return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-blue-600 text-white mb-4">
-        <Icon className="h-6 w-6" />
-      </div>
-      <h3 className="text-lg font-medium text-gray-900 mb-2">{title}</h3>
-      <p className="text-gray-500">{description}</p>
-    </div>
-  );
-};
+import { useAuth } from '@/hooks/useAuth';
+import { FiArrowRight, FiCheck, FiShield, FiTrendingUp } from 'react-icons/fi';
 
 export default function HomePage() {
+  const { user } = useAuth();
+
   return (
-    <Layout>
-      {/* Hero section */}
-      <div className="py-12 md:py-20 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-          Welcome to CrypticBroker
-        </h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-          A comprehensive platform connecting promising blockchain projects with investors, exchanges, and essential services. Streamline your journey from ideation to funding.
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Link 
-            href="/register" 
-            className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Submit Your Project
-          </Link>
-          <Link 
-            href="/login" 
-            className="px-6 py-3 bg-white text-blue-600 font-medium rounded-lg border border-blue-600 hover:bg-blue-50 transition-colors"
-          >
-            Investor Login
-          </Link>
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-50">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-8">
+              Welcome to CrypticBroker
+            </h1>
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+              Your trusted platform for managing and tracking cryptocurrency projects
+            </p>
+            {user ? (
+              <div className="space-y-4">
+                <Link
+                  href="/dashboard"
+                  className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm hover:shadow-md text-lg font-medium"
+                >
+                  Go to Dashboard
+                  <FiArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+                <p className="text-gray-600">
+                  Welcome back, {user.firstName}! Check your project status and updates.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="space-x-4">
+                  <Link
+                    href="/register"
+                    className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-sm hover:shadow-md text-lg font-medium"
+                  >
+                    Get Started
+                    <FiArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-50 transition-all shadow-sm hover:shadow-md text-lg font-medium"
+                  >
+                    Login
+                  </Link>
+                </div>
+                <p className="text-gray-600">
+                  Join our platform to start managing your crypto projects
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Features section */}
-      <div className="py-12 bg-gray-50 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Platform Features</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Everything you need to connect blockchain innovation with capital and support services.
+      {/* Features Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-gray-900">
+            Why Choose CrypticBroker?
+          </h2>
+          <p className="mt-4 text-lg text-gray-600">
+            We provide comprehensive tools and features for your crypto projects
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+            <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+              <FiTrendingUp className="h-6 w-6 text-blue-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Project Tracking
+            </h3>
+            <p className="text-gray-600">
+              Monitor your project status, updates, and performance metrics in real-time
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <FeatureCard 
-              title="Smart Project Evaluation" 
-              description="AI-powered screening and standardized evaluation process for blockchain projects seeking funding."
-              icon={FiBarChart2}
-            />
-            <FeatureCard 
-              title="Comprehensive Support" 
-              description="Access to essential services including market making, exchange listings, and strategic guidance."
-              icon={FiTrendingUp}
-            />
-            <FeatureCard 
-              title="Secure Data Management" 
-              description="Enterprise-grade security for sensitive project information and investor communications."
-              icon={FiLock}
-            />
-            <FeatureCard 
-              title="Ecosystem Connection" 
-              description="Direct access to leading VCs, accelerators, and service providers in the blockchain space."
-              icon={FiUsers}
-            />
+
+          <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+            <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+              <FiCheck className="h-6 w-6 text-green-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Easy Submission
+            </h3>
+            <p className="text-gray-600">
+              Submit and manage your projects with our intuitive interface
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+            <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+              <FiShield className="h-6 w-6 text-purple-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Secure Platform
+            </h3>
+            <p className="text-gray-600">
+              Your project data is protected with enterprise-grade security
+            </p>
           </div>
         </div>
       </div>
 
-      {/* CTA section */}
-      <div className="py-12 text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">Ready to Scale Your Blockchain Project?</h2>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-          Join CrypticBroker to connect with quality capital and essential services for your project&apos;s success.
-        </p>
-        <Link 
-          href="/register" 
-          className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-        >
-          Submit Your Project
-        </Link>
+      {/* CTA Section */}
+      <div className="bg-blue-600 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold mb-4">
+              Ready to Start Your Crypto Journey?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Join CrypticBroker today and take your projects to the next level
+            </p>
+            {user ? (
+              <Link
+                href="/submit-project"
+                className="inline-flex items-center px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-all shadow-sm hover:shadow-md text-lg font-medium"
+              >
+                Submit a Project
+                <FiArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            ) : (
+              <Link
+                href="/register"
+                className="inline-flex items-center px-8 py-3 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-all shadow-sm hover:shadow-md text-lg font-medium"
+              >
+                Get Started Now
+                <FiArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
-    </Layout>
+    </div>
   );
 } 

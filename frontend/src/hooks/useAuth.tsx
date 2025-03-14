@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
-import { login as loginApi, register as registerApi, getCurrentUser } from '../utils/api';
+import { login as loginApi, register as registerApi } from '../utils/api';
 
 // Types
 interface User {
@@ -20,13 +20,6 @@ interface User {
 interface AuthResponse {
   status: string;
   token: string;
-  data: {
-    user: User;
-  };
-}
-
-interface UserResponse {
-  status: string;
   data: {
     user: User;
   };
@@ -114,26 +107,30 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             return;
           }
           
-          console.log('Auth: Getting current user...');
-          const response = (await getCurrentUser() as unknown) as ApiResponse<UserResponse>;
+          // Extract user data from token instead of making an API call
+          const userData = {
+            id: tokenData.id,
+            email: tokenData.email,
+            firstName: tokenData.firstName,
+            lastName: tokenData.lastName,
+            role: tokenData.role,
+            createdAt: tokenData.createdAt,
+            updatedAt: tokenData.updatedAt,
+            isEmailVerified: tokenData.isEmailVerified
+          };
           
-          if (response?.data?.data?.user) {
-            console.log('Auth: User loaded successfully');
-            setUser(response.data.data.user);
-            
-            // Set up a timer to check token expiration
-            const timeUntilExpiry = expirationTime - currentTime - (2 * 60 * 1000); // Check 2 minutes before expiry
-            setTimeout(() => {
-              loadUser(); // Recheck token when it's close to expiry
-            }, timeUntilExpiry);
-          } else {
-            console.log('Auth: Invalid user data received');
-            throw new Error('Invalid user data');
-          }
+          setUser(userData);
+          
+          // Set up a timer to check token expiration
+          const timeUntilExpiry = expirationTime - currentTime - (2 * 60 * 1000); // Check 2 minutes before expiry
+          setTimeout(() => {
+            loadUser(); // Recheck token when it's close to expiry
+          }, timeUntilExpiry);
+          
         } catch (err) {
           console.error('Auth: Error loading user:', err);
-          // Don't remove token on network errors
-          if (err instanceof Error && !err.message.includes('Network Error')) {
+          // Only remove token if it's invalid
+          if (err instanceof Error && err.message.includes('Invalid token')) {
             localStorage.removeItem('token');
             setUser(null);
           }
@@ -151,8 +148,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
     try {
       const response = (await loginApi(email, password) as unknown) as ApiResponse<AuthResponse>;
-      localStorage.setItem('token', response.data.token);
-      setUser(response.data.data.user);
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      
+      // Extract user data from token
+      const tokenData = JSON.parse(atob(token.split('.')[1]));
+      const userData = {
+        id: tokenData.id,
+        email: tokenData.email,
+        firstName: tokenData.firstName,
+        lastName: tokenData.lastName,
+        role: tokenData.role,
+        createdAt: tokenData.createdAt,
+        updatedAt: tokenData.updatedAt,
+        isEmailVerified: tokenData.isEmailVerified
+      };
+      
+      setUser(userData);
+      
+      // Set up token expiration check
+      const expirationTime = tokenData.exp * 1000; // Convert to milliseconds
+      const currentTime = Date.now();
+      const timeUntilExpiry = expirationTime - currentTime - (2 * 60 * 1000); // Check 2 minutes before expiry
+      
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('token');
+          setUser(null);
+          router.push('/login');
+        }
+      }, timeUntilExpiry);
+
       router.push('/dashboard');
     } catch (err: unknown) {
       const apiError = err as ApiError;
@@ -168,8 +194,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setError(null);
     try {
       const response = (await registerApi(data) as unknown) as ApiResponse<AuthResponse>;
-      localStorage.setItem('token', response.data.token);
-      setUser(response.data.data.user);
+      const token = response.data.token;
+      localStorage.setItem('token', token);
+      
+      // Extract user data from token
+      const tokenData = JSON.parse(atob(token.split('.')[1]));
+      const userData = {
+        id: tokenData.id,
+        email: tokenData.email,
+        firstName: tokenData.firstName,
+        lastName: tokenData.lastName,
+        role: tokenData.role,
+        createdAt: tokenData.createdAt,
+        updatedAt: tokenData.updatedAt,
+        isEmailVerified: tokenData.isEmailVerified
+      };
+      
+      setUser(userData);
+      
+      // Set up token expiration check
+      const expirationTime = tokenData.exp * 1000; // Convert to milliseconds
+      const currentTime = Date.now();
+      const timeUntilExpiry = expirationTime - currentTime - (2 * 60 * 1000); // Check 2 minutes before expiry
+      
+      setTimeout(() => {
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('token');
+          setUser(null);
+          router.push('/login');
+        }
+      }, timeUntilExpiry);
+
       router.push('/dashboard');
     } catch (err: unknown) {
       const apiError = err as ApiError;

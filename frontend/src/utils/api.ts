@@ -54,17 +54,6 @@ export interface MultipleFileUploadResponse {
   };
 }
 
-// Define a proper error type for axios errors
-interface ApiErrorResponse {
-  status: number;
-  data: unknown;
-}
-
-interface ApiErrorConfig {
-  url?: string;
-  method?: string;
-  headers?: Record<string, string>;
-}
 
 // Helper function to get auth headers
 const getAuthHeaders = (): Record<string, string> => {
@@ -319,6 +308,36 @@ export const checkTokenStatus = () => {
     console.error('Error parsing token:', error);
     return { valid: false, message: 'Invalid token format' };
   }
+};
+
+// Project types
+export interface Project {
+  id: number;
+  name: string;
+  status: 'UNDER_REVIEW' | 'ACCEPTED' | 'REJECTED';
+  submittedAt: string;
+  description?: string;
+  website?: string;
+  pitchDeckUrl?: string;
+}
+
+// Project API functions
+export const getProjects = async () => {
+  const response = await api.get('/projects', {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  return response;
+};
+
+export const getProject = async (id: string) => {
+  const response = await axios.get(`/api/projects/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  return response.data;
 };
 
 // Default export for the API client

@@ -20,39 +20,40 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-600 shadow-md">
+    <nav className="bg-gradient-to-r from-blue-600 to-blue-800 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo and primary navigation */}
-          <div className="flex">
-            <div className="flex-shrink-0 flex items-center">
-              <Link href="/" className="text-white font-bold text-xl">
+          <div className="flex items-center space-x-8">
+            <div className="flex-shrink-0">
+              <Link href="/" className="text-white font-bold text-2xl hover:text-blue-100 transition-colors">
                 CrypticBroker
               </Link>
             </div>
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+            
+            <div className="hidden sm:flex items-center space-x-6">
               <Link
                 href="/"
                 className={`${
                   pathname === '/'
-                    ? 'border-white text-white'
-                    : 'border-transparent text-blue-100 hover:border-blue-300 hover:text-white'
-                } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                    ? 'bg-blue-700/50 text-white'
+                    : 'text-blue-100 hover:bg-blue-700/30 hover:text-white'
+                } px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2`}
               >
-                <FiHome className="mr-1" />
-                Home
+                <FiHome className="h-4 w-4" />
+                <span>Home</span>
               </Link>
               {user && (
                 <Link
                   href="/dashboard"
                   className={`${
                     pathname === '/dashboard'
-                      ? 'border-white text-white'
-                      : 'border-transparent text-blue-100 hover:border-blue-300 hover:text-white'
-                  } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                      ? 'bg-blue-700/50 text-white'
+                      : 'text-blue-100 hover:bg-blue-700/30 hover:text-white'
+                  } px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-2`}
                 >
-                  <FiBarChart2 className="mr-1" />
-                  Dashboard
+                  <FiBarChart2 className="h-4 w-4" />
+                  <span>Dashboard</span>
                 </Link>
               )}
             </div>
@@ -60,33 +61,37 @@ const Navbar = () => {
 
           {/* User menu and mobile menu button */}
           <div className="flex items-center">
-            <div className="hidden sm:ml-6 sm:flex sm:items-center">
+            <div className="hidden sm:flex items-center space-x-4">
               {user ? (
-                <div className="relative ml-3">
-                  <div className="flex items-center space-x-4">
-                    <span className="text-white">
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2 px-3 py-2 text-blue-100">
+                    <div className="h-8 w-8 rounded-full bg-blue-700/50 flex items-center justify-center">
+                      <FiUser className="h-4 w-4" />
+                    </div>
+                    <span className="text-sm font-medium">
                       {user.firstName} {user.lastName}
                     </span>
-                    <button
-                      onClick={logout}
-                      className="inline-flex items-center justify-center p-2 rounded-md text-blue-100 hover:text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                      aria-label="Logout"
-                    >
-                      <FiLogOut className="h-6 w-6" />
-                    </button>
                   </div>
+                  <button
+                    onClick={logout}
+                    className="inline-flex items-center space-x-2 px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-700/30 hover:text-white transition-all duration-200"
+                    aria-label="Logout"
+                  >
+                    <FiLogOut className="h-4 w-4" />
+                    <span className="text-sm font-medium">Logout</span>
+                  </button>
                 </div>
               ) : (
-                <div className="flex space-x-4">
+                <div className="flex items-center space-x-4">
                   <Link
                     href="/login"
-                    className="text-blue-100 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className="px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-700/30 hover:text-white transition-all duration-200 text-sm font-medium"
                   >
                     Login
                   </Link>
                   <Link
                     href="/register"
-                    className="bg-white text-blue-600 hover:bg-blue-50 px-3 py-2 rounded-md text-sm font-medium"
+                    className="px-3 py-2 rounded-lg bg-white text-blue-600 hover:bg-blue-50 transition-all duration-200 text-sm font-medium"
                   >
                     Register
                   </Link>
@@ -98,7 +103,7 @@ const Navbar = () => {
             <div className="flex items-center sm:hidden">
               <button
                 onClick={toggleMenu}
-                className="inline-flex items-center justify-center p-2 rounded-md text-blue-100 hover:text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                className="inline-flex items-center justify-center p-2 rounded-lg text-blue-100 hover:bg-blue-700/30 hover:text-white transition-all duration-200"
                 aria-expanded="false"
               >
                 <span className="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
@@ -111,19 +116,19 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       <div className={`${isMenuOpen ? 'block' : 'hidden'} sm:hidden`}>
-        <div className="pt-2 pb-3 space-y-1">
+        <div className="px-2 pt-2 pb-3 space-y-1">
           <Link
             href="/"
             className={`${
               pathname === '/'
-                ? 'bg-blue-700 text-white'
-                : 'text-blue-100 hover:bg-blue-700 hover:text-white'
-            } block px-3 py-2 rounded-md text-base font-medium`}
+                ? 'bg-blue-700/50 text-white'
+                : 'text-blue-100 hover:bg-blue-700/30 hover:text-white'
+            } block px-3 py-2 rounded-lg text-base font-medium transition-all duration-200`}
             onClick={closeMenu}
           >
-            <div className="flex items-center">
-              <FiHome className="mr-2" />
-              Home
+            <div className="flex items-center space-x-2">
+              <FiHome className="h-5 w-5" />
+              <span>Home</span>
             </div>
           </Link>
           {user && (
@@ -131,52 +136,58 @@ const Navbar = () => {
               href="/dashboard"
               className={`${
                 pathname === '/dashboard'
-                  ? 'bg-blue-700 text-white'
-                  : 'text-blue-100 hover:bg-blue-700 hover:text-white'
-              } block px-3 py-2 rounded-md text-base font-medium`}
+                  ? 'bg-blue-700/50 text-white'
+                  : 'text-blue-100 hover:bg-blue-700/30 hover:text-white'
+              } block px-3 py-2 rounded-lg text-base font-medium transition-all duration-200`}
               onClick={closeMenu}
             >
-              <div className="flex items-center">
-                <FiBarChart2 className="mr-2" />
-                Dashboard
+              <div className="flex items-center space-x-2">
+                <FiBarChart2 className="h-5 w-5" />
+                <span>Dashboard</span>
               </div>
             </Link>
           )}
         </div>
-        <div className="pt-4 pb-3 border-t border-blue-700">
+        
+        <div className="px-4 py-3 border-t border-blue-700/30">
           {user ? (
-            <div className="flex items-center px-5">
-              <div className="flex-shrink-0">
-                <div className="h-10 w-10 rounded-full bg-blue-800 flex items-center justify-center text-white">
-                  <FiUser className="h-6 w-6" />
+            <div className="space-y-3">
+              <div className="flex items-center px-3 py-2">
+                <div className="flex-shrink-0">
+                  <div className="h-10 w-10 rounded-full bg-blue-700/50 flex items-center justify-center text-white">
+                    <FiUser className="h-5 w-5" />
+                  </div>
                 </div>
-              </div>
-              <div className="ml-3">
-                <div className="text-base font-medium text-white">
-                  {user.firstName} {user.lastName}
+                <div className="ml-3">
+                  <div className="text-base font-medium text-white">
+                    {user.firstName} {user.lastName}
+                  </div>
+                  <div className="text-sm text-blue-100">{user.email}</div>
                 </div>
-                <div className="text-sm font-medium text-blue-100">{user.email}</div>
               </div>
               <button
-                onClick={logout}
-                className="ml-auto flex-shrink-0 bg-blue-600 p-1 rounded-full text-blue-100 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-600 focus:ring-white"
+                onClick={() => {
+                  logout();
+                  closeMenu();
+                }}
+                className="flex items-center w-full px-3 py-2 text-blue-100 hover:bg-blue-700/30 hover:text-white rounded-lg transition-all duration-200"
               >
-                <span className="sr-only">Logout</span>
-                <FiLogOut className="h-6 w-6" />
+                <FiLogOut className="h-5 w-5 mr-2" />
+                <span className="text-base font-medium">Logout</span>
               </button>
             </div>
           ) : (
-            <div className="flex flex-col space-y-2 px-5">
+            <div className="space-y-2">
               <Link
                 href="/login"
-                className="block text-center text-blue-100 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-base font-medium"
+                className="block w-full px-3 py-2 text-center text-blue-100 hover:bg-blue-700/30 hover:text-white rounded-lg transition-all duration-200 text-base font-medium"
                 onClick={closeMenu}
               >
                 Login
               </Link>
               <Link
                 href="/register"
-                className="block text-center bg-white text-blue-600 hover:bg-blue-50 px-3 py-2 rounded-md text-base font-medium"
+                className="block w-full px-3 py-2 text-center bg-white text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 text-base font-medium"
                 onClick={closeMenu}
               >
                 Register
