@@ -1,12 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function LoginPage() {
-  const router = useRouter();
   const { login, error: authError, loading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,8 +14,8 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       await login(email, password);
-    } catch (err) {
-      setError('Failed to login. Please try again.');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Failed to login. Please try again.');
     }
   };
 

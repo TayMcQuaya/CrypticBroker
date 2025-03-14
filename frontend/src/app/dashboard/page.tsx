@@ -173,10 +173,10 @@ export default function DashboardPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div>
             <h1 className="text-4xl font-bold text-gray-900">
-              Welcome, {user.firstName}!
+              {user?.firstName ? `Welcome, ${user.firstName}!` : 'Welcome to your Dashboard!'}
             </h1>
             <p className="mt-2 text-lg text-gray-600">
-              Manage and track your project submissions
+              {user?.firstName ? 'Manage and track your project submissions' : 'Sign in to manage your projects'}
             </p>
           </div>
           <Link 

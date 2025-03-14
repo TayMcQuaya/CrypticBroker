@@ -153,24 +153,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(true);
     setError(null);
     try {
-      const response = (await loginApi(email, password) as unknown) as ApiResponse<AuthResponse>;
-      const token = response.data.token;
+      const response = await loginApi(email, password);
+      const { token, data } = (response.data as AuthResponse);
       localStorage.setItem('token', token);
       
-      // Extract user data from token
-      const tokenData = JSON.parse(atob(token.split('.')[1]));
-      const userData = {
-        id: tokenData.id,
-        email: tokenData.email,
-        firstName: tokenData.firstName,
-        lastName: tokenData.lastName,
-        role: tokenData.role,
-        createdAt: tokenData.createdAt,
-        updatedAt: tokenData.updatedAt,
-        isEmailVerified: tokenData.isEmailVerified
-      };
-      
-      setUser(userData);
+      // Use the user data directly from the response
+      setUser(data.user);
       router.push('/dashboard');
     } catch (err: unknown) {
       const apiError = err as ApiError;
