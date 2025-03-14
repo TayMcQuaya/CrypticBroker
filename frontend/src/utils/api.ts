@@ -259,26 +259,39 @@ export const submitProject = async (data: FormData, status: 'DRAFT' | 'SUBMITTED
     
     // Try different endpoints with different methods
     const endpoints = [
-      { url: '/projects', method: 'post' },
-      { url: '/projects', method: 'put' },
-      // Try with Next.js API routes
-      { url: '/api/projects', method: 'post' },
-      { url: '/api/projects', method: 'put' }
+      // Try direct endpoints without /api prefix
+      { url: '/projects', method: 'post', useBaseUrl: true },
+      { url: '/projects', method: 'put', useBaseUrl: true },
+      
+      // Try Next.js API routes with absolute URLs to avoid double prefixing
+      { url: '/api/projects', method: 'post', useBaseUrl: false },
+      { url: '/api/projects', method: 'put', useBaseUrl: false }
     ];
     
     for (const endpoint of endpoints) {
       try {
         console.log(`Trying endpoint: ${endpoint.url} with method: ${endpoint.method}`);
         
+        // Determine the full URL
+        const url = endpoint.useBaseUrl 
+          ? endpoint.url  // Will use the baseURL from axios config
+          : window.location.origin + endpoint.url;  // Absolute URL to avoid baseURL
+        
         let response;
         if (endpoint.method === 'post') {
-          response = await api.post(endpoint.url, transformedData, {
-            timeout: 10000, // 10 second timeout
-          });
+          response = endpoint.useBaseUrl
+            ? await api.post(endpoint.url, transformedData, { timeout: 10000 })
+            : await axios.post(url, transformedData, { 
+                timeout: 10000,
+                headers: api.defaults.headers
+              });
         } else {
-          response = await api.put(endpoint.url, transformedData, {
-            timeout: 10000, // 10 second timeout
-          });
+          response = endpoint.useBaseUrl
+            ? await api.put(endpoint.url, transformedData, { timeout: 10000 })
+            : await axios.put(url, transformedData, { 
+                timeout: 10000,
+                headers: api.defaults.headers
+              });
         }
         
         console.log(`Success with ${endpoint.url} (${endpoint.method}):`, response.status);

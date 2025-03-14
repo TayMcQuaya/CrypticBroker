@@ -110,60 +110,20 @@ export default function ProjectSubmissionForm() {
     try {
       setIsSavingDraft(true);
       // Get values without validation
-      const formData = methods.getValues();
+      const data = methods.getValues();
       
-      // Always save to local storage as backup
-      localStorage.setItem('projectDraft', JSON.stringify(formData));
+      // Save to local storage only
+      localStorage.setItem('projectDraft', JSON.stringify(data));
+      
       // Set hasSavedDraft to true since we have a local copy
       setHasSavedDraft(true);
       
-      try {
-        const response = await submitProject(formData, 'DRAFT');
-        
-        // Check if this was a mock success (local storage only)
-        if (response.data && typeof response.data === 'object' && 'message' in response.data && 
-            typeof response.data.message === 'string' && response.data.message.includes('Mock success')) {
-          toast.success('Draft saved locally');
-          toast.error('Server connection failed - using local storage only');
-          setServerStatus('offline');
-        } else {
-          toast.success('Draft saved successfully');
-          setServerStatus('online');
-        }
-      } catch (error: unknown) {
-        console.error('Error saving draft to server:', error);
-        
-        // Show more detailed error message
-        const err = error as { response?: { status?: number }, code?: string, message?: string };
-        if (err.response?.status === 500) {
-          toast.success('Draft saved locally (server error occurred)');
-          toast.error('Could not save to server: Internal server error');
-          setServerStatus('offline');
-        } else if (err.response?.status === 401) {
-          toast.success('Draft saved locally (authentication error)');
-          toast.error('Could not save to server: Authentication error');
-          // Don't set offline for auth errors
-        } else if (err.code === 'ECONNABORTED') {
-          toast.success('Draft saved locally (server timeout)');
-          toast.error('Could not save to server: Request timed out');
-          setServerStatus('offline');
-        } else {
-          toast.success('Draft saved locally');
-          toast.error(`Could not save to server: ${err.message || 'Unknown error'}`);
-          setServerStatus('offline');
-        }
-      }
+      // Show success message
+      toast.success('Draft saved to your browser');
+      
     } catch (error) {
       console.error('Error in saveDraft:', error);
-      
-      // Check if we at least saved to localStorage
-      if (localStorage.getItem('projectDraft')) {
-        toast.success('Draft saved locally');
-        toast.error('An error occurred in the save process');
-      } else {
-        toast.error('Failed to save draft');
-      }
-      setServerStatus('offline');
+      toast.error('Failed to save draft');
     } finally {
       setIsSavingDraft(false);
     }
@@ -360,8 +320,10 @@ export default function ProjectSubmissionForm() {
                 <div
                   key={step.id}
                   className={`${
-                    index <= currentStep ? 'opacity-100' : 'opacity-50'
-                  }`}
+                    index <= currentStep 
+                      ? 'text-white font-medium' 
+                      : 'text-blue-200'
+                  } transition-all duration-300`}
                 >
                   Step {index + 1}
                 </div>
@@ -411,40 +373,75 @@ export default function ProjectSubmissionForm() {
           </div>
 
           {/* Navigation buttons */}
-          <div className="flex justify-between pt-4 border-t border-gray-200">
-            <div className="flex gap-3">
-              <button
-                type="button"
-                onClick={prevStep}
-                disabled={currentStep === 0}
-                className={`
-                  inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
-                  transition-colors duration-200
-                  ${currentStep === 0
-                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                    : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400'
-                  }
-                `}
-              >
-                <FiArrowLeft className="mr-2 h-4 w-4" />
-                Previous
-              </button>
+          <div className={`flex ${currentStep === formSteps.length - 1 ? 'justify-center gap-4' : 'justify-between'} pt-4 border-t border-gray-200`}>
+            {currentStep !== formSteps.length - 1 && (
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  disabled={currentStep === 0}
+                  className={`
+                    inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
+                    transition-colors duration-200
+                    ${currentStep === 0
+                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400'
+                    }
+                  `}
+                >
+                  <FiArrowLeft className="mr-2 h-4 w-4" />
+                  Previous
+                </button>
 
-              <button
-                type="button"
-                onClick={saveDraft}
-                disabled={isSavingDraft}
-                className="
-                  inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg
-                  shadow-sm text-sm font-medium text-gray-700 bg-white
-                  hover:bg-gray-50 hover:border-gray-400
-                  transition-colors duration-200
-                "
-              >
-                <FiSave className="mr-2 h-4 w-4" />
-                {isSavingDraft ? 'Saving...' : 'Save Draft'}
-              </button>
-            </div>
+                <button
+                  type="button"
+                  onClick={saveDraft}
+                  disabled={isSavingDraft}
+                  className="
+                    inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg
+                    shadow-sm text-sm font-medium text-gray-700 bg-white
+                    hover:bg-gray-50 hover:border-gray-400
+                    transition-colors duration-200
+                  "
+                >
+                  <FiSave className="mr-2 h-4 w-4" />
+                  {isSavingDraft ? 'Saving...' : 'Save Draft'}
+                </button>
+              </div>
+            )}
+
+            {currentStep === formSteps.length - 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="
+                    inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg
+                    shadow-sm text-sm font-medium text-gray-700 bg-white
+                    hover:bg-gray-50 hover:border-gray-400
+                    transition-colors duration-200
+                  "
+                >
+                  <FiArrowLeft className="mr-2 h-4 w-4" />
+                  Previous
+                </button>
+                
+                <button
+                  type="button"
+                  onClick={saveDraft}
+                  disabled={isSavingDraft}
+                  className="
+                    inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg
+                    shadow-sm text-sm font-medium text-gray-700 bg-white
+                    hover:bg-gray-50 hover:border-gray-400
+                    transition-colors duration-200
+                  "
+                >
+                  <FiSave className="mr-2 h-4 w-4" />
+                  {isSavingDraft ? 'Saving...' : 'Save Draft'}
+                </button>
+              </>
+            )}
 
             <button
               type={currentStep === formSteps.length - 1 ? 'submit' : 'button'}
@@ -453,13 +450,14 @@ export default function ProjectSubmissionForm() {
                 nextStep();
               }}
               disabled={isSubmitting}
-              className="
+              className={`
                 inline-flex items-center px-6 py-2 rounded-lg text-sm font-medium
                 text-white bg-blue-600 hover:bg-blue-700
                 disabled:bg-blue-400 disabled:cursor-not-allowed
                 transition-colors duration-200
                 shadow-sm
-              "
+                ${currentStep === formSteps.length - 1 ? 'px-8 py-3' : ''}
+              `}
             >
               {currentStep === formSteps.length - 1 ? (
                 <>

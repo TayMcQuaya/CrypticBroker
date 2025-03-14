@@ -13,7 +13,11 @@ const projects: Array<{
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('Next.js API route: POST /api/projects called');
+    
+    // Parse the request body
     const data = await request.json();
+    console.log('Received data:', data);
     
     // Generate a random ID
     const id = Math.random().toString(36).substring(2, 15);
@@ -28,6 +32,7 @@ export async function POST(request: NextRequest) {
     
     // Add to mock database
     projects.push(project);
+    console.log('Project saved:', project.id);
     
     // Return success
     return NextResponse.json(
@@ -39,7 +44,7 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
-    console.error('Error creating project:', error);
+    console.error('Error in Next.js API route POST /api/projects:', error);
     return NextResponse.json(
       { 
         status: 'error',
@@ -52,7 +57,11 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
+    console.log('Next.js API route: PUT /api/projects called');
+    
+    // Parse the request body
     const data = await request.json();
+    console.log('Received data:', data);
     
     // Generate a random ID if not provided
     const id = data.id || Math.random().toString(36).substring(2, 15);
@@ -68,9 +77,11 @@ export async function PUT(request: NextRequest) {
     const index = projects.findIndex(p => p.id === id);
     if (index >= 0) {
       projects[index] = project;
+      console.log('Project updated:', project.id);
     } else {
       project.createdAt = new Date().toISOString();
       projects.push(project);
+      console.log('Project created:', project.id);
     }
     
     // Return success
@@ -83,7 +94,7 @@ export async function PUT(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error updating project:', error);
+    console.error('Error in Next.js API route PUT /api/projects:', error);
     return NextResponse.json(
       { 
         status: 'error',
