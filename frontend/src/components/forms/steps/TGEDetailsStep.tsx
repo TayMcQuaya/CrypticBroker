@@ -5,7 +5,7 @@ import TextArea from '../fields/TextArea';
 export default function TGEDetailsStep() {
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Token Generation Event Details</h2>
+      <h2 className="text-xl font-semibold text-gray-900">Token Generation Event Details</h2>
       
       {/* TGE Date */}
       <TextField

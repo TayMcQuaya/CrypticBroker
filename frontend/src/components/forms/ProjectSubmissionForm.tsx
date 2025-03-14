@@ -10,24 +10,6 @@ import { toast } from 'react-hot-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 
-// Import enums
-enum BlockchainType {
-  ETHEREUM = 'ETHEREUM',
-  BINANCE_SMART_CHAIN = 'BINANCE_SMART_CHAIN',
-  POLYGON = 'POLYGON',
-  SOLANA = 'SOLANA',
-  AVALANCHE = 'AVALANCHE',
-  OTHER = 'OTHER'
-}
-
-enum CompanyStructure {
-  LLC = 'LLC',
-  CORPORATION = 'CORPORATION',
-  FOUNDATION = 'FOUNDATION',
-  DAO = 'DAO',
-  OTHER = 'OTHER'
-}
-
 // Import form steps
 import GeneralInfoStep from './steps/GeneralInfoStep';
 import TGEDetailsStep from './steps/TGEDetailsStep';
@@ -99,15 +81,6 @@ export default function ProjectSubmissionForm() {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [lastSavedTime, setLastSavedTime] = React.useState<Date | null>(null);
   const [serverStatus, setServerStatus] = React.useState<'online' | 'offline' | 'unknown'>('unknown');
-  const [isTestMode, setIsTestMode] = React.useState(false);
-  
-  // Add persistent test mode
-  React.useEffect(() => {
-    const savedTestMode = localStorage.getItem('testMode');
-    if (savedTestMode === 'true') {
-      setIsTestMode(true);
-    }
-  }, []);
 
   const methods = useForm<FormData>({
     mode: 'onChange',
@@ -306,33 +279,6 @@ export default function ProjectSubmissionForm() {
     }
   }, [user, router, authLoading]);
 
-  // Modified token check for test mode
-  React.useEffect(() => {
-    const tokenStatus = checkTokenStatus();
-    console.log('Token Status:', tokenStatus);
-    
-    if (!tokenStatus.valid && !isTestMode) {
-      console.log('Invalid token detected, redirecting to login...');
-      toast.error('Your session has expired. Please log in again.');
-      localStorage.removeItem('token');
-      router.push('/login');
-    } else if (!tokenStatus.valid && isTestMode) {
-      // In test mode, just show a warning
-      toast.error('Token expired but continuing in test mode');
-      console.log('Token expired but continuing in test mode');
-    }
-  }, [router, isTestMode]);
-
-  // Toggle test mode function - updated to persist
-  const toggleTestMode = () => {
-    setIsTestMode(prev => {
-      const newValue = !prev;
-      localStorage.setItem('testMode', String(newValue));
-      toast.success(newValue ? 'Test Mode Enabled' : 'Test Mode Disabled');
-      return newValue;
-    });
-  };
-
   // Modified submit function for test mode
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -391,25 +337,6 @@ export default function ProjectSubmissionForm() {
 
       console.log('Full transformed data being sent to server:', JSON.stringify(transformedData, null, 2));
 
-      if (isTestMode) {
-        // In test mode, just simulate success without API calls
-        console.log('Test mode submission:', transformedData);
-        
-        // Save form data to localStorage
-        localStorage.setItem('projectDraft', JSON.stringify(transformedData));
-        localStorage.setItem('projectDraftSavedTime', new Date().toISOString());
-        setLastSavedTime(new Date());
-        
-        // Show success message
-        toast.success('Test submission successful!');
-        toast.success('Form data preserved for testing');
-        
-        // Reset submission state but don't clear form
-        setIsSubmitting(false);
-        return;
-      }
-      
-      // Regular submission flow
       const tokenStatus = checkTokenStatus();
       if (!tokenStatus.valid) {
         toast.error('Your session has expired. Please log in again.');
@@ -486,16 +413,7 @@ export default function ProjectSubmissionForm() {
             
             if (errorMessage.includes('column') && errorMessage.includes('does not exist')) {
               toast.error('Database schema error detected. The server database needs to be updated.');
-              toast.error('Please use Test Mode instead until the server is fixed.');
-              
-              // Suggest enabling test mode
-              setTimeout(() => {
-                if (confirm('Would you like to enable Test Mode to continue working?')) {
-                  setIsTestMode(true);
-                  localStorage.setItem('testMode', 'true');
-                  toast.success('Test Mode Enabled. You can continue working with the form.');
-                }
-              }, 1000);
+              toast.error('Please try again later or contact support.');
             } else {
               toast.error('Server error. Please try again later.');
             }
@@ -643,39 +561,15 @@ export default function ProjectSubmissionForm() {
           <div className="flex justify-between items-center text-white">
             <div className="flex items-center gap-4">
               <h1 className="text-xl font-semibold">Submit Your Project</h1>
-              {/* Test mode toggle button */}
-              <button
-                onClick={toggleTestMode}
-                className={`px-3 py-1 rounded text-xs font-medium transition-colors
-                  ${isTestMode 
-                    ? 'bg-yellow-500 hover:bg-yellow-600' 
-                    : 'bg-gray-600 hover:bg-gray-700'}`}
-              >
-                {isTestMode ? '🧪 Test Mode ON' : '🔍 Test Mode OFF'}
-              </button>
             </div>
             <span className="text-sm">Step {currentStep + 1} of {formSteps.length}</span>
           </div>
-          
-          {/* Test mode warning */}
-          {isTestMode && (
-            <div className="mt-2 bg-yellow-500 text-white px-3 py-1.5 rounded-md text-sm flex items-center">
-              <span className="inline-block w-2 h-2 bg-yellow-300 rounded-full mr-2 animate-pulse"></span>
-              <span>Test Mode: Form data will be preserved after submission</span>
-            </div>
-          )}
           
           {/* Server status indicator */}
           {serverStatus === 'offline' && (
             <div className="mt-2 bg-red-600 text-white px-3 py-1.5 rounded-md text-sm flex items-center">
               <span className="inline-block w-2 h-2 bg-red-300 rounded-full mr-2 animate-pulse"></span>
               <span>Server connection lost - Your data will be saved locally</span>
-            </div>
-          )}
-          {serverStatus === 'unknown' && (
-            <div className="mt-2 bg-yellow-600 text-white px-3 py-1.5 rounded-md text-sm flex items-center">
-              <span className="inline-block w-2 h-2 bg-yellow-300 rounded-full mr-2 animate-pulse"></span>
-              <span>Checking server connection...</span>
             </div>
           )}
           

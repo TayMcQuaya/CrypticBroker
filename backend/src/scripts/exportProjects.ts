@@ -21,6 +21,7 @@ async function exportProjects() {
     const excelData = projects.map((project: any) => ({
       // General Info Section
       'Project Name': project.name,
+      'Description': project.description,
       'Website URL': project.website,
       'Pitch Deck URL': project.pitchDeckUrl,
       'Core Founders': project.coreFounders,

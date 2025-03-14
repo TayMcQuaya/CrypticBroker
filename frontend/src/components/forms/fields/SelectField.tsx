@@ -40,7 +40,7 @@ export default function SelectField({
         {...register(name, {
           required: required ? 'This field is required' : false,
         })}
-        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+        className="block w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
       >
         {placeholder && (
           <option value="" disabled>
@@ -48,7 +48,7 @@ export default function SelectField({
           </option>
         )}
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option key={option.value} value={option.value} className="py-2">
             {option.label}
           </option>
         ))}
