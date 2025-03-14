@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FiArrowLeft, FiArrowRight, FiCheck, FiSave } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowRight, FiCheck } from 'react-icons/fi';
 import { formSchema, FormData, FormDataPath } from './schema';
 import { uploadFile, submitProject } from '../../utils/api';
 import { toast } from 'react-hot-toast';
@@ -59,8 +59,7 @@ const formSteps = [
 export default function ProjectSubmissionForm() {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [isSavingDraft, setIsSavingDraft] = React.useState(false);
-  const [hasSavedDraft, setHasSavedDraft] = React.useState(false);
+  const [lastSavedTime, setLastSavedTime] = React.useState<Date | null>(null);
   const [serverStatus, setServerStatus] = React.useState<'online' | 'offline' | 'unknown'>('unknown');
   
   const methods = useForm<FormData>({
@@ -68,30 +67,109 @@ export default function ProjectSubmissionForm() {
     resolver: zodResolver(formSchema),
   });
 
-  const { handleSubmit, trigger, setValue, reset } = methods;
+  const { handleSubmit, trigger, setValue, reset, watch, getValues } = methods;
 
-  // Check for saved draft on component mount
-  React.useEffect(() => {
-    const savedDraft = localStorage.getItem('projectDraft');
-    if (savedDraft) {
-      setHasSavedDraft(true);
-    }
-  }, []);
-
-  // Load draft from local storage
-  const loadDraft = () => {
-    try {
-      const savedDraft = localStorage.getItem('projectDraft');
-      if (savedDraft) {
-        const parsedDraft = JSON.parse(savedDraft) as FormData;
-        reset(parsedDraft);
-        toast.success('Draft loaded successfully');
-      }
-    } catch (error) {
-      console.error('Error loading draft:', error);
-      toast.error('Failed to load draft');
-    }
+  // Watch for form changes to enable auto-save
+  const formValues = watch();
+  
+  // Type guard to ensure data is a valid FormData object
+  const isValidFormData = (data: unknown): data is FormData => {
+    return (
+      data !== null &&
+      typeof data === 'object' &&
+      Object.keys(data).length > 0
+    );
   };
+
+  // Initialize form with default values and check for saved draft
+  React.useEffect(() => {
+    console.log('Checking for saved draft...');
+    const savedDraft = localStorage.getItem('projectDraft');
+    
+    if (savedDraft) {
+      try {
+        const parsedDraft = JSON.parse(savedDraft);
+        console.log('Found saved draft:', parsedDraft);
+        
+        if (isValidFormData(parsedDraft)) {
+          // Update saved time if available
+          const savedTime = localStorage.getItem('projectDraftSavedTime');
+          if (savedTime) {
+            setLastSavedTime(new Date(savedTime));
+            console.log('Last saved time:', savedTime);
+          }
+          
+          // If we're on the first step, pre-populate the form
+          if (currentStep === 0) {
+            console.log('On first step, pre-populating form...');
+            
+            // Reset form with saved data
+            reset(parsedDraft);
+            
+            // Set each field individually
+            Object.entries(parsedDraft).forEach(([key, value]) => {
+              if (value !== undefined && value !== null) {
+                setValue(key as keyof FormData, value);
+              }
+            });
+            
+            console.log('Form values after pre-population:', methods.getValues());
+          }
+        } else {
+          console.error('Invalid draft data format');
+          throw new Error('Invalid draft data format');
+        }
+      } catch (error) {
+        console.error('Error parsing saved draft:', error);
+        // Clear invalid draft data
+        localStorage.removeItem('projectDraft');
+        localStorage.removeItem('projectDraftSavedTime');
+      }
+    } else {
+      console.log('No saved draft found');
+    }
+  }, [currentStep, reset, setValue, methods]);
+  
+  // Save form as draft - wrapped in useCallback
+  const saveDraft = useCallback(async () => {
+    try {
+      // Get values without validation
+      const data = getValues();
+      
+      // Debug: Log what we're trying to save
+      console.log('Attempting to save draft:', data);
+      
+      // Check if the data is different from the last saved draft
+      const lastSavedDraft = localStorage.getItem('projectDraft');
+      if (lastSavedDraft && JSON.stringify(data) === lastSavedDraft) {
+        return;
+      }
+      
+      // Save to local storage
+      localStorage.setItem('projectDraft', JSON.stringify(data));
+      localStorage.setItem('projectDraftSavedTime', new Date().toISOString());
+      
+      // Debug: Verify save
+      console.log('Draft saved. Verification:', localStorage.getItem('projectDraft'));
+      
+      // Update state
+      setLastSavedTime(new Date());
+      
+    } catch (error) {
+      console.error('Error in saveDraft:', error);
+    }
+  }, [getValues]);
+
+  // Auto-save when form values change
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (Object.keys(formValues).length > 0) {
+        saveDraft();
+      }
+    }, 2000); // Auto-save 2 seconds after last change
+
+    return () => clearTimeout(timeoutId);
+  }, [formValues, saveDraft]);
 
   // Handle file uploads
   const handleFileUpload = async (file: File, field: FormDataPath) => {
@@ -102,30 +180,6 @@ export default function ProjectSubmissionForm() {
     } catch (error) {
       console.error('Error uploading file:', error);
       toast.error('Failed to upload file');
-    }
-  };
-
-  // Save form as draft
-  const saveDraft = async () => {
-    try {
-      setIsSavingDraft(true);
-      // Get values without validation
-      const data = methods.getValues();
-      
-      // Save to local storage only
-      localStorage.setItem('projectDraft', JSON.stringify(data));
-      
-      // Set hasSavedDraft to true since we have a local copy
-      setHasSavedDraft(true);
-      
-      // Show success message
-      toast.success('Draft saved to your browser');
-      
-    } catch (error) {
-      console.error('Error in saveDraft:', error);
-      toast.error('Failed to save draft');
-    } finally {
-      setIsSavingDraft(false);
     }
   };
 
@@ -204,8 +258,10 @@ export default function ProjectSubmissionForm() {
     const currentValues = methods.getValues();
     console.log('Current form values:', currentValues);
     
-    // Use type assertion to handle the complex type conversion
-    const isStepValid = await trigger(fields as unknown as Array<keyof FormData>);
+    // Validate all fields in the current section
+    const validationPromises = fields.map(field => trigger(field as keyof FormData));
+    const validationResults = await Promise.all(validationPromises);
+    const isStepValid = validationResults.every(result => result);
     
     console.log('Step validation result:', isStepValid);
     
@@ -239,49 +295,40 @@ export default function ProjectSubmissionForm() {
 
   // Check server status on component mount
   React.useEffect(() => {
+    let isComponentMounted = true;
+    
     const checkServerStatus = async () => {
       try {
-        // Try multiple health check endpoints
-        const endpoints = ['/api/health', '/health', '/api/status', '/status'];
-        let isOnline = false;
+        // Only try the main health endpoint
+        const response = await fetch('/api/health', { 
+          method: 'HEAD', // Use HEAD instead of GET - we don't need the response body
+          headers: { 'Content-Type': 'application/json' },
+          signal: AbortSignal.timeout(2000), // Shorter timeout
+          cache: 'no-store' // Prevent caching
+        });
         
-        for (const endpoint of endpoints) {
-          try {
-            console.log(`Trying health check endpoint: ${endpoint}`);
-            // Simple ping to check if server is responding
-            const response = await fetch(endpoint, { 
-              method: 'GET',
-              headers: { 'Content-Type': 'application/json' },
-              signal: AbortSignal.timeout(3000) // 3 second timeout per endpoint
-            });
-            
-            if (response.ok) {
-              console.log(`Server is online (${endpoint})`);
-              isOnline = true;
-              break;
-            }
-          } catch (endpointError) {
-            console.log(`Endpoint ${endpoint} failed:`, endpointError);
-            // Continue to next endpoint
-          }
+        if (isComponentMounted) {
+          setServerStatus(response.ok ? 'online' : 'offline');
         }
-        
-        setServerStatus(isOnline ? 'online' : 'offline');
       } catch (error) {
-        console.error('All server health checks failed:', error);
-        setServerStatus('offline');
+        if (isComponentMounted) {
+          console.error('Health check failed:', error);
+          setServerStatus('offline');
+        }
       }
     };
     
     // Initial check
     checkServerStatus();
     
-    // Set up periodic health checks
-    const intervalId = setInterval(() => {
-      checkServerStatus();
-    }, 30000); // Check every 30 seconds
+    // Less frequent checks
+    const intervalId = setInterval(checkServerStatus, 60000); // Check every minute instead of 30 seconds
     
-    return () => clearInterval(intervalId);
+    // Cleanup
+    return () => {
+      isComponentMounted = false;
+      clearInterval(intervalId);
+    };
   }, []); // No dependencies needed since we're not using any state variables in the interval
 
   return (
@@ -332,6 +379,18 @@ export default function ProjectSubmissionForm() {
           </div>
         </div>
 
+        {/* Auto-save indicator */}
+        <div className="px-6 py-2 bg-gray-50 text-sm flex items-center justify-between">
+          <span className="text-blue-600">
+            Your entries are automatically saved as you type
+          </span>
+          {lastSavedTime && (
+            <span className="text-gray-600">
+              Last saved: {lastSavedTime.toLocaleTimeString()}
+            </span>
+          )}
+        </div>
+
         <form onSubmit={handleSubmit(onSubmit)} className="p-6">
           {/* Step title */}
           <div className="text-center mb-8">
@@ -341,20 +400,6 @@ export default function ProjectSubmissionForm() {
             <p className="mt-2 text-sm text-gray-600">
               {formSteps[currentStep].description}
             </p>
-            
-            {/* Draft notification */}
-            {hasSavedDraft && currentStep === 0 && (
-              <div className="mt-4 p-3 bg-blue-50 rounded-lg text-blue-700 text-sm">
-                <p>You have a saved draft. Would you like to load it?</p>
-                <button
-                  type="button"
-                  onClick={loadDraft}
-                  className="mt-2 px-3 py-1 bg-blue-600 text-white rounded-md text-xs hover:bg-blue-700"
-                >
-                  Load Draft
-                </button>
-              </div>
-            )}
             
             {/* Offline mode explanation */}
             {serverStatus === 'offline' && currentStep === 0 && (
@@ -375,72 +420,38 @@ export default function ProjectSubmissionForm() {
           {/* Navigation buttons */}
           <div className={`flex ${currentStep === formSteps.length - 1 ? 'justify-center gap-4' : 'justify-between'} pt-4 border-t border-gray-200`}>
             {currentStep !== formSteps.length - 1 && (
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={prevStep}
-                  disabled={currentStep === 0}
-                  className={`
-                    inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
-                    transition-colors duration-200
-                    ${currentStep === 0
-                      ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400'
-                    }
-                  `}
-                >
-                  <FiArrowLeft className="mr-2 h-4 w-4" />
-                  Previous
-                </button>
-
-                <button
-                  type="button"
-                  onClick={saveDraft}
-                  disabled={isSavingDraft}
-                  className="
-                    inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg
-                    shadow-sm text-sm font-medium text-gray-700 bg-white
-                    hover:bg-gray-50 hover:border-gray-400
-                    transition-colors duration-200
-                  "
-                >
-                  <FiSave className="mr-2 h-4 w-4" />
-                  {isSavingDraft ? 'Saving...' : 'Save Draft'}
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={prevStep}
+                disabled={currentStep === 0}
+                className={`
+                  inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
+                  transition-colors duration-200
+                  ${currentStep === 0
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400'
+                  }
+                `}
+              >
+                <FiArrowLeft className="mr-2 h-4 w-4" />
+                Previous
+              </button>
             )}
 
             {currentStep === formSteps.length - 1 && (
-              <>
-                <button
-                  type="button"
-                  onClick={prevStep}
-                  className="
-                    inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg
-                    shadow-sm text-sm font-medium text-gray-700 bg-white
-                    hover:bg-gray-50 hover:border-gray-400
-                    transition-colors duration-200
-                  "
-                >
-                  <FiArrowLeft className="mr-2 h-4 w-4" />
-                  Previous
-                </button>
-                
-                <button
-                  type="button"
-                  onClick={saveDraft}
-                  disabled={isSavingDraft}
-                  className="
-                    inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg
-                    shadow-sm text-sm font-medium text-gray-700 bg-white
-                    hover:bg-gray-50 hover:border-gray-400
-                    transition-colors duration-200
-                  "
-                >
-                  <FiSave className="mr-2 h-4 w-4" />
-                  {isSavingDraft ? 'Saving...' : 'Save Draft'}
-                </button>
-              </>
+              <button
+                type="button"
+                onClick={prevStep}
+                className="
+                  inline-flex items-center px-6 py-3 border border-gray-300 rounded-lg
+                  shadow-sm text-sm font-medium text-gray-700 bg-white
+                  hover:bg-gray-50 hover:border-gray-400
+                  transition-colors duration-200
+                "
+              >
+                <FiArrowLeft className="mr-2 h-4 w-4" />
+                Previous
+              </button>
             )}
 
             <button

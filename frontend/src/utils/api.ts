@@ -219,7 +219,7 @@ export const submitProject = async (data: FormData, status: 'DRAFT' | 'SUBMITTED
       // Technical Details (with defaults for required fields)
       blockchain: data.technical?.blockchain || 'ETHEREUM',
       otherBlockchain: '',
-      features: data.technical?.features?.split(',').map(f => f.trim()) || [],
+      features: data.technical?.features || [],
       techStack: data.technical?.techStack || '',
       security: data.technical?.security || '',
 
@@ -234,22 +234,20 @@ export const submitProject = async (data: FormData, status: 'DRAFT' | 'SUBMITTED
       }),
 
       // Funding Details (with defaults for required fields)
-      previousFunding: data.funding?.previousFunding?.split(',').map(f => f.trim()) || [],
+      previousFunding: data.funding?.previousFunding || [],
       fundingTarget: data.funding?.fundingTarget || '0',
-      investmentTypes: data.funding?.investmentType ? [data.funding.investmentType] : [],
-      interestedVCs: '',
+      investmentTypes: data.funding?.investmentType || [],
+      interestedVCs: data.funding?.interestedVCs || '',
       keyMetrics: data.funding?.keyMetrics || '',
 
       // Services (with defaults for required fields)
-      requiredServices: data.services?.requiredServices?.split(',').map(s => s.trim()) || [],
+      requiredServices: data.services?.requiredServices || [],
       serviceDetails: data.services?.serviceDetails || '',
       additionalServices: '',
 
       // Compliance (with defaults for required fields)
       companyStructure: data.compliance?.companyStructure || 'LLC',
-      regulatoryCompliance: Array.isArray(data.compliance?.regulatoryCompliance) 
-        ? data.compliance.regulatoryCompliance 
-        : data.compliance?.regulatoryCompliance ? [data.compliance.regulatoryCompliance] : [],
+      regulatoryCompliance: data.compliance?.regulatoryCompliance || [],
       legalAdvisor: data.compliance?.legalAdvisor || '',
       complianceStrategy: data.compliance?.complianceStrategy || '',
       riskFactors: data.compliance?.riskFactors || ''

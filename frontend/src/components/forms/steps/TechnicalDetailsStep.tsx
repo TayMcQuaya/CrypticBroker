@@ -8,7 +8,7 @@ export default function TechnicalDetailsStep() {
   return (
     <div className="space-y-6">
       <SelectField
-        name="blockchain"
+        name="technical.blockchain"
         label="Primary Blockchain"
         required
         options={[
@@ -30,7 +30,7 @@ export default function TechnicalDetailsStep() {
       />
 
       <CheckboxGroup
-        name="features"
+        name="technical.features"
         label="Key Technical Features"
         required
         options={[

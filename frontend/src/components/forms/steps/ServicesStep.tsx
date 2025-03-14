@@ -6,7 +6,7 @@ export default function ServicesStep() {
   return (
     <div className="space-y-6">
       <CheckboxGroup
-        name="requiredServices"
+        name="services.requiredServices"
         label="Required Support Services"
         required
         options={[

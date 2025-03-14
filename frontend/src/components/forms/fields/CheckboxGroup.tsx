@@ -25,15 +25,26 @@ export default function CheckboxGroup({
   columns = 1,
 }: CheckboxGroupProps) {
   const {
-    register,
     formState: { errors },
+    setValue,
+    watch,
   } = useFormContext();
+
+  const selectedValues = watch(name) || [];
 
   const gridCols = {
     1: 'grid-cols-1',
     2: 'grid-cols-2',
     3: 'grid-cols-3',
     4: 'grid-cols-4',
+  };
+
+  const handleCheckboxChange = (value: string, checked: boolean) => {
+    const currentValues = selectedValues || [];
+    const newValues = checked
+      ? [...currentValues, value]
+      : currentValues.filter((v: string) => v !== value);
+    setValue(name, newValues, { shouldValidate: true });
   };
 
   return (
@@ -52,9 +63,8 @@ export default function CheckboxGroup({
             <input
               type="checkbox"
               value={option.value}
-              {...register(name, {
-                required: required ? 'Please select at least one option' : false,
-              })}
+              checked={selectedValues?.includes(option.value)}
+              onChange={(e) => handleCheckboxChange(option.value, e.target.checked)}
               className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
             />
             <span className="text-gray-700">{option.label}</span>

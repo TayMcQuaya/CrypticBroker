@@ -7,7 +7,7 @@ export default function FundingStep() {
   return (
     <div className="space-y-6">
       <CheckboxGroup
-        name="previousFunding"
+        name="funding.previousFunding"
         label="Previous Funding Rounds"
         options={[
           { value: 'PRIVATE', label: 'Private' },
@@ -18,6 +18,7 @@ export default function FundingStep() {
         ]}
         columns={2}
         helpText="Select all that apply"
+        required
       />
 
       <TextField
