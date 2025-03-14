@@ -23,9 +23,9 @@ export default function TechnicalDetailsStep() {
       />
 
       <TextField
-        name="otherBlockchain"
+        name="technical.otherBlockchain"
         label="Other Blockchain"
-        placeholder="If Other, please specify"
+        placeholder="Specify if you selected 'Other' above"
         helpText="Only fill this if you selected 'Other' above"
       />
 
@@ -46,8 +46,8 @@ export default function TechnicalDetailsStep() {
       />
 
       <TextArea
-        name="techStack"
-        label="Technology Stack"
+        name="technical.techStack"
+        label="Technical Stack"
         required
         placeholder={`Describe your tech stack, including:
 - Programming Languages
@@ -60,7 +60,7 @@ export default function TechnicalDetailsStep() {
       />
 
       <TextArea
-        name="security"
+        name="technical.security"
         label="Security Measures"
         required
         placeholder={`Detail your security approach:

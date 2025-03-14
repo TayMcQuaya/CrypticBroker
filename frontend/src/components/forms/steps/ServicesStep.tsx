@@ -24,8 +24,8 @@ export default function ServicesStep() {
       />
 
       <TextArea
-        name="serviceDetails"
-        label="Service Requirements Details"
+        name="services.serviceDetails"
+        label="Service Details"
         required
         placeholder={`Please specify your needs for each selected service:
 - Timeline requirements
@@ -37,8 +37,8 @@ export default function ServicesStep() {
       />
 
       <TextArea
-        name="additionalServices"
-        label="Additional Support Needed"
+        name="services.additionalServices"
+        label="Additional Services"
         placeholder="Describe any other support services not listed above that you might need"
         rows={4}
         helpText="Optional - List any other services you're looking for"

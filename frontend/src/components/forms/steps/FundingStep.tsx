@@ -21,7 +21,7 @@ export default function FundingStep() {
       />
 
       <TextField
-        name="fundingTarget"
+        name="funding.fundingTarget"
         label="Current Fundraising Target ($USD)"
         required
         placeholder="e.g., 1,000,000"
@@ -29,7 +29,7 @@ export default function FundingStep() {
       />
 
       <CheckboxGroup
-        name="investmentType"
+        name="funding.investmentType"
         label="Type of Investment Sought"
         options={[
           { value: 'EQUITY', label: 'Equity' },
@@ -43,14 +43,14 @@ export default function FundingStep() {
       />
 
       <TextField
-        name="interestedVCs"
+        name="funding.interestedVCs"
         label="Top 3 VCs/Funds Currently Interested"
         placeholder="List the names of VCs/Funds if any"
         helpText="Optional - helps us understand your current fundraising progress"
       />
 
       <TextArea
-        name="keyMetrics"
+        name="funding.keyMetrics"
         label="Key Metrics to Showcase to Investors"
         required
         placeholder={`Share your key metrics such as:

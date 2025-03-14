@@ -64,7 +64,9 @@ const Navbar = () => {
               {user ? (
                 <div className="relative ml-3">
                   <div className="flex items-center space-x-4">
-                    <span className="text-white">{user.username}</span>
+                    <span className="text-white">
+                      {user.firstName} {user.lastName}
+                    </span>
                     <button
                       onClick={logout}
                       className="inline-flex items-center justify-center p-2 rounded-md text-blue-100 hover:text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
@@ -150,7 +152,9 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="ml-3">
-                <div className="text-base font-medium text-white">{user.username}</div>
+                <div className="text-base font-medium text-white">
+                  {user.firstName} {user.lastName}
+                </div>
                 <div className="text-sm font-medium text-blue-100">{user.email}</div>
               </div>
               <button
