@@ -1,44 +1,15 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import FormField from '../FormField';
+import { FormDataPath } from '../schema';
 
 interface TextFieldProps {
-  name: string;
+  name: FormDataPath;
   label: string;
   required?: boolean;
   type?: 'text' | 'url' | 'email' | 'date';
   placeholder?: string;
   helpText?: string;
-  validation?: {
-    pattern?: {
-      value: RegExp;
-      message: string;
-    };
-    minLength?: {
-      value: number;
-      message: string;
-    };
-    maxLength?: {
-      value: number;
-      message: string;
-    };
-  };
 }
-
-const defaultValidation = {
-  url: {
-    pattern: {
-      value: /^https?:\/\/.+/,
-      message: 'Please enter a valid URL starting with http:// or https://',
-    },
-  },
-  email: {
-    pattern: {
-      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-      message: 'Please enter a valid email address',
-    },
-  },
-};
 
 export default function TextField({
   name,
@@ -47,33 +18,46 @@ export default function TextField({
   type = 'text',
   placeholder,
   helpText,
-  validation = {},
 }: TextFieldProps) {
   const {
     register,
     formState: { errors },
   } = useFormContext();
 
-  // Combine default validation with custom validation
-  const finalValidation = {
-    required: required ? 'This field is required' : false,
-    ...(defaultValidation[type as keyof typeof defaultValidation] || {}),
-    ...validation,
-  };
+  const error = errors[name]?.message as string;
 
   return (
-    <FormField
-      label={label}
-      required={required}
-      error={errors[name]?.message as string}
-      helpText={helpText}
-    >
+    <div className="space-y-1">
+      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+        {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
+      </label>
+      
       <input
+        id={name}
         type={type}
-        {...register(name, finalValidation)}
+        {...register(name)}
         placeholder={placeholder}
-        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+        className={`
+          block w-full px-4 py-3 rounded-lg border
+          text-gray-900 placeholder-gray-400
+          focus:outline-none focus:ring-2 focus:ring-offset-2
+          ${error 
+            ? 'border-red-300 focus:border-red-500 focus:ring-red-500' 
+            : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+          }
+          transition-colors duration-200
+          text-base
+        `}
       />
-    </FormField>
+      
+      {helpText && !error && (
+        <p className="mt-1 text-sm text-gray-500">{helpText}</p>
+      )}
+      
+      {error && (
+        <p className="mt-1 text-sm text-red-600">{error}</p>
+      )}
+    </div>
   );
 } 

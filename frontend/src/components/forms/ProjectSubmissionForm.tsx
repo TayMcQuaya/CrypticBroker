@@ -167,92 +167,115 @@ export default function ProjectSubmissionForm() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-        {/* Progress bar */}
-        <div className="relative">
-          <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
-            <div
-              style={{ width: `${((currentStep + 1) / formSteps.length) * 100}%` }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600 transition-all duration-500"
-            />
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4">
+          <div className="flex justify-between items-center text-white">
+            <h1 className="text-xl font-semibold">Submit Your Project</h1>
+            <span className="text-sm">Step {currentStep + 1} of {formSteps.length}</span>
           </div>
-          <div className="flex justify-between text-xs text-gray-600">
-            {formSteps.map((step, index) => (
+          
+          {/* Progress bar */}
+          <div className="mt-4">
+            <div className="overflow-hidden h-2 rounded-full bg-blue-900/30">
               <div
-                key={step.id}
-                className={`${
-                  index <= currentStep ? 'text-blue-600' : 'text-gray-400'
-                }`}
+                style={{ width: `${((currentStep + 1) / formSteps.length) * 100}%` }}
+                className="h-full bg-white rounded-full transition-all duration-500 ease-in-out"
+              />
+            </div>
+            <div className="flex justify-between mt-2 text-xs text-blue-100">
+              {formSteps.map((step, index) => (
+                <div
+                  key={step.id}
+                  className={`${
+                    index <= currentStep ? 'opacity-100' : 'opacity-50'
+                  }`}
+                >
+                  Step {index + 1}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="p-6">
+          {/* Step title */}
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-900">
+              {formSteps[currentStep].title}
+            </h2>
+            <p className="mt-2 text-sm text-gray-600">
+              {formSteps[currentStep].description}
+            </p>
+          </div>
+
+          {/* Current step form */}
+          <div className="bg-gray-50 rounded-lg p-6 mb-8">
+            <CurrentStepComponent onFileUpload={handleFileUpload} />
+          </div>
+
+          {/* Navigation buttons */}
+          <div className="flex justify-between pt-4 border-t border-gray-200">
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={prevStep}
+                disabled={currentStep === 0}
+                className={`
+                  inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium
+                  transition-colors duration-200
+                  ${currentStep === 0
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400'
+                  }
+                `}
               >
-                Step {index + 1}
-              </div>
-            ))}
-          </div>
-        </div>
+                <FiArrowLeft className="mr-2 h-4 w-4" />
+                Previous
+              </button>
 
-        {/* Step title */}
-        <div className="text-center">
-          <h2 className="text-xl font-semibold text-gray-900">
-            {formSteps[currentStep].title}
-          </h2>
-          <p className="mt-1 text-sm text-gray-500">
-            {formSteps[currentStep].description}
-          </p>
-        </div>
-
-        {/* Current step form */}
-        <div className="bg-white shadow-sm rounded-lg p-6">
-          <CurrentStepComponent onFileUpload={handleFileUpload} />
-        </div>
-
-        {/* Navigation buttons */}
-        <div className="flex justify-between pt-4">
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={prevStep}
-              disabled={currentStep === 0}
-              className={`inline-flex items-center px-4 py-2 rounded-md text-sm font-medium ${
-                currentStep === 0
-                  ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                  : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
-              }`}
-            >
-              <FiArrowLeft className="mr-2 h-4 w-4" />
-              Previous
-            </button>
+              <button
+                type="button"
+                onClick={saveDraft}
+                disabled={isSavingDraft}
+                className="
+                  inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg
+                  shadow-sm text-sm font-medium text-gray-700 bg-white
+                  hover:bg-gray-50 hover:border-gray-400
+                  transition-colors duration-200
+                "
+              >
+                <FiSave className="mr-2 h-4 w-4" />
+                {isSavingDraft ? 'Saving...' : 'Save Draft'}
+              </button>
+            </div>
 
             <button
-              type="button"
-              onClick={saveDraft}
-              disabled={isSavingDraft}
-              className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+              type={currentStep === formSteps.length - 1 ? 'submit' : 'button'}
+              onClick={currentStep === formSteps.length - 1 ? undefined : nextStep}
+              disabled={isSubmitting}
+              className="
+                inline-flex items-center px-6 py-2 rounded-lg text-sm font-medium
+                text-white bg-blue-600 hover:bg-blue-700
+                disabled:bg-blue-400 disabled:cursor-not-allowed
+                transition-colors duration-200
+                shadow-sm
+              "
             >
-              <FiSave className="mr-2 h-4 w-4" />
-              {isSavingDraft ? 'Saving...' : 'Save Draft'}
+              {currentStep === formSteps.length - 1 ? (
+                <>
+                  <FiCheck className="mr-2 h-4 w-4" />
+                  {isSubmitting ? 'Submitting...' : 'Submit'}
+                </>
+              ) : (
+                <>
+                  Next
+                  <FiArrowRight className="ml-2 h-4 w-4" />
+                </>
+              )}
             </button>
           </div>
-
-          <button
-            type={currentStep === formSteps.length - 1 ? 'submit' : 'button'}
-            onClick={currentStep === formSteps.length - 1 ? undefined : nextStep}
-            disabled={isSubmitting}
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400"
-          >
-            {currentStep === formSteps.length - 1 ? (
-              <>
-                <FiCheck className="mr-2 h-4 w-4" />
-                {isSubmitting ? 'Submitting...' : 'Submit'}
-              </>
-            ) : (
-              <>
-                Next
-                <FiArrowRight className="ml-2 h-4 w-4" />
-              </>
-            )}
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </FormProvider>
   );
 } 

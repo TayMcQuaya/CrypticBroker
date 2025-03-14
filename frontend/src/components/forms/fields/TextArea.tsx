@@ -1,24 +1,14 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import FormField from '../FormField';
+import { FormDataPath } from '../schema';
 
 interface TextAreaProps {
-  name: string;
+  name: FormDataPath;
   label: string;
   required?: boolean;
   placeholder?: string;
   helpText?: string;
   rows?: number;
-  validation?: {
-    minLength?: {
-      value: number;
-      message: string;
-    };
-    maxLength?: {
-      value: number;
-      message: string;
-    };
-  };
 }
 
 export default function TextArea({
@@ -28,31 +18,46 @@ export default function TextArea({
   placeholder,
   helpText,
   rows = 4,
-  validation = {},
 }: TextAreaProps) {
   const {
     register,
     formState: { errors },
   } = useFormContext();
 
-  const finalValidation = {
-    required: required ? 'This field is required' : false,
-    ...validation,
-  };
+  const error = errors[name]?.message as string;
 
   return (
-    <FormField
-      label={label}
-      required={required}
-      error={errors[name]?.message as string}
-      helpText={helpText}
-    >
+    <div className="space-y-1">
+      <label htmlFor={name} className="block text-sm font-medium text-gray-700">
+        {label}
+        {required && <span className="text-red-500 ml-1">*</span>}
+      </label>
+      
       <textarea
-        {...register(name, finalValidation)}
+        id={name}
         rows={rows}
+        {...register(name)}
         placeholder={placeholder}
-        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+        className={`
+          block w-full px-4 py-3 rounded-lg border
+          text-gray-900 placeholder-gray-400
+          focus:outline-none focus:ring-2 focus:ring-offset-2
+          ${error 
+            ? 'border-red-300 focus:border-red-500 focus:ring-red-500' 
+            : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+          }
+          transition-colors duration-200
+          text-base resize-none
+        `}
       />
-    </FormField>
+      
+      {helpText && !error && (
+        <p className="mt-1 text-sm text-gray-500">{helpText}</p>
+      )}
+      
+      {error && (
+        <p className="mt-1 text-sm text-red-600">{error}</p>
+      )}
+    </div>
   );
 } 

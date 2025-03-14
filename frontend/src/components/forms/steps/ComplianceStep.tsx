@@ -3,12 +3,18 @@ import TextField from '../fields/TextField';
 import SelectField from '../fields/SelectField';
 import TextArea from '../fields/TextArea';
 import CheckboxGroup from '../fields/CheckboxGroup';
+import { FormDataPath } from '../schema';
 
-export default function ComplianceStep() {
+interface ComplianceStepProps {
+  onFileUpload: (file: File, field: FormDataPath) => Promise<void>;
+}
+
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+export default function ComplianceStep({ onFileUpload }: ComplianceStepProps) {
   return (
     <div className="space-y-6">
       <SelectField
-        name="companyStructure"
+        name="compliance.companyStructure"
         label="Company Structure"
         required
         options={[
@@ -22,7 +28,7 @@ export default function ComplianceStep() {
       />
 
       <CheckboxGroup
-        name="regulatoryCompliance"
+        name="compliance.regulatoryCompliance"
         label="Regulatory Compliance Status"
         required
         options={[
@@ -37,14 +43,14 @@ export default function ComplianceStep() {
       />
 
       <TextField
-        name="legalAdvisor"
+        name="compliance.legalAdvisor"
         label="Legal Advisor/Firm"
         placeholder="Name of your legal representation if any"
         helpText="Optional - Who provides your legal counsel?"
       />
 
       <TextArea
-        name="complianceStrategy"
+        name="compliance.complianceStrategy"
         label="Compliance Strategy"
         required
         placeholder={`Detail your compliance approach:
@@ -57,7 +63,7 @@ export default function ComplianceStep() {
       />
 
       <TextArea
-        name="riskFactors"
+        name="compliance.riskFactors"
         label="Key Risk Factors"
         required
         placeholder={`List main risk factors:
