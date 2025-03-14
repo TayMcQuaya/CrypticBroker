@@ -1,5 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import { prisma } from '../index';
+import { prisma } from '../lib/prisma';
+import type { PrismaClient } from '@prisma/client';
+
+// Define the transaction client type
+type TransactionClient = Omit<
+  PrismaClient,
+  '$connect' | '$disconnect' | '$on' | '$transaction' | '$use' | '$extends'
+>;
 
 interface FormQuestion {
   text: string;
@@ -9,13 +16,26 @@ interface FormQuestion {
   options?: string[];
 }
 
+interface FormSection {
+  title: string;
+  description?: string;
+  questions?: FormQuestion[];
+}
+
+interface CreateFormBody {
+  title: string;
+  description?: string;
+  structure: any;
+  sections?: FormSection[];
+}
+
 /**
  * @desc    Create a new form
  * @route   POST /api/forms
  * @access  Private (Admin only)
  */
 export const createForm = async (
-  req: Request,
+  req: Request<{}, {}, CreateFormBody>,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -41,36 +61,39 @@ export const createForm = async (
     }
     
     // Create form with transaction to ensure sections are created properly
-    const form = await prisma.$transaction(async (tx) => {
+    const form = await prisma.$transaction(async (tx: TransactionClient) => {
       // Create the form
-      const newForm = await tx.form.create({
+      const newForm = await tx.forms.create({
         data: {
           title,
           description,
           structure,
-          createdById: userId,
-          isActive: true
+          createdBy: { connect: { id: userId } },
+          isActive: true,
+          version: 1
         }
       });
       
       // Create sections if provided
       if (sections && Array.isArray(sections) && sections.length > 0) {
         for (const [index, section] of sections.entries()) {
-          await tx.formSection.create({
+          await tx.form_sections.create({
             data: {
-              formId: newForm.id,
+              form: { connect: { id: newForm.id } },
               title: section.title,
               description: section.description,
               order: index,
-              questions: {
-                create: section.questions?.map((question: FormQuestion, qIndex: number) => ({
-                  text: question.text,
-                  description: question.description,
-                  type: question.type,
-                  isRequired: question.isRequired || false,
-                  order: qIndex,
-                  options: question.options || null
-                })) || []
+              form_questions: {
+                createMany: {
+                  data: section.questions?.map((question: FormQuestion, qIndex: number) => ({
+                    text: question.text,
+                    description: question.description,
+                    type: question.type,
+                    isRequired: question.isRequired || false,
+                    order: qIndex,
+                    options: question.options || null
+                  })) || []
+                }
               }
             }
           });
@@ -81,15 +104,22 @@ export const createForm = async (
     });
     
     // Fetch the complete form with sections and questions
-    const completeForm = await prisma.form.findUnique({
+    const completeForm = await prisma.forms.findUnique({
       where: { id: form.id },
       include: {
-        sections: {
+        form_sections: {
           include: {
-            questions: true
+            form_questions: true
           },
           orderBy: {
             order: 'asc'
+          }
+        },
+        form_submissions: true,
+        _count: {
+          select: {
+            form_sections: true,
+            form_submissions: true
           }
         }
       }
@@ -117,7 +147,7 @@ export const getForms = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const forms = await prisma.form.findMany({
+    const forms = await prisma.forms.findMany({
       where: {
         isActive: true
       },
@@ -134,8 +164,8 @@ export const getForms = async (
         updatedAt: true,
         _count: {
           select: {
-            sections: true,
-            submissions: true
+            form_sections: true,
+            form_submissions: true
           }
         }
       }
@@ -166,14 +196,14 @@ export const getForm = async (
   try {
     const { id } = req.params;
     
-    const form = await prisma.form.findUnique({
+    const form = await prisma.forms.findUnique({
       where: {
         id
       },
       include: {
-        sections: {
+        form_sections: {
           include: {
-            questions: {
+            form_questions: {
               orderBy: {
                 order: 'asc'
               }
@@ -220,7 +250,7 @@ export const updateForm = async (
     const { title, description, isActive } = req.body;
     
     // Check if form exists
-    const existingForm = await prisma.form.findUnique({
+    const existingForm = await prisma.forms.findUnique({
       where: {
         id
       }
@@ -235,7 +265,7 @@ export const updateForm = async (
     }
     
     // Update form
-    const updatedForm = await prisma.form.update({
+    const updatedForm = await prisma.forms.update({
       where: {
         id
       },
@@ -281,7 +311,7 @@ export const submitForm = async (
     }
     
     // Check if form exists
-    const form = await prisma.form.findUnique({
+    const form = await prisma.forms.findUnique({
       where: {
         id
       }
@@ -297,7 +327,7 @@ export const submitForm = async (
     
     // If projectId is provided, check if project exists and user is the owner
     if (projectId) {
-      const project = await prisma.project.findUnique({
+      const project = await prisma.projects.findUnique({
         where: {
           id: projectId
         }
@@ -321,15 +351,17 @@ export const submitForm = async (
     }
     
     // Create form submission
-    const submission = await prisma.formSubmission.create({
-      data: {
-        formId: id,
-        userId,
-        projectId: projectId || undefined,
-        formVersion: form.version,
-        data,
-        status: 'submitted'
-      }
+    const submissionData = {
+      formId: id,
+      userId,
+      projectId: projectId || null,
+      formVersion: form.version,
+      data,
+      status: 'submitted'
+    } satisfies Omit<PrismaClient.form_submissionsUncheckedCreateInput, 'id' | 'updatedAt'>;
+
+    const submission = await prisma.form_submissions.create({
+      data: submissionData
     });
     
     res.status(201).json({
@@ -357,7 +389,7 @@ export const getFormSubmissions = async (
     const { id } = req.params;
     
     // Check if form exists
-    const form = await prisma.form.findUnique({
+    const form = await prisma.forms.findUnique({
       where: {
         id
       }
@@ -372,12 +404,12 @@ export const getFormSubmissions = async (
     }
     
     // Get submissions
-    const submissions = await prisma.formSubmission.findMany({
+    const submissions = await prisma.form_submissions.findMany({
       where: {
         formId: id
       },
       include: {
-        user: {
+        users: {
           select: {
             id: true,
             email: true,
@@ -385,7 +417,7 @@ export const getFormSubmissions = async (
             lastName: true
           }
         },
-        project: {
+        projects: {
           select: {
             id: true,
             name: true
@@ -432,13 +464,13 @@ export const getSubmission = async (
       return;
     }
     
-    const submission = await prisma.formSubmission.findUnique({
+    const submission = await prisma.form_submissions.findUnique({
       where: {
         id
       },
       include: {
-        form: true,
-        user: {
+        forms: true,
+        users: {
           select: {
             id: true,
             email: true,
@@ -446,7 +478,7 @@ export const getSubmission = async (
             lastName: true
           }
         },
-        project: true
+        projects: true
       }
     });
     
@@ -500,18 +532,18 @@ export const getMySubmissions = async (
       return;
     }
     
-    const submissions = await prisma.formSubmission.findMany({
+    const submissions = await prisma.form_submissions.findMany({
       where: {
         userId
       },
       include: {
-        form: {
+        forms: {
           select: {
             id: true,
             title: true
           }
         },
-        project: {
+        projects: {
           select: {
             id: true,
             name: true

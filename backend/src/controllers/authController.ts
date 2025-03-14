@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
-import { prisma } from '../index';
+import { prisma } from '../lib/prisma';
 import { catchAsync, AppError, badRequest } from '../utils/errors';
 import jwt, { SignOptions } from 'jsonwebtoken';
 import { Prisma } from '@prisma/client';
@@ -56,7 +56,7 @@ const signToken = (id: string): string => {
     throw new Error('JWT_SECRET is not defined');
   }
   const options: SignOptions = {
-    expiresIn: process.env.JWT_EXPIRES_IN ? parseInt(process.env.JWT_EXPIRES_IN) : '90d'
+    expiresIn: (process.env.JWT_EXPIRES_IN || '90d') as jwt.SignOptions['expiresIn']
   };
   return jwt.sign({ id }, jwtSecret, options);
 };

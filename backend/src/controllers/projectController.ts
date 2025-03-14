@@ -1,36 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
-import { prisma } from '../index';
-import { BlockchainType, CompanyStructure, InvestmentType, ProjectStatus } from '@prisma/client';
+import { prisma } from '../lib/prisma';
+import { Prisma, ProjectStatus } from '@prisma/client';
 
-interface CreateProjectData {
+// Remove custom types and use Prisma's generated types
+type ProjectCreateInput = Prisma.projectsCreateInput;
+type ProjectUncheckedCreateInput = Prisma.projectsUncheckedCreateInput;
+
+interface ProjectRequestBody {
   name: string;
   description?: string;
   website?: string;
   pitchDeckUrl?: string;
-  status: ProjectStatus;
-  blockchain: BlockchainType;
-  otherBlockchain?: string;
-  features: string[];
-  techStack: string;
-  security: string;
-  tgeDate?: string;
-  listingExchanges: string;
-  marketMaker?: string;
-  tokenomics: string;
-  previousFunding: string[];
-  fundingTarget: string;
-  investmentTypes: InvestmentType[];
-  interestedVCs?: string;
-  keyMetrics: string;
-  requiredServices: string[];
-  serviceDetails: string;
-  additionalServices?: string;
-  companyStructure: CompanyStructure;
-  regulatoryCompliance: string[];
-  legalAdvisor?: string;
-  complianceStrategy: string;
-  riskFactors: string;
-  ownerId: string;
 }
 
 /**
@@ -39,7 +19,7 @@ interface CreateProjectData {
  * @access  Private
  */
 export const createProject = async (
-  req: Request,
+  req: Request<{}, {}, ProjectRequestBody>,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
@@ -63,31 +43,16 @@ export const createProject = async (
       return;
     }
     
-    // Create project with default values for required fields
-    const projectData: CreateProjectData = {
-      ...req.body,
-      status: 'DRAFT',
-      ownerId: userId,
-      blockchain: req.body.blockchain || 'ETHEREUM',
-      features: req.body.features || [],
-      techStack: req.body.techStack || '',
-      security: req.body.security || '',
-      listingExchanges: req.body.listingExchanges || '',
-      tokenomics: req.body.tokenomics || '',
-      previousFunding: req.body.previousFunding || [],
-      fundingTarget: req.body.fundingTarget || '0',
-      investmentTypes: req.body.investmentTypes || [],
-      keyMetrics: req.body.keyMetrics || '',
-      requiredServices: req.body.requiredServices || [],
-      serviceDetails: req.body.serviceDetails || '',
-      companyStructure: req.body.companyStructure || 'LLC',
-      regulatoryCompliance: req.body.regulatoryCompliance || [],
-      complianceStrategy: req.body.complianceStrategy || '',
-      riskFactors: req.body.riskFactors || ''
-    };
-    
-    const project = await prisma.project.create({
-      data: projectData
+    // Create project using unchecked create input
+    const project = await prisma.projects.create({
+      data: {
+        name: req.body.name,
+        description: req.body.description ?? null,
+        website: req.body.website ?? null,
+        pitchDeckUrl: req.body.pitchDeckUrl ?? null,
+        status: ProjectStatus.DRAFT,
+        ownerId: userId
+      } as Prisma.projectsUncheckedCreateInput
     });
     
     res.status(201).json({
@@ -122,7 +87,7 @@ export const getMyProjects = async (
       return;
     }
     
-    const projects = await prisma.project.findMany({
+    const projects = await prisma.projects.findMany({
       where: {
         ownerId: userId
       },
@@ -165,13 +130,13 @@ export const getProject = async (
       return;
     }
     
-    const project = await prisma.project.findUnique({
+    const project = await prisma.projects.findUnique({
       where: {
         id
       },
       include: {
         applications: true,
-        formSubmissions: true
+        form_submissions: true
       }
     });
     
@@ -227,7 +192,7 @@ export const updateProject = async (
     }
     
     // Check if project exists and user is the owner
-    const existingProject = await prisma.project.findUnique({
+    const existingProject = await prisma.projects.findUnique({
       where: {
         id
       }
@@ -250,7 +215,7 @@ export const updateProject = async (
     }
     
     // Update project
-    const updatedProject = await prisma.project.update({
+    const updatedProject = await prisma.projects.update({
       where: {
         id
       },
@@ -297,7 +262,7 @@ export const deleteProject = async (
     }
     
     // Check if project exists and user is the owner
-    const existingProject = await prisma.project.findUnique({
+    const existingProject = await prisma.projects.findUnique({
       where: {
         id
       }
@@ -320,7 +285,7 @@ export const deleteProject = async (
     }
     
     // Delete project
-    await prisma.project.delete({
+    await prisma.projects.delete({
       where: {
         id
       }

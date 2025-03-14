@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AppError, unauthorized } from '../utils/errors';
-import { prisma } from '../index';
+import { prisma } from '../lib/prisma';
 
 interface User {
   id: string;
@@ -64,7 +64,7 @@ export const protect = async (
     }
 
     // Find user in database
-    const currentUser = await prisma.user.findUnique({
+    const currentUser = await prisma.users.findUnique({
       where: { id: decoded.id }
     });
 

@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { PrismaClient } from '@prisma/client';
 import path from 'path';
+import { prisma } from './lib/prisma';
 
 // Import routes
 import authRoutes from './routes/authRoutes';
@@ -21,9 +21,6 @@ dotenv.config();
 
 // Initialize Express app
 const app = express();
-
-// Initialize Prisma client
-export const prisma = new PrismaClient();
 
 // Custom error type
 interface ApiError extends Error {
