@@ -21,12 +21,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProviderWrapper>
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50">
             <Navbar />
-            <main className="flex-grow">
+            <main className="flex-1 flex flex-col">
               {children}
             </main>
-            <footer className="bg-white shadow-inner py-6">
+            <footer className="bg-white/80 backdrop-blur-sm shadow-inner py-6">
               <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col items-center justify-center">
                   <p className="text-sm text-gray-500">
