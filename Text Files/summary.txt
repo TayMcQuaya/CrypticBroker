@@ -1,0 +1,299 @@
+# Project Root Structure
+/CrypticBroker
+├── README.md              # Project documentation and setup guide
+├── .gitignore            # Git ignore rules
+├── .gitignore.backup     # Backup of git ignore rules
+├── package.json          # Root dependencies
+├── package-lock.json     # Root dependency lock file
+├── gitauto.py           # Git automation script
+├── docs/                # Documentation directory
+├── Text Files/          # Additional text files
+├── frontend/            # Next.js frontend application
+├── backend/             # Express backend application
+└── node_modules/        # Root node modules
+
+# Frontend Structure (/frontend)
+├── .env.local           # Environment variables
+├── .gitignore          # Frontend specific ignores
+├── eslint.config.mjs   # ESLint configuration
+├── next.config.ts      # Next.js configuration
+├── next-env.d.ts       # Next.js type definitions
+├── package.json        # Frontend dependencies
+├── package-lock.json   # Frontend dependency lock
+├── postcss.config.js   # PostCSS configuration
+├── postcss.config.mjs  # PostCSS module configuration
+├── tailwind.config.js  # Tailwind CSS configuration
+├── tailwind.config.ts  # Tailwind TypeScript configuration
+├── tsconfig.json       # TypeScript configuration
+├── tsconfig.tsbuildinfo # TypeScript build info
+├── public/             # Static assets
+└── src/
+    ├── app/           # Next.js 13+ app router
+    │   ├── page.tsx              # Homepage with features showcase
+    │   ├── layout.tsx            # Root layout with AuthWrapper
+    │   ├── globals.css           # Global styles
+    │   ├── dashboard/            # Dashboard pages
+    │   ├── submit-project/       # Project submission
+    │   ├── api/                  # API routes
+    │   ├── login/               # Login pages
+    │   └── register/            # Registration pages
+    ├── components/    # Reusable components
+    │   ├── auth/
+    │   │   └── AuthProviderWrapper.tsx
+    │   ├── layout/
+    │   └── ui/
+    ├── hooks/        # Custom React hooks
+    ├── utils/        # Utility functions
+    └── styles/       # Style components
+
+# Backend Structure (/backend)
+├── .env               # Environment variables
+├── .env.example      # Example environment variables
+├── .eslintrc.json    # ESLint configuration
+├── package.json      # Backend dependencies
+├── package-lock.json # Backend dependency lock
+├── tsconfig.json     # TypeScript configuration
+├── src/
+│   ├── index.ts      # Main application entry
+│   ├── routes/
+│   │   ├── authRoutes.ts         # Authentication routes
+│   │   ├── projectRoutes.ts      # Project management routes
+│   │   ├── formRoutes.ts         # Form handling routes
+│   │   ├── userRoutes.ts         # User management routes
+│   │   ├── organizationRoutes.ts # Organization routes
+│   │   ├── applicationRoutes.ts  # Application routes
+│   │   └── uploadRoutes.ts       # File upload routes
+│   ├── controllers/
+│   │   ├── authController.ts         # Auth logic
+│   │   ├── userController.ts         # User management
+│   │   ├── projectController.ts      # Project handling
+│   │   ├── formController.ts         # Form processing
+│   │   ├── organizationController.ts # Organization management
+│   │   ├── applicationController.ts  # Application processing
+│   │   └── uploadController.ts       # File uploads
+│   ├── services/
+│   │   ├── auth.service.ts      # Authentication service
+│   │   ├── user.service.ts      # User service
+│   │   ├── project.service.ts   # Project service
+│   │   └── upload.service.ts    # Upload service
+│   ├── models/
+│   │   ├── User.ts             # User model & interfaces
+│   │   ├── Project.ts          # Project model & interfaces
+│   │   └── Organization.ts     # Organization model & interfaces
+│   ├── middlewares/
+│   │   └── auth.ts            # Authentication middleware
+│   └── utils/
+│       ├── errors.ts         # Error handling
+│       └── jwt.ts           # JWT utilities
+└── prisma/
+    ├── schema.prisma       # Database schema
+    └── migrations/         # Database migrations
+
+# API Endpoints
+## Authentication
+POST /api/auth/signup     # Register new user
+POST /api/auth/login      # User login
+GET /api/auth/me          # Get current user
+PATCH /api/auth/updateMe  # Update user profile
+
+## Projects
+POST /api/projects        # Create project
+GET /api/projects         # List projects
+GET /api/projects/:id     # Get project details
+PATCH /api/projects/:id   # Update project
+DELETE /api/projects/:id  # Delete project
+
+## Forms
+POST /api/forms          # Create form
+GET /api/forms           # List forms
+GET /api/forms/:id       # Get form details
+PATCH /api/forms/:id     # Update form
+POST /api/forms/:id/submit # Submit form
+GET /api/forms/submissions/me # Get user submissions
+
+## Organizations
+POST /api/organizations  # Create organization
+GET /api/organizations   # List organizations
+PATCH /api/organizations/:id # Update organization
+POST /api/organizations/:id/members # Add member
+DELETE /api/organizations/:id/members/:memberId # Remove member
+
+## Applications
+POST /api/applications  # Create application
+GET /api/applications   # List applications
+PATCH /api/applications/:id/status # Update status
+GET /api/applications/organization/:id # Get org applications
+
+## File Upload
+POST /api/upload/single    # Single file upload
+POST /api/upload/multiple  # Multiple files upload
+DELETE /api/upload/:filename # Delete file
+
+# Database Schema (prisma/schema.prisma)
+## Enums
+enum UserRole {
+  ADMIN
+  PROJECT_OWNER
+  INVESTOR
+  ACCELERATOR
+}
+
+enum ProjectStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum ApplicationStatus {
+  DRAFT
+  SUBMITTED
+  REVIEWING
+  INTERVIEWING
+  ACCEPTED
+  REJECTED
+}
+
+enum OrganizationType {
+  VC
+  ACCELERATOR
+  PROJECT_TEAM
+  DAO
+}
+
+enum BlockchainType {
+  ETHEREUM
+  BINANCE_SMART_CHAIN
+  POLYGON
+  SOLANA
+  AVALANCHE
+  OTHER
+}
+
+## Models
+model User {
+  id                String    @id @default(uuid())
+  email             String    @unique
+  passwordHash      String
+  firstName         String?
+  lastName          String?
+  avatar            String?
+  role              UserRole  @default(PROJECT_OWNER)
+  isEmailVerified   Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  organizations     OrganizationMember[]
+  ownedOrganizations Organization[]
+  projects          Project[]
+  formSubmissions   FormSubmission[]
+  createdForms      Form[]
+}
+
+model Organization {
+  id              String            @id @default(uuid())
+  name            String
+  description     String?
+  logo            String?
+  website         String?
+  type            OrganizationType
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  ownerId         String
+  owner           User              @relation("OrganizationOwner")
+  members         OrganizationMember[]
+  receivedApplications Application[]
+  sentApplications Application[]
+}
+
+model Project {
+  id                  String          @id @default(uuid())
+  name                String
+  description         String?
+  website             String?
+  pitchDeckUrl        String?
+  status              ProjectStatus   @default(DRAFT)
+  blockchain          BlockchainType
+  features            String[]
+  techStack           String
+  security            String
+  tgeDate            String?
+  listingExchanges    String
+  marketMaker         String?
+  tokenomics          String
+  previousFunding     String[]
+  fundingTarget       String
+  investmentTypes     InvestmentType[]
+  keyMetrics          String
+  requiredServices    String[]
+  serviceDetails      String
+  companyStructure    CompanyStructure
+  regulatoryCompliance String[]
+  ownerId             String
+  owner               User
+  applications        Application[]
+  formSubmissions     FormSubmission[]
+}
+
+model Form {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  version     Int       @default(1)
+  isActive    Boolean   @default(true)
+  structure   Json
+  createdById String
+  createdBy   User
+  sections    FormSection[]
+  submissions FormSubmission[]
+}
+
+model Application {
+  id                  String             @id @default(uuid())
+  projectId           String
+  formSubmissionId    String?
+  applicantOrgId      String?
+  targetOrgId         String
+  status              ApplicationStatus  @default(DRAFT)
+  project             Project
+  formSubmission      FormSubmission?
+  applicantOrg        Organization?
+  targetOrg           Organization
+}
+
+# Environment Variables
+## Frontend (.env.local)
+NEXT_PUBLIC_API_URL=http://localhost:5000
+NEXT_PUBLIC_UPLOAD_URL=/uploads
+
+## Backend (.env)
+PORT=5000
+DATABASE_URL=postgresql://...
+JWT_SECRET=your-secret-key
+JWT_EXPIRES_IN=90d
+CORS_ORIGIN=http://localhost:3000
+
+# Key Dependencies
+## Frontend
+{
+  "next": "15.2.2",
+  "react": "^19.0.0",
+  "react-dom": "^19.0.0",
+  "axios": "^1.8.3",
+  "react-hook-form": "^7.54.2",
+  "react-hot-toast": "^2.5.2",
+  "react-icons": "^5.5.0",
+  "tailwindcss": "^3.4.1",
+  "typescript": "^5"
+}
+
+## Backend
+{
+  "express": "^4.21.2",
+  "prisma": "^4.16.2",
+  "@prisma/client": "^4.16.2",
+  "jsonwebtoken": "^9.0.2",
+  "bcrypt": "^5.1.1",
+  "cors": "^2.8.5",
+  "typescript": "^4.9.5"
+}
