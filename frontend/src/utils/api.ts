@@ -54,6 +54,26 @@ export interface MultipleFileUploadResponse {
   };
 }
 
+// Define a proper error type for axios errors
+interface ApiErrorResponse {
+  status: number;
+  data: unknown;
+}
+
+interface ApiErrorConfig {
+  url?: string;
+  method?: string;
+  headers?: Record<string, string>;
+}
+
+// Update the error interface to match axios error structure
+interface ApiError {
+  response?: ApiErrorResponse;
+  config?: ApiErrorConfig;
+  message: string;
+  status?: number;
+}
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
 // Create axios instance with default config
@@ -202,116 +222,76 @@ export const deleteUploadedFile = async (filename: string): Promise<void> => {
 
 // PROJECT API CALLS
 
+// Define ProjectStatus type
+type ProjectStatus = 'DRAFT' | 'SUBMITTED';
+
 /**
  * Save project as draft or submit
  */
-export const submitProject = async (data: FormData, status: 'DRAFT' | 'SUBMITTED') => {
+export const submitProject = async (formData: FormData, status: ProjectStatus = 'SUBMITTED') => {
+  console.log('Submitting project with transformed data:', formData);
+  
+  // Transform the data to match the backend structure
+  const transformedData = {
+    name: formData.generalInfo.projectName,
+    description: '',
+    website: formData.generalInfo.websiteUrl,
+    pitchDeckUrl: formData.generalInfo.pitchDeckUrl,
+    status: status,
+    blockchain: formData.technical.blockchain,
+    otherBlockchain: formData.technical.otherBlockchain || '',
+    features: formData.technical.features,
+    techStack: formData.technical.techStack,
+    security: formData.technical.security,
+    tgeDate: formData.tgeDetails.tgeDate,
+    listingExchanges: formData.tgeDetails.listingExchanges,
+    marketMaker: formData.tgeDetails.marketMakingProvider || '',
+    // Convert tokenomics object to string
+    tokenomics: JSON.stringify({
+      totalSupply: formData.tgeDetails.totalSupply,
+      circulatingSupply: formData.tgeDetails.circulatingSupply,
+      vestingSchedule: formData.tgeDetails.vestingSchedule
+    }),
+    previousFunding: formData.funding.previousFunding,
+    fundingTarget: formData.funding.fundingTarget,
+    // Fix for investmentTypes - convert to proper format
+    // The controller expects an array of enum values
+    investmentTypes: formData.funding.investmentType.map(type => {
+      // Map STRATEGIC to OTHER since it's not in the enum
+      if (type.toUpperCase() === 'STRATEGIC') return 'OTHER';
+      return type.toUpperCase();
+    }),
+    interestedVCs: formData.funding.interestedVCs || '',
+    keyMetrics: formData.funding.keyMetrics,
+    requiredServices: formData.services.requiredServices,
+    serviceDetails: formData.services.serviceDetails,
+    additionalServices: formData.services.additionalServices || '',
+    companyStructure: formData.compliance.companyStructure,
+    regulatoryCompliance: formData.compliance.regulatoryCompliance,
+    legalAdvisor: formData.compliance.legalAdvisor || '',
+    complianceStrategy: formData.compliance.complianceStrategy,
+    riskFactors: formData.compliance.riskFactors
+  };
+
+  console.log('Using authorization token:', localStorage.getItem('token') ? 'Token exists' : 'No token');
+  console.log('Transformed data being sent to server:', JSON.stringify(transformedData, null, 2));
+
   try {
-    // Transform form data to match backend structure, handling partial data
-    const transformedData = {
-      // General Info (required for draft)
-      name: data.generalInfo?.projectName || 'Untitled Project', // Ensure name is never empty
-      description: '', // Default empty description - not in the form schema
-      website: data.generalInfo?.websiteUrl || '',
-      pitchDeckUrl: data.generalInfo?.pitchDeckUrl || '',
-      status,
+    const response = await api.post('/projects', transformedData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      timeout: 30000 // 30 second timeout
+    });
 
-      // Technical Details (with defaults for required fields)
-      blockchain: data.technical?.blockchain || 'ETHEREUM',
-      otherBlockchain: '',
-      features: data.technical?.features || [],
-      techStack: data.technical?.techStack || '',
-      security: data.technical?.security || '',
-
-      // TGE Details (with defaults for required fields)
-      tgeDate: data.tgeDetails?.tgeDate || '',
-      listingExchanges: data.tgeDetails?.listingExchanges || '',
-      marketMaker: data.tgeDetails?.marketMakingProvider || '',
-      tokenomics: JSON.stringify({
-        totalSupply: data.tgeDetails?.totalSupply || '',
-        circulatingSupply: data.tgeDetails?.circulatingSupply || '',
-        vestingSchedule: data.tgeDetails?.vestingSchedule || '',
-      }),
-
-      // Funding Details (with defaults for required fields)
-      previousFunding: data.funding?.previousFunding || [],
-      fundingTarget: data.funding?.fundingTarget || '0',
-      investmentTypes: data.funding?.investmentType || [],
-      interestedVCs: data.funding?.interestedVCs || '',
-      keyMetrics: data.funding?.keyMetrics || '',
-
-      // Services (with defaults for required fields)
-      requiredServices: data.services?.requiredServices || [],
-      serviceDetails: data.services?.serviceDetails || '',
-      additionalServices: '',
-
-      // Compliance (with defaults for required fields)
-      companyStructure: data.compliance?.companyStructure || 'LLC',
-      regulatoryCompliance: data.compliance?.regulatoryCompliance || [],
-      legalAdvisor: data.compliance?.legalAdvisor || '',
-      complianceStrategy: data.compliance?.complianceStrategy || '',
-      riskFactors: data.compliance?.riskFactors || ''
-    };
-
-    console.log('Sending project data:', transformedData);
-    
-    // Try different endpoints with different methods
-    const endpoints = [
-      // Try direct endpoints without /api prefix
-      { url: '/projects', method: 'post', useBaseUrl: true },
-      { url: '/projects', method: 'put', useBaseUrl: true },
-      
-      // Try Next.js API routes with absolute URLs to avoid double prefixing
-      { url: '/api/projects', method: 'post', useBaseUrl: false },
-      { url: '/api/projects', method: 'put', useBaseUrl: false }
-    ];
-    
-    for (const endpoint of endpoints) {
-      try {
-        console.log(`Trying endpoint: ${endpoint.url} with method: ${endpoint.method}`);
-        
-        // Determine the full URL
-        const url = endpoint.useBaseUrl 
-          ? endpoint.url  // Will use the baseURL from axios config
-          : window.location.origin + endpoint.url;  // Absolute URL to avoid baseURL
-        
-        let response;
-        if (endpoint.method === 'post') {
-          response = endpoint.useBaseUrl
-            ? await api.post(endpoint.url, transformedData, { timeout: 10000 })
-            : await axios.post(url, transformedData, { 
-                timeout: 10000,
-                headers: api.defaults.headers
-              });
-        } else {
-          response = endpoint.useBaseUrl
-            ? await api.put(endpoint.url, transformedData, { timeout: 10000 })
-            : await axios.put(url, transformedData, { 
-                timeout: 10000,
-                headers: api.defaults.headers
-              });
-        }
-        
-        console.log(`Success with ${endpoint.url} (${endpoint.method}):`, response.status);
-        return response;
-      } catch (error) {
-        console.error(`Failed with ${endpoint.url} (${endpoint.method}):`, error);
-        // Continue to next endpoint
-      }
-    }
-    
-    // All endpoints failed, use mock success
-    console.log('All endpoints failed. Using mock success for local storage only.');
-    return {
-      status: 200,
-      data: {
-        message: 'Mock success - data saved to local storage only',
-        project: transformedData
-      }
-    } as { status: number, data: { message: string, project: typeof transformedData } };
+    return response;
   } catch (error) {
-    console.error('Error in submitProject:', error);
-    // Re-throw the error to be handled by the caller
+    // Type the error properly
+    const apiError = error as ApiError;
+    console.error('API Error:', apiError.response?.status, apiError.response?.data);
+    console.error('Detailed submission error:', apiError);
+    console.error('Error in submitProject:', apiError);
     throw error;
   }
 };

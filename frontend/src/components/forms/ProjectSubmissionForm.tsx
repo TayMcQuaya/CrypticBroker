@@ -5,8 +5,10 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FiArrowLeft, FiArrowRight, FiCheck } from 'react-icons/fi';
 import { formSchema, FormData, FormDataPath } from './schema';
-import { uploadFile, submitProject } from '../../utils/api';
+import { uploadFile, submitProject, checkTokenStatus } from '../../utils/api';
 import { toast } from 'react-hot-toast';
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 // Import form steps
 import GeneralInfoStep from './steps/GeneralInfoStep';
@@ -56,18 +58,94 @@ const formSteps = [
   },
 ] as const;
 
+// Add this interface near the ApiError interface
+interface ApiErrorData {
+  message?: string;
+  status?: string;
+  statusCode?: number;
+}
+
+interface ApiErrorResponse {
+  status: number;
+  data?: ApiErrorData;
+}
+
+type ApiError = Error & {
+  response?: ApiErrorResponse;
+};
+
 export default function ProjectSubmissionForm() {
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
   const [currentStep, setCurrentStep] = React.useState(0);
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [lastSavedTime, setLastSavedTime] = React.useState<Date | null>(null);
   const [serverStatus, setServerStatus] = React.useState<'online' | 'offline' | 'unknown'>('unknown');
+  const [isTestMode, setIsTestMode] = React.useState(false);
   
+  // Add persistent test mode
+  React.useEffect(() => {
+    const savedTestMode = localStorage.getItem('testMode');
+    if (savedTestMode === 'true') {
+      setIsTestMode(true);
+    }
+  }, []);
+
   const methods = useForm<FormData>({
     mode: 'onChange',
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      generalInfo: {
+        projectName: '',
+        websiteUrl: '',
+        pitchDeckUrl: '',
+        coreFounders: '',
+        projectHQ: '',
+      },
+      tgeDetails: {
+        tgeDate: '',
+        listingExchanges: '',
+        marketMakingProvider: '',
+        totalSupply: '',
+        circulatingSupply: '',
+        vestingSchedule: '',
+        tokenomicsMechanisms: '',
+      },
+      funding: {
+        previousFunding: [],
+        fundingTarget: '',
+        investmentType: [],
+        interestedVCs: '',
+        keyMetrics: '',
+      },
+      technical: {
+        blockchain: '',
+        otherBlockchain: '',
+        features: [],
+        techStack: '',
+        security: '',
+      },
+      services: {
+        requiredServices: [],
+        serviceDetails: '',
+        additionalServices: '',
+      },
+      compliance: {
+        companyStructure: '',
+        regulatoryCompliance: [],
+        legalAdvisor: '',
+        complianceStrategy: '',
+        riskFactors: '',
+      },
+      finalQuestions: {
+        uniquePosition: '',
+        biggestChallenges: '',
+        referralSource: 'OTHER',
+      },
+    },
   });
 
-  const { handleSubmit, trigger, setValue, reset, watch, getValues } = methods;
+  const { handleSubmit, trigger, setValue, reset, watch, getValues, formState: { errors } } = methods;
 
   // Watch for form changes to enable auto-save
   const formValues = watch();
@@ -183,54 +261,186 @@ export default function ProjectSubmissionForm() {
     }
   };
 
+  // Debug auth state
+  React.useEffect(() => {
+    console.log('Auth State:', {
+      user,
+      authLoading,
+      hasToken: !!localStorage.getItem('token')
+    });
+  }, [user, authLoading]);
+
+  // Protect the route - updated with better handling
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    console.log('Route protection check:', {
+      token: !!token,
+      user: !!user,
+      authLoading
+    });
+    
+    // Only redirect if we're absolutely certain there's no authentication
+    if (!authLoading && !user && !token) {
+      console.log('No authentication found, redirecting to login...');
+      toast.error('Please log in to access the submission form');
+      router.push('/login');
+      return;
+    }
+  }, [user, router, authLoading]);
+
+  // Modified token check for test mode
+  React.useEffect(() => {
+    const tokenStatus = checkTokenStatus();
+    console.log('Token Status:', tokenStatus);
+    
+    if (!tokenStatus.valid && !isTestMode) {
+      console.log('Invalid token detected, redirecting to login...');
+      toast.error('Your session has expired. Please log in again.');
+      localStorage.removeItem('token');
+      router.push('/login');
+    } else if (!tokenStatus.valid && isTestMode) {
+      // In test mode, just show a warning
+      toast.error('Token expired but continuing in test mode');
+      console.log('Token expired but continuing in test mode');
+    }
+  }, [router, isTestMode]);
+
+  // Toggle test mode function - updated to persist
+  const toggleTestMode = () => {
+    setIsTestMode(prev => {
+      const newValue = !prev;
+      localStorage.setItem('testMode', String(newValue));
+      toast.success(newValue ? 'Test Mode Enabled' : 'Test Mode Disabled');
+      return newValue;
+    });
+  };
+
+  // Modified submit function for test mode
   const onSubmit = async (data: FormData) => {
+    console.log('Form submission started with data:', data);
     try {
       setIsSubmitting(true);
       
-      // Save to local storage as backup
-      localStorage.setItem('projectSubmission', JSON.stringify(data));
+      if (isTestMode) {
+        // In test mode, just simulate success without API calls
+        console.log('Test mode submission:', data);
+        
+        // Save form data to localStorage
+        localStorage.setItem('projectDraft', JSON.stringify(data));
+        localStorage.setItem('projectDraftSavedTime', new Date().toISOString());
+        setLastSavedTime(new Date());
+        
+        // Show success message
+        toast.success('Test submission successful!');
+        toast.success('Form data preserved for testing');
+        
+        // Reset submission state but don't clear form
+        setIsSubmitting(false);
+        return;
+      }
+      
+      // Regular submission flow
+      const tokenStatus = checkTokenStatus();
+      if (!tokenStatus.valid) {
+        toast.error('Your session has expired. Please log in again.');
+        localStorage.removeItem('token');
+        router.push('/login');
+        return;
+      }
+
+      // Show loading toast
+      const loadingToast = toast.loading('Submitting your project...');
       
       try {
+        // Validate form data before submission
+        const isValid = await trigger();
+        if (!isValid) {
+          toast.dismiss(loadingToast);
+          toast.error('Please fill in all required fields correctly');
+          return;
+        }
+
+        // Save as draft first
+        localStorage.setItem('projectDraft', JSON.stringify(data));
+        
+        // Submit to server
         const response = await submitProject(data, 'SUBMITTED');
         
-        // Check if this was a mock success (local storage only)
-        if (response.data && typeof response.data === 'object' && 'message' in response.data && 
-            typeof response.data.message === 'string' && response.data.message.includes('Mock success')) {
-          toast.success('Project saved locally');
-          toast.error('Server connection failed - submission may not be processed');
-          setServerStatus('offline');
-        } else {
-          toast.success('Project submitted successfully');
-          setServerStatus('online');
-        }
-      } catch (error: unknown) {
-        console.error('Error submitting project to server:', error);
+        // Clear loading toast
+        toast.dismiss(loadingToast);
         
-        // Show more detailed error message
-        const err = error as { response?: { status?: number }, code?: string, message?: string };
-        if (err.response?.status === 500) {
-          toast.error('Could not submit to server: Internal server error');
-          setServerStatus('offline');
-        } else if (err.response?.status === 401) {
-          toast.error('Could not submit to server: Authentication error');
-          // Don't set offline for auth errors
-        } else if (err.code === 'ECONNABORTED') {
-          toast.error('Could not submit to server: Request timed out');
-          setServerStatus('offline');
+        if (response.status === 200 || response.status === 201) {
+          // Success case
+          toast.success('Project submitted successfully!');
+          
+          // Clear draft data
+          localStorage.removeItem('projectDraft');
+          localStorage.removeItem('projectDraftSavedTime');
+          
+          // Show countdown and redirect
+          let countdown = 5;
+          const countdownInterval = setInterval(() => {
+            toast.success(`Redirecting to dashboard in ${countdown} seconds...`);
+            countdown--;
+            
+            if (countdown === 0) {
+              clearInterval(countdownInterval);
+              router.push('/dashboard');
+            }
+          }, 1000);
         } else {
-          toast.error(`Could not submit to server: ${err.message || 'Unknown error'}`);
-          setServerStatus('offline');
+          throw new Error(`Unexpected response status: ${response.status}`);
         }
-      }
-    } catch (error) {
-      console.error('Error in onSubmit:', error);
-      
-      // Check if we at least saved to localStorage
-      if (localStorage.getItem('projectSubmission')) {
-        toast.success('Project saved locally');
-        toast.error('Failed to submit to server - please try again later');
-      } else {
-        toast.error('Failed to submit project');
+      } catch (error: Error | unknown) {
+        // Clear loading toast
+        toast.dismiss(loadingToast);
+        
+        console.error('Submission error:', error);
+        
+        // Handle specific error cases
+        if (error instanceof Error) {
+          const apiError = error as ApiError;
+          
+          if (apiError.response?.status === 401) {
+            toast.error('Your session has expired. Please log in again.');
+            localStorage.removeItem('token');
+            setTimeout(() => router.push('/login'), 2000);
+          } else if (apiError.response?.status === 404) {
+            toast.error('Server endpoint not found. Please try again later.');
+            // Keep the draft
+            toast.success('Your data has been saved as a draft');
+          } else if (apiError.response?.status === 500) {
+            // Check for database schema error
+            const errorData = apiError.response?.data as ApiErrorData;
+            const errorMessage = errorData?.message || '';
+            
+            if (errorMessage.includes('column') && errorMessage.includes('does not exist')) {
+              toast.error('Database schema error detected. The server database needs to be updated.');
+              toast.error('Please use Test Mode instead until the server is fixed.');
+              
+              // Suggest enabling test mode
+              setTimeout(() => {
+                if (confirm('Would you like to enable Test Mode to continue working?')) {
+                  setIsTestMode(true);
+                  localStorage.setItem('testMode', 'true');
+                  toast.success('Test Mode Enabled. You can continue working with the form.');
+                }
+              }, 1000);
+            } else {
+              toast.error('Server error. Please try again later.');
+            }
+            
+            // Keep the draft
+            toast.success('Your data has been saved as a draft');
+          } else {
+            toast.error(`Failed to submit project: ${error.message}`);
+            // Keep the draft
+            toast.success('Your data has been saved as a draft');
+          }
+        } else {
+          toast.error('An unexpected error occurred. Please try again.');
+          toast.success('Your data has been saved as a draft');
+        }
       }
     } finally {
       setIsSubmitting(false);
@@ -331,14 +541,59 @@ export default function ProjectSubmissionForm() {
     };
   }, []); // No dependencies needed since we're not using any state variables in the interval
 
+  // Debug form state
+  React.useEffect(() => {
+    console.log('Current form values:', formValues);
+    console.log('Current form errors:', errors);
+  }, [formValues, errors]);
+
+  // Show loading state while checking auth
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+            <p className="mt-4 text-gray-600">Loading your session...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Only block render if we're absolutely certain there's no auth
+  if (!authLoading && !user && !localStorage.getItem('token')) {
+    return null;
+  }
+
   return (
     <FormProvider {...methods}>
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-4">
           <div className="flex justify-between items-center text-white">
-            <h1 className="text-xl font-semibold">Submit Your Project</h1>
+            <div className="flex items-center gap-4">
+              <h1 className="text-xl font-semibold">Submit Your Project</h1>
+              {/* Test mode toggle button */}
+              <button
+                onClick={toggleTestMode}
+                className={`px-3 py-1 rounded text-xs font-medium transition-colors
+                  ${isTestMode 
+                    ? 'bg-yellow-500 hover:bg-yellow-600' 
+                    : 'bg-gray-600 hover:bg-gray-700'}`}
+              >
+                {isTestMode ? '🧪 Test Mode ON' : '🔍 Test Mode OFF'}
+              </button>
+            </div>
             <span className="text-sm">Step {currentStep + 1} of {formSteps.length}</span>
           </div>
+          
+          {/* Test mode warning */}
+          {isTestMode && (
+            <div className="mt-2 bg-yellow-500 text-white px-3 py-1.5 rounded-md text-sm flex items-center">
+              <span className="inline-block w-2 h-2 bg-yellow-300 rounded-full mr-2 animate-pulse"></span>
+              <span>Test Mode: Form data will be preserved after submission</span>
+            </div>
+          )}
           
           {/* Server status indicator */}
           {serverStatus === 'offline' && (
@@ -391,7 +646,19 @@ export default function ProjectSubmissionForm() {
           )}
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="p-6">
+        <form 
+          onSubmit={handleSubmit((data) => {
+            // Only submit if we're on the last step
+            if (currentStep === formSteps.length - 1) {
+              console.log('Form submitted with data:', data);
+              onSubmit(data);
+            } else {
+              // Prevent form submission on other steps
+              console.log('Form submission prevented - not on last step');
+            }
+          })} 
+          className="p-6"
+        >
           {/* Step title */}
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold text-gray-900">
@@ -456,7 +723,8 @@ export default function ProjectSubmissionForm() {
 
             <button
               type={currentStep === formSteps.length - 1 ? 'submit' : 'button'}
-              onClick={currentStep === formSteps.length - 1 ? undefined : () => {
+              onClick={currentStep === formSteps.length - 1 ? undefined : (e) => {
+                e.preventDefault(); // Prevent any form submission
                 console.log('Next button clicked');
                 nextStep();
               }}
@@ -473,7 +741,7 @@ export default function ProjectSubmissionForm() {
               {currentStep === formSteps.length - 1 ? (
                 <>
                   <FiCheck className="mr-2 h-4 w-4" />
-                  {isSubmitting ? 'Submitting...' : 'Submit'}
+                  {isSubmitting ? 'Submitting...' : 'Submit Project'}
                 </>
               ) : (
                 <>

@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { prisma } from '../index';
 import { catchAsync, AppError, badRequest } from '../utils/errors';
 import jwt, { SignOptions } from 'jsonwebtoken';
+import { Prisma } from '@prisma/client';
 
 // Define user roles
 type UserRole = 'ADMIN' | 'PROJECT_OWNER' | 'INVESTOR' | 'ACCELERATOR';
@@ -97,34 +98,53 @@ export const signup = catchAsync(async (
   res: Response<AuthResponse>,
   next: NextFunction
 ) => {
-  const { email, password, firstName, lastName, role } = req.body;
+  try {
+    const { email, password, firstName, lastName, role } = req.body;
 
-  if (!email || !password || !firstName || !lastName) {
-    return next(badRequest('Please provide all required fields'));
-  }
+    if (!email || !password || !firstName || !lastName) {
+      return next(badRequest('Please provide all required fields'));
+    }
 
-  const existingUser = await prisma.user.findUnique({
-    where: { email },
-  });
+    const existingUser = await prisma.users.findUnique({
+      where: { email },
+    });
 
-  if (existingUser) {
-    return next(badRequest('Email already in use'));
-  }
+    if (existingUser) {
+      return next(badRequest('Email already in use'));
+    }
 
-  const passwordHash = await bcrypt.hash(password, 12);
+    const passwordHash = await bcrypt.hash(password, 12);
 
-  const newUser = await prisma.user.create({
-    data: {
+    type CreateUserData = {
+      email: string;
+      passwordHash: string;
+      firstName: string;
+      lastName: string;
+      role: UserRole;
+      isEmailVerified: boolean;
+    };
+
+    const userData: CreateUserData = {
       email,
       passwordHash,
       firstName,
       lastName,
-      role: role as UserRole || 'PROJECT_OWNER',
+      role: (role as UserRole) || 'PROJECT_OWNER',
       isEmailVerified: false,
-    },
-  });
+    };
 
-  createSendToken(newUser, 201, res);
+    const newUser = await prisma.users.create({
+      data: userData as unknown as Prisma.usersCreateInput,
+    });
+
+    createSendToken(newUser, 201, res);
+  } catch (error) {
+    console.error('Signup error:', error);
+    if (error instanceof Error) {
+      return next(new AppError(`Registration failed: ${error.message}`, 500));
+    }
+    return next(new AppError('Registration failed', 500));
+  }
 });
 
 interface LoginRequestBody {
@@ -141,21 +161,29 @@ export const login = catchAsync(async (
   res: Response<AuthResponse>,
   next: NextFunction
 ) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  if (!email || !password) {
-    return next(badRequest('Please provide email and password'));
+    if (!email || !password) {
+      return next(badRequest('Please provide email and password'));
+    }
+
+    const user = await prisma.users.findUnique({
+      where: { email },
+    });
+
+    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+      return next(badRequest('Invalid email or password'));
+    }
+
+    createSendToken(user, 200, res);
+  } catch (error) {
+    console.error('Login error:', error);
+    if (error instanceof Error) {
+      return next(new AppError(`Login failed: ${error.message}`, 500));
+    }
+    return next(new AppError('Login failed', 500));
   }
-
-  const user = await prisma.user.findUnique({
-    where: { email },
-  });
-
-  if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
-    return next(badRequest('Invalid email or password'));
-  }
-
-  createSendToken(user, 200, res);
 });
 
 /**
@@ -167,26 +195,34 @@ export const getMe = catchAsync(async (
   res: Response<UserResponse>,
   next: NextFunction
 ) => {
-  if (!req.user?.id) {
-    return next(new AppError('User not found or not logged in', 404));
+  try {
+    if (!req.user?.id) {
+      return next(new AppError('User not found or not logged in', 404));
+    }
+
+    const user = await prisma.users.findUnique({
+      where: { id: req.user.id },
+    });
+
+    if (!user) {
+      return next(new AppError('User not found', 404));
+    }
+
+    const { passwordHash: _passwordHash, ...userWithoutPassword } = user;
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        user: userWithoutPassword,
+      },
+    });
+  } catch (error) {
+    console.error('Get profile error:', error);
+    if (error instanceof Error) {
+      return next(new AppError(`Failed to get profile: ${error.message}`, 500));
+    }
+    return next(new AppError('Failed to get profile', 500));
   }
-
-  const user = await prisma.user.findUnique({
-    where: { id: req.user.id },
-  });
-
-  if (!user) {
-    return next(new AppError('User not found', 404));
-  }
-
-  const { passwordHash: _passwordHash, ...userWithoutPassword } = user;
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user: userWithoutPassword,
-    },
-  });
 });
 
 interface UpdateMeRequestBody {
@@ -219,7 +255,7 @@ export const updateMe = catchAsync(async (
   if (lastName) updateData.lastName = lastName;
   if (email) updateData.email = email;
 
-  const updatedUser = await prisma.user.update({
+  const updatedUser = await prisma.users.update({
     where: { id: req.user.id },
     data: updateData,
   });

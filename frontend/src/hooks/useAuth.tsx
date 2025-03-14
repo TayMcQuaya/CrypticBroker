@@ -86,27 +86,56 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const loadUser = async () => {
       if (typeof window !== 'undefined') {
         const token = localStorage.getItem('token');
-        if (token) {
-          try {
-            // Check token expiration
-            const tokenData = JSON.parse(atob(token.split('.')[1]));
-            const expirationTime = tokenData.exp * 1000; // Convert to milliseconds
-            const currentTime = Date.now();
-            
-            // If token is about to expire (less than 5 minutes left), refresh it
-            if (expirationTime - currentTime < 5 * 60 * 1000) {
-              console.log('Token is about to expire, refreshing...');
-              // For now, just redirect to login
-              localStorage.removeItem('token');
-              setLoading(false);
-              return;
-            }
-            
-            const response = (await getCurrentUser() as unknown) as ApiResponse<UserResponse>;
-            setUser(response.data.data.user);
-          } catch (err) {
-            console.error('Error loading user:', err);
+        console.log('Auth: Checking token...', !!token);
+        
+        if (!token) {
+          setLoading(false);
+          return;
+        }
+
+        try {
+          // Check token expiration
+          const tokenData = JSON.parse(atob(token.split('.')[1]));
+          const expirationTime = tokenData.exp * 1000; // Convert to milliseconds
+          const currentTime = Date.now();
+          
+          console.log('Auth: Token expiration check', {
+            expirationTime,
+            currentTime,
+            timeLeft: (expirationTime - currentTime) / 1000 / 60 + ' minutes'
+          });
+          
+          // If token is expired or about to expire (less than 5 minutes left), refresh it
+          if (expirationTime - currentTime < 5 * 60 * 1000) {
+            console.log('Auth: Token is about to expire or expired');
             localStorage.removeItem('token');
+            setUser(null);
+            setLoading(false);
+            return;
+          }
+          
+          console.log('Auth: Getting current user...');
+          const response = (await getCurrentUser() as unknown) as ApiResponse<UserResponse>;
+          
+          if (response?.data?.data?.user) {
+            console.log('Auth: User loaded successfully');
+            setUser(response.data.data.user);
+            
+            // Set up a timer to check token expiration
+            const timeUntilExpiry = expirationTime - currentTime - (2 * 60 * 1000); // Check 2 minutes before expiry
+            setTimeout(() => {
+              loadUser(); // Recheck token when it's close to expiry
+            }, timeUntilExpiry);
+          } else {
+            console.log('Auth: Invalid user data received');
+            throw new Error('Invalid user data');
+          }
+        } catch (err) {
+          console.error('Auth: Error loading user:', err);
+          // Don't remove token on network errors
+          if (err instanceof Error && !err.message.includes('Network Error')) {
+            localStorage.removeItem('token');
+            setUser(null);
           }
         }
       }

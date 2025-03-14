@@ -73,18 +73,18 @@ export const formSchema = z.object({
     riskFactors: z.string().min(1, 'Risk factors are required'),
   }),
 
-  // Final Questions
+  // Final Questions - now optional
   finalQuestions: z.object({
-    uniquePosition: z.string(),
-    biggestChallenges: z.string(),
+    uniquePosition: z.string().optional(),
+    biggestChallenges: z.string().optional(),
     referralSource: z.enum([
       'TWITTER',
       'TELEGRAM',
       'EVENT',
       'REFERRAL',
       'OTHER'
-    ]),
-  }),
+    ]).optional(),
+  }).optional(),
 });
 
 // Export type for the form data
