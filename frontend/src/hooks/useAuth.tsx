@@ -83,6 +83,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         
         if (!token) {
           setLoading(false);
+          setUser(null);
           return;
         }
 
@@ -98,16 +99,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             timeLeft: (expirationTime - currentTime) / 1000 / 60 + ' minutes'
           });
           
-          // If token is expired or about to expire (less than 5 minutes left), refresh it
-          if (expirationTime - currentTime < 5 * 60 * 1000) {
-            console.log('Auth: Token is about to expire or expired');
+          // If token is expired, remove it and clear user
+          if (currentTime >= expirationTime) {
+            console.log('Auth: Token is expired');
             localStorage.removeItem('token');
             setUser(null);
             setLoading(false);
             return;
           }
           
-          // Extract user data from token instead of making an API call
+          // Extract user data from token
           const userData = {
             id: tokenData.id,
             email: tokenData.email,
@@ -120,23 +121,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           };
           
           setUser(userData);
+          setLoading(false);
           
           // Set up a timer to check token expiration
-          const timeUntilExpiry = expirationTime - currentTime - (2 * 60 * 1000); // Check 2 minutes before expiry
-          setTimeout(() => {
-            loadUser(); // Recheck token when it's close to expiry
-          }, timeUntilExpiry);
+          const timeUntilExpiry = expirationTime - currentTime;
+          if (timeUntilExpiry > 0) {
+            const timer = setTimeout(() => {
+              console.log('Auth: Token expired, logging out');
+              localStorage.removeItem('token');
+              setUser(null);
+            }, timeUntilExpiry);
+            
+            // Cleanup timer on unmount
+            return () => clearTimeout(timer);
+          }
           
         } catch (err) {
           console.error('Auth: Error loading user:', err);
-          // Only remove token if it's invalid
-          if (err instanceof Error && err.message.includes('Invalid token')) {
-            localStorage.removeItem('token');
-            setUser(null);
-          }
+          localStorage.removeItem('token');
+          setUser(null);
+          setLoading(false);
         }
       }
-      setLoading(false);
     };
 
     loadUser();
@@ -165,20 +171,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       };
       
       setUser(userData);
-      
-      // Set up token expiration check
-      const expirationTime = tokenData.exp * 1000; // Convert to milliseconds
-      const currentTime = Date.now();
-      const timeUntilExpiry = expirationTime - currentTime - (2 * 60 * 1000); // Check 2 minutes before expiry
-      
-      setTimeout(() => {
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('token');
-          setUser(null);
-          router.push('/login');
-        }
-      }, timeUntilExpiry);
-
       router.push('/dashboard');
     } catch (err: unknown) {
       const apiError = err as ApiError;
@@ -215,15 +207,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Set up token expiration check
       const expirationTime = tokenData.exp * 1000; // Convert to milliseconds
       const currentTime = Date.now();
-      const timeUntilExpiry = expirationTime - currentTime - (2 * 60 * 1000); // Check 2 minutes before expiry
+      const timeUntilExpiry = expirationTime - currentTime;
       
-      setTimeout(() => {
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('token');
-          setUser(null);
-          router.push('/login');
-        }
-      }, timeUntilExpiry);
+      if (timeUntilExpiry > 0) {
+        setTimeout(() => {
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem('token');
+            setUser(null);
+            router.push('/login');
+          }
+        }, timeUntilExpiry);
+      }
 
       router.push('/dashboard');
     } catch (err: unknown) {

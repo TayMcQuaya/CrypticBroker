@@ -21,6 +21,14 @@ interface ProjectStats {
   rejected: number;
 }
 
+interface ProjectsApiResponse {
+  status: string;
+  results: number;
+  data: {
+    projects: Project[];
+  };
+}
+
 const getStatusColor = (status: string) => {
   switch (status) {
     case 'UNDER_REVIEW':
@@ -63,12 +71,20 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      if (!user) return;
+      if (!user) {
+        setLoading(false);
+        return;
+      }
       
       try {
+        console.log('Fetching projects for user:', user.email);
         setLoading(true);
-        const response = await getProjects();
-        const fetchedProjects = (response.data as { projects: Project[] }).projects || [];
+        const response = await getProjects() as { data: ProjectsApiResponse };
+        console.log('Projects response:', response);
+        
+        // Extract projects from the nested response
+        const fetchedProjects = response.data?.data?.projects || [];
+        console.log('Fetched projects:', fetchedProjects);
         setProjects(fetchedProjects);
         
         // Calculate stats
@@ -105,15 +121,19 @@ export default function DashboardPage() {
       }
     };
 
-    fetchProjects();
-  }, [user]);
+    if (!authLoading) {
+      fetchProjects();
+    }
+  }, [user, authLoading]);
+
+  console.log('Dashboard render state:', { authLoading, loading, user: !!user, projectsCount: projects.length });
 
   if (authLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <p className="mt-4 text-gray-600">Loading authentication...</p>
         </div>
       </div>
     );

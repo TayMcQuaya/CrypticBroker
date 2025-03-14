@@ -105,28 +105,9 @@ api.interceptors.response.use(
     console.error('API Error:', error.response?.status, error.response?.data);
     
     if (error.response?.status === 401) {
-      // Show error message to user
+      // Clear the token on 401 unauthorized
       if (typeof window !== 'undefined') {
-        // Create a persistent error message
-        const errorDiv = document.createElement('div');
-        errorDiv.style.position = 'fixed';
-        errorDiv.style.top = '20px';
-        errorDiv.style.left = '50%';
-        errorDiv.style.transform = 'translateX(-50%)';
-        errorDiv.style.backgroundColor = '#f44336';
-        errorDiv.style.color = 'white';
-        errorDiv.style.padding = '15px 20px';
-        errorDiv.style.borderRadius = '4px';
-        errorDiv.style.zIndex = '9999';
-        errorDiv.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
-        errorDiv.textContent = 'Authentication error: ' + (error.response?.data?.message || 'Your session has expired. Redirecting to login...');
-        document.body.appendChild(errorDiv);
-        
-        // Token expired or invalid - redirect after delay
-        setTimeout(() => {
-          localStorage.removeItem('token');
-          window.location.href = '/login';
-        }, 3000); // 3 second delay
+        localStorage.removeItem('token');
       }
     }
     return Promise.reject(error);
@@ -323,21 +304,25 @@ export interface Project {
 
 // Project API functions
 export const getProjects = async () => {
-  const response = await api.get('/projects', {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  });
-  return response;
+  try {
+    const response = await api.get('/projects');
+    console.log('Projects API Response:', response);
+    return response;
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    throw error;
+  }
 };
 
 export const getProject = async (id: string) => {
-  const response = await axios.get(`/api/projects/${id}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    }
-  });
-  return response.data;
+  try {
+    const response = await api.get(`/projects/${id}`);
+    console.log('Project API Response:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching project:', error);
+    throw error;
+  }
 };
 
 // Default export for the API client

@@ -17,8 +17,11 @@ export default function HomePage() {
             <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-8">
               Welcome to CrypticBroker
             </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Your trusted platform for managing and tracking cryptocurrency projects
+            <p className="text-xl text-gray-600 mb-4 max-w-2xl mx-auto">
+              The bridge between promising blockchain projects and investment opportunities
+            </p>
+            <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
+              We connect innovative crypto projects with venture capital, accelerators, and essential support services through our AI-powered evaluation platform
             </p>
             {user ? (
               <div className="space-y-4">
@@ -51,7 +54,7 @@ export default function HomePage() {
                   </Link>
                 </div>
                 <p className="text-gray-600">
-                  Join our platform to start managing your crypto projects
+                  Submit your project and connect with leading investors and accelerators
                 </p>
               </div>
             )}
@@ -66,7 +69,7 @@ export default function HomePage() {
             Why Choose CrypticBroker?
           </h2>
           <p className="mt-4 text-lg text-gray-600">
-            We provide comprehensive tools and features for your crypto projects
+            Streamlined project evaluation and funding process powered by AI
           </p>
         </div>
 
@@ -76,10 +79,10 @@ export default function HomePage() {
               <FiTrendingUp className="h-6 w-6 text-blue-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Project Tracking
+              Smart Evaluation
             </h3>
             <p className="text-gray-600">
-              Monitor your project status, updates, and performance metrics in real-time
+              AI-powered project assessment and standardized data collection for faster funding decisions
             </p>
           </div>
 
@@ -88,10 +91,10 @@ export default function HomePage() {
               <FiCheck className="h-6 w-6 text-green-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Easy Submission
+              Complete Support
             </h3>
             <p className="text-gray-600">
-              Submit and manage your projects with our intuitive interface
+              Access to funding, exchange listings, market making, and strategic guidance
             </p>
           </div>
 
@@ -100,10 +103,10 @@ export default function HomePage() {
               <FiShield className="h-6 w-6 text-purple-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Secure Platform
+              Trusted Network
             </h3>
             <p className="text-gray-600">
-              Your project data is protected with enterprise-grade security
+              Connect with verified investors, accelerators, and service providers in the crypto ecosystem
             </p>
           </div>
         </div>
@@ -114,10 +117,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <h2 className="text-3xl font-bold mb-4">
-              Ready to Start Your Crypto Journey?
+              Ready to Scale Your Blockchain Project?
             </h2>
             <p className="text-xl text-blue-100 mb-8">
-              Join CrypticBroker today and take your projects to the next level
+              Join CrypticBroker to connect with the right investors and support services
             </p>
             {user ? (
               <Link
